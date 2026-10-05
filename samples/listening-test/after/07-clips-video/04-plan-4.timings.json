@@ -1,10 +1,10 @@
 {
   "file": "04-plan-4.mp3",
-  "durationSec": 2.5,
+  "durationSec": 2.819,
   "passages": [
     {
       "start": 0.21,
-      "end": 2.04,
+      "end": 2.359,
       "text": "Le Phare. Bientôt.",
       "speaker": null,
       "voice": "cedar"
@@ -13,7 +13,7 @@
   "sentences": [
     {
       "start": 0.21,
-      "end": 2.04,
+      "end": 2.359,
       "text": "Le Phare. Bientôt.",
       "speaker": null
     }

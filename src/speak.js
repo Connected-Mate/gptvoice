@@ -30,6 +30,7 @@ const USAGE = `Usage:
 
 Voice & controls:
   --voice marin  --preset NAME  --speed 0.25-1.5  --pitch-shift -12..12 (semitones)  --emotion joy|sadness|anger|fear|excitement|tenderness|calm|…
+  --acting shouting|crying|laughing-while-speaking|whispering-in-fear|angry-rant|broken-voice|panicked|sarcastic|intimate|sports-commentator|old-storyteller|child-wonder
   --intensity 0-1  --pitch very-low|low|normal|high|very-high  --intonation flat|natural|expressive|sing-song
   --volume whisper|soft|normal|projected|shout  --pauses tight|natural|dramatic  --breaths
   --accent "British RP"  --language French  --narration audiobook|trailer|documentary|ad|character|news|podcast|meditation|kids|elearning|announcement
@@ -40,7 +41,7 @@ Inline cues in the text: [pause 1s] [whispers] [excited] [laughs] [sighs] {Nguye
 const VALUE_FLAGS = {
   "--text": "text", "-t": "text", "--file": "file", "-f": "file", "--out": "out", "-o": "out",
   "--voice": "voice", "-v": "voice", "--preset": "preset", "--speed": "speed", "--pitch-shift": "pitch_shift", "--emotion": "emotion",
-  "--intensity": "intensity", "--pitch": "pitch", "--intonation": "intonation", "--volume": "volume",
+  "--intensity": "intensity", "--acting": "acting", "--pitch": "pitch", "--intonation": "intonation", "--volume": "volume",
   "--pauses": "pauses", "--accent": "accent", "--language": "language", "--narration": "narration",
   "--character": "character", "--pace": "pace", "--style": "style", "-s": "style", "--format": "format",
   "--dialogue": "dialogue", "-d": "dialogue", "--cast": "cast", "--transcribe": "transcribe",
@@ -96,7 +97,7 @@ async function readText(file) {
 }
 
 const progress = (d, n) => process.stderr.write(`\r  speaking passage ${d}/${n}…`);
-const CONTROL_KEYS = ["voice", "preset", "speed", "pitch_shift", "emotion", "intensity", "pitch", "intonation", "volume", "pauses", "breaths", "accent", "language", "narration", "character", "pace", "style", "pronunciations"];
+const CONTROL_KEYS = ["voice", "preset", "speed", "pitch_shift", "acting", "emotion", "intensity", "pitch", "intonation", "volume", "pauses", "breaths", "accent", "language", "narration", "character", "pace", "style", "pronunciations"];
 const controlsOf = (a) => Object.fromEntries(CONTROL_KEYS.filter((k) => a[k] !== undefined).map((k) => [k, a[k]]));
 
 async function main() {

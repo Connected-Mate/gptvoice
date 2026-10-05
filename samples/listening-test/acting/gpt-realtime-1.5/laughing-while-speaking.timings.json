@@ -1,0 +1,21 @@
+{
+  "file": "laughing-while-speaking.mp3",
+  "durationSec": 8.749,
+  "passages": [
+    {
+      "start": 0.21,
+      "end": 8.289,
+      "text": "And then the goat ate his homework, the whole thing, right in front of the teacher!",
+      "speaker": null,
+      "voice": "verse"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0.21,
+      "end": 8.289,
+      "text": "And then the goat ate his homework, the whole thing, right in front of the teacher!",
+      "speaker": null
+    }
+  ]
+}

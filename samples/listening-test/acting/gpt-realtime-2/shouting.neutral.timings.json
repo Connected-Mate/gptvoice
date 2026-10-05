@@ -1,0 +1,21 @@
+{
+  "file": "shouting.neutral.mp3",
+  "durationSec": 5.22,
+  "passages": [
+    {
+      "start": 0.21,
+      "end": 4.76,
+      "text": "Hey! Over here! Grab the rope, the boat is drifting away!",
+      "speaker": null,
+      "voice": "ash"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0.21,
+      "end": 4.76,
+      "text": "Hey! Over here! Grab the rope, the boat is drifting away!",
+      "speaker": null
+    }
+  ]
+}

@@ -1,0 +1,27 @@
+{
+  "file": "sarcastic.mp3",
+  "durationSec": 7.92,
+  "passages": [
+    {
+      "start": 0.21,
+      "end": 7.46,
+      "text": "Oh, wonderful. Another meeting that could have been an email. I simply cannot contain my joy.",
+      "speaker": null,
+      "voice": "shimmer"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0.21,
+      "end": 5.017,
+      "text": "Oh, wonderful. Another meeting that could have been an email.",
+      "speaker": null
+    },
+    {
+      "start": 5.017,
+      "end": 7.46,
+      "text": "I simply cannot contain my joy.",
+      "speaker": null
+    }
+  ]
+}

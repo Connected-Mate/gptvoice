@@ -3,6 +3,8 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { ITEMS } from "./listening-items.js";
+import { ACTING } from "./acting-items.js";
+import { ACTING_MODES } from "../src/direction.js";
 import { decodeToPcm } from "../src/transcribe.js";
 import { smoothness } from "../src/quality.js";
 import { analyzePcm } from "../src/analysis.js";
@@ -82,6 +84,70 @@ for (const it of ITEMS) {
   sections += `<section id="${it.id}"><h2>${esc(it.title)}</h2>${body}</section>\n`;
 }
 
+// ---------------------------------------------------------------------------
+// Acting section
+// ---------------------------------------------------------------------------
+let acting = "";
+let actingResults = null;
+try {
+  actingResults = JSON.parse(await fs.readFile(path.join(ROOT, "acting", "results.json"), "utf8"));
+} catch {}
+const MODELS = ["gpt-realtime-1.5", "gpt-realtime-2", "gpt-realtime-2.1", "gpt-realtime-2.1-mini"];
+const score = (a, n) =>
+  Math.abs(a.pitchHz / n.pitchHz - 1) * 10 + Math.abs(a.pitchRangeSt - n.pitchRangeSt) / 2 + Math.abs(a.loudRangeDb - n.loudRangeDb) / 3 + Math.abs(a.wordsPerSec - n.wordsPerSec) / 0.5 + Math.abs(a.voicedRatio - n.voicedRatio) / 0.15 + Math.abs(a.durationSec / n.durationSec - 1) * 5;
+const sign = (v, d = 0, u = "") => `${v >= 0 ? "+" : ""}${v.toFixed(d)}${u}`;
+const verdict = (s) => (s >= 5 ? ["works", "ok"] : s >= 3 ? ["noticeable", ""] : ["subtle", "warn"]);
+if (actingResults) {
+  const modelStats = Object.fromEntries(MODELS.map((m) => [m, { s: 0, acc: 0, n: 0 }]));
+  let cards = "";
+  const verdicts = [];
+  for (const it of ACTING) {
+    const get = (m, kind) => actingResults[`${m}|${it.id}|${kind}`];
+    const rows = MODELS.map((m) => {
+      const a = get(m, "acted");
+      const n = get(m, "neutral");
+      if (!a || a.error || !n || n.error) return null;
+      const s = score(a, n);
+      modelStats[m].s += s;
+      modelStats[m].acc += a.verifiedAccuracy ?? a.accuracy;
+      modelStats[m].n++;
+      return { m, a, n, s };
+    }).filter(Boolean);
+    const main = rows.find((r) => r.m === "gpt-realtime-1.5") ?? rows[0];
+    if (!main) continue;
+    const [label, cls] = verdict(main.s);
+    verdicts.push(`<li><b>${esc(it.id)}</b> — <span class="${cls}">${label}</span></li>`);
+    const mode = it.acting ? ACTING_MODES[it.acting] : null;
+    const metric = (r) => `<dl class="m">
+      <div><dt>Pitch</dt><dd>${r.a.pitchHz} Hz (${sign((r.a.pitchHz / r.n.pitchHz - 1) * 100, 0, "%")})</dd></div>
+      <div><dt>Pitch range</dt><dd>${r.a.pitchRangeSt} st (${sign(r.a.pitchRangeSt - r.n.pitchRangeSt, 1)})</dd></div>
+      <div><dt>Loudness range</dt><dd>${r.a.loudRangeDb} dB (${sign(r.a.loudRangeDb - r.n.loudRangeDb, 1)})</dd></div>
+      <div><dt>Pace</dt><dd>${r.a.wordsPerSec} words/s (${sign(r.a.wordsPerSec - r.n.wordsPerSec, 1)})</dd></div>
+      <div><dt>Duration</dt><dd>${r.a.durationSec} s (${sign((r.a.durationSec / r.n.durationSec - 1) * 100, 0, "%")})</dd></div>
+      <div><dt>Word accuracy</dt><dd>${r.a.verifiedAccuracy ?? r.a.accuracy} %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="${verdict(r.s)[1]}">${r.s.toFixed(1)} · ${verdict(r.s)[0]}</dd></div></dl>`;
+    const others = rows
+      .filter((r) => r !== main)
+      .map((r) => `<div class="side">${player("acting", r.a.file, esc(r.m))}${metric(r)}</div>`)
+      .join("");
+    cards += `<section id="acting-${esc(it.id)}"><h2>${esc(it.acting ?? "dramatic scene (emotion switches)")}</h2>
+      <p class="note">Voice <b>${esc(it.voice)}</b> · ${mode ? `persona: ${esc(mode.persona)}` : "cues [calm] → [scared] → [angry] → [sad]"}</p>
+      <div class="pair"><div class="side">${player("acting", main.n.file, `Neutral reading · ${esc(main.m)}`)}<dl class="m"><div><dt>Pitch</dt><dd>${main.n.pitchHz} Hz</dd></div><div><dt>Pace</dt><dd>${main.n.wordsPerSec} words/s</dd></div></dl></div>
+      <div class="side after">${player("acting", main.a.file, `Acted · ${esc(main.m)}`)}${metric(main)}</div></div>
+      <details><summary>Script</summary><pre class="script">${esc(it.text)}</pre></details>
+      <details><summary>Compare with the other models</summary><div class="grid3">${others}</div></details></section>\n`;
+  }
+  const modelRows = MODELS.filter((m) => modelStats[m].n)
+    .map((m) => `<tr><td>${esc(m)}</td><td>${(modelStats[m].s / modelStats[m].n).toFixed(1)}</td><td>${(modelStats[m].acc / modelStats[m].n).toFixed(1)} %</td></tr>`)
+    .join("");
+  acting = `<h1 id="acting" class="part">Jeu d'acteur / Acting</h1>
+  <p class="lead">Each acting mode compared with a neutral reading of the same words (same voice). "Change vs neutral" combines measured shifts in pitch, pitch range, loudness range, pace, duration and voicing — it cannot hear tears or laughter, so trust your ears. Every take was checked word for word by an independent transcription and re-recorded if needed.</p>
+  <table class="models"><thead><tr><th>Model</th><th>Avg change vs neutral</th><th>Avg word accuracy</th></tr></thead><tbody>${modelRows}</tbody></table>
+  <p class="note">Newer models were also tried: gpt-live-1 (OpenAI's new expressive voice model) answers "Voice session access denied" for this sign-in; the voice "sol" is "not available for your organization".</p>
+  <ul class="verdicts">${verdicts.join("")}</ul>
+  ${cards}`;
+}
+
 const t = totals;
 const html = `<!doctype html>
 <html lang="en">
@@ -119,12 +185,18 @@ dd { margin: 0; text-align: right; }
 details { margin-top: 10px; } summary { cursor: pointer; color: var(--accent); }
 .note, .fit { color: var(--muted); font-size: .9rem; margin: 4px 0; }
 footer { color: var(--muted); font-size: .85rem; margin-top: 24px; }
+h1.part { margin-top: 40px; padding-top: 16px; border-top: 2px solid var(--line); }
+.grid3 { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 16px; margin-top: 10px; }
+table.models { border-collapse: collapse; margin: 0 0 12px; background: var(--card); border:1px solid var(--line); }
+table.models th, table.models td { padding: 6px 12px; border-bottom: 1px solid var(--line); text-align: left; }
+ul.verdicts { columns: 2 260px; padding-left: 18px; margin: 0 0 20px; }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 </style>
 </head>
 <body>
 <main>
 <h1>GPTVoice — listening test</h1>
+<p class="note"><a href="#acting">→ Jeu d'acteur / Acting</a></p>
 <p class="lead">The same scripts, generated twice: <strong>Before</strong> = previous pipeline, <strong>After</strong> = new pipeline (whole sentences, natural endings kept, fades and crossfades, room tone, even loudness). Listen with headphones. Numbers are measured automatically; your ears decide.</p>
 <div class="summary">
   <div>Clicks in quiet passages*<b>${t.before.clicks} → ${t.after.clicks}</b></div>
@@ -134,6 +206,7 @@ footer { color: var(--muted); font-size: .85rem; margin-top: 24px; }
   <div>Problems at joins between takes<b>${t.before.joins}/${t.before.joinCount} → ${t.after.joins}/${t.after.joinCount}</b></div>
 </div>
 ${sections}
+${acting}
 <footer>* "Clicks in quiet passages" counts every sharp step next to silence. Most of them are natural consonants (p, t, k) after a pause, present in both versions; the numbers that show splicing problems are "Hard starts / stops", "Cut-off ending", "Dead digital silence" and "Problems at joins between takes".<br>Local file, generated ${new Date().toISOString().slice(0, 16).replace("T", " ")} by bench/listening-page.js. Not published.</footer>
 </main>
 </body>

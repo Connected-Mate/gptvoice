@@ -1,0 +1,7 @@
+1
+00:00:00,210 --> 00:00:00,956
+One hour!
+
+2
+00:00:00,956 --> 00:00:07,839
+I have been waiting for one entire hour, and nobody, nobody, has even looked at me!

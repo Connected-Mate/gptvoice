@@ -34,15 +34,21 @@ dd { margin: 0; text-align: right; }
 details { margin-top: 10px; } summary { cursor: pointer; color: var(--accent); }
 .note, .fit { color: var(--muted); font-size: .9rem; margin: 4px 0; }
 footer { color: var(--muted); font-size: .85rem; margin-top: 24px; }
+h1.part { margin-top: 40px; padding-top: 16px; border-top: 2px solid var(--line); }
+.grid3 { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 16px; margin-top: 10px; }
+table.models { border-collapse: collapse; margin: 0 0 12px; background: var(--card); border:1px solid var(--line); }
+table.models th, table.models td { padding: 6px 12px; border-bottom: 1px solid var(--line); text-align: left; }
+ul.verdicts { columns: 2 260px; padding-left: 18px; margin: 0 0 20px; }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 </style>
 </head>
 <body>
 <main>
 <h1>GPTVoice — listening test</h1>
+<p class="note"><a href="#acting">→ Jeu d'acteur / Acting</a></p>
 <p class="lead">The same scripts, generated twice: <strong>Before</strong> = previous pipeline, <strong>After</strong> = new pipeline (whole sentences, natural endings kept, fades and crossfades, room tone, even loudness). Listen with headphones. Numbers are measured automatically; your ears decide.</p>
 <div class="summary">
-  <div>Clicks in quiet passages*<b>31 → 35</b></div>
+  <div>Clicks in quiet passages*<b>31 → 26</b></div>
   <div>Hard starts/stops<b>4 → 3</b></div>
   <div>Cut-off endings<b>0 → 0</b></div>
   <div>Files with dead silence<b>6 → 0</b></div>
@@ -203,15 +209,15 @@ JAMES (laughing): Un croissant, s'il vous plaît. Okay… I think I can do that.
   </dl><p class="fit">3.35 s — fits</p></div>
       <div class="side after"><figure><figcaption>After</figcaption><audio controls preload="none" src="after/07-clips-video/01-plan-1.mp3"></audio></figure>
   <dl class="m">
-    <div><dt>Duration</dt><dd>3.22 s</dd></div>
+    <div><dt>Duration</dt><dd>3.6 s</dd></div>
     <div><dt>Word accuracy</dt><dd>100 %</dd></div>
     <div><dt>Clicks in quiet passages*</dt><dd>0</dd></div>
     
     <div><dt>Hard starts / stops</dt><dd class="ok">0 / 0</dd></div>
     <div><dt>Cut-off ending</dt><dd class="ok">no</dd></div>
     <div><dt>Dead digital silence</dt><dd class="ok">none</dd></div>
-    <div><dt>Speech level</dt><dd>-19.56 dB RMS</dd></div>
-  </dl><p class="fit">3.15 s — does not fit</p></div></div></div><div class="clip"><h3>Shot 2 · target 4 s</h3><p class="script">Chaque matin, les bateaux partent avant le jour.</p>
+    <div><dt>Speech level</dt><dd>-19.49 dB RMS</dd></div>
+  </dl><p class="fit">3.55 s — fits</p></div></div></div><div class="clip"><h3>Shot 2 · target 4 s</h3><p class="script">Chaque matin, les bateaux partent avant le jour.</p>
       <div class="pair"><div class="side"><figure><figcaption>Before</figcaption><audio controls preload="none" src="before/07-clips-video/02-plan-2.mp3"></audio></figure>
   <dl class="m">
     <div><dt>Duration</dt><dd>4.01 s</dd></div>
@@ -225,15 +231,15 @@ JAMES (laughing): Un croissant, s'il vous plaît. Okay… I think I can do that.
   </dl><p class="fit">3.95 s — fits</p></div>
       <div class="side after"><figure><figcaption>After</figcaption><audio controls preload="none" src="after/07-clips-video/02-plan-2.mp3"></audio></figure>
   <dl class="m">
-    <div><dt>Duration</dt><dd>3.86 s</dd></div>
-    <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+    <div><dt>Duration</dt><dd>4.18 s</dd></div>
+    <div><dt>Word accuracy</dt><dd>87.5 %</dd></div>
     <div><dt>Clicks in quiet passages*</dt><dd>0</dd></div>
     
     <div><dt>Hard starts / stops</dt><dd class="ok">0 / 0</dd></div>
     <div><dt>Cut-off ending</dt><dd class="ok">no</dd></div>
     <div><dt>Dead digital silence</dt><dd class="ok">none</dd></div>
-    <div><dt>Speech level</dt><dd>-19.97 dB RMS</dd></div>
-  </dl><p class="fit">3.79 s — fits</p></div></div></div><div class="clip"><h3>Shot 3 · target 4 s</h3><p class="script">Mais aujourd'hui, l'un d'eux ne reviendra pas.</p>
+    <div><dt>Speech level</dt><dd>-20.16 dB RMS</dd></div>
+  </dl><p class="fit">4.12 s — fits</p></div></div></div><div class="clip"><h3>Shot 3 · target 4 s</h3><p class="script">Mais aujourd'hui, l'un d'eux ne reviendra pas.</p>
       <div class="pair"><div class="side"><figure><figcaption>Before</figcaption><audio controls preload="none" src="before/07-clips-video/03-plan-3.mp3"></audio></figure>
   <dl class="m">
     <div><dt>Duration</dt><dd>4.49 s</dd></div>
@@ -247,15 +253,15 @@ JAMES (laughing): Un croissant, s'il vous plaît. Okay… I think I can do that.
   </dl><p class="fit">4.42 s — does not fit</p></div>
       <div class="side after"><figure><figcaption>After</figcaption><audio controls preload="none" src="after/07-clips-video/03-plan-3.mp3"></audio></figure>
   <dl class="m">
-    <div><dt>Duration</dt><dd>4.32 s</dd></div>
+    <div><dt>Duration</dt><dd>4.13 s</dd></div>
     <div><dt>Word accuracy</dt><dd>100 %</dd></div>
-    <div><dt>Clicks in quiet passages*</dt><dd>1</dd></div>
+    <div><dt>Clicks in quiet passages*</dt><dd>0</dd></div>
     
     <div><dt>Hard starts / stops</dt><dd class="ok">0 / 0</dd></div>
     <div><dt>Cut-off ending</dt><dd class="ok">no</dd></div>
     <div><dt>Dead digital silence</dt><dd class="ok">none</dd></div>
     <div><dt>Speech level</dt><dd>-19.52 dB RMS</dd></div>
-  </dl><p class="fit">4.27 s — fits</p></div></div></div><div class="clip"><h3>Shot 4 · target 2.5 s</h3><p class="script">Le Phare. Bientôt.</p>
+  </dl><p class="fit">4.07 s — fits</p></div></div></div><div class="clip"><h3>Shot 4 · target 2.5 s</h3><p class="script">Le Phare. Bientôt.</p>
       <div class="pair"><div class="side"><figure><figcaption>Before</figcaption><audio controls preload="none" src="before/07-clips-video/04-plan-4.mp3"></audio></figure>
   <dl class="m">
     <div><dt>Duration</dt><dd>2.54 s</dd></div>
@@ -269,15 +275,15 @@ JAMES (laughing): Un croissant, s'il vous plaît. Okay… I think I can do that.
   </dl><p class="fit">2.49 s — fits</p></div>
       <div class="side after"><figure><figcaption>After</figcaption><audio controls preload="none" src="after/07-clips-video/04-plan-4.mp3"></audio></figure>
   <dl class="m">
-    <div><dt>Duration</dt><dd>2.57 s</dd></div>
+    <div><dt>Duration</dt><dd>2.88 s</dd></div>
     <div><dt>Word accuracy</dt><dd>100 %</dd></div>
     <div><dt>Clicks in quiet passages*</dt><dd>0</dd></div>
     
     <div><dt>Hard starts / stops</dt><dd class="ok">0 / 0</dd></div>
     <div><dt>Cut-off ending</dt><dd class="ok">no</dd></div>
     <div><dt>Dead digital silence</dt><dd class="ok">none</dd></div>
-    <div><dt>Speech level</dt><dd>-19.77 dB RMS</dd></div>
-  </dl><p class="fit">2.5 s — fits</p></div></div></div></section>
+    <div><dt>Speech level</dt><dd>-20.05 dB RMS</dd></div>
+  </dl><p class="fit">2.82 s — does not fit</p></div></div></div></section>
 <section id="08-fr-long-2min"><h2>Texte long FR (~1 min 40) — teste les jointures</h2><div class="pair"><div class="side"><figure><figcaption>Before</figcaption><audio controls preload="none" src="before/08-fr-long-2min.mp3"></audio></figure>
   <dl class="m">
     <div><dt>Duration</dt><dd>99.48 s · 5 takes</dd></div>
@@ -290,14 +296,14 @@ JAMES (laughing): Un croissant, s'il vous plaît. Okay… I think I can do that.
     <div><dt>Speech level</dt><dd>-19.62 dB RMS</dd></div>
   </dl></div><div class="side after"><figure><figcaption>After</figcaption><audio controls preload="none" src="after/08-fr-long-2min.mp3"></audio></figure>
   <dl class="m">
-    <div><dt>Duration</dt><dd>98.83 s · 5 takes</dd></div>
-    <div><dt>Word accuracy</dt><dd>98.6 % (independent transcription)</dd></div>
-    <div><dt>Clicks in quiet passages*</dt><dd>17</dd></div>
+    <div><dt>Duration</dt><dd>100.22 s · 5 takes</dd></div>
+    <div><dt>Word accuracy</dt><dd>99.7 % (independent transcription)</dd></div>
+    <div><dt>Clicks in quiet passages*</dt><dd>9</dd></div>
     <div><dt>Problems at joins between takes</dt><dd class="ok">0 (of 4 joins)</dd></div>
     <div><dt>Hard starts / stops</dt><dd class="ok">0 / 0</dd></div>
     <div><dt>Cut-off ending</dt><dd class="ok">no</dd></div>
     <div><dt>Dead digital silence</dt><dd class="ok">none</dd></div>
-    <div><dt>Speech level</dt><dd>-19.66 dB RMS</dd></div>
+    <div><dt>Speech level</dt><dd>-19.63 dB RMS</dd></div>
   </dl></div></div>
     <details><summary>Script</summary><pre class="script">Le train de nuit quitta Paris à vingt-deux heures quinze, sous une pluie fine qui faisait briller les rails. Dans le compartiment numéro sept, une femme d'une soixantaine d'années rangeait soigneusement un vieux carnet dans son sac. Elle n'avait pas pris ce train depuis plus de trente ans.
 
@@ -309,7 +315,455 @@ Alors elle raconta. La lettre écrite à vingt ans, jamais envoyée. Le garçon 
 
 Le train ralentit à l'approche de Grenoble. Dehors, l'aube commençait à dessiner les sommets. Elle ouvrit le carnet à la dernière page, où l'enveloppe attendait toujours, jaunie, avec un timbre qui ne valait plus rien. « Vous allez la poster ? » demanda le contrôleur. Elle regarda la montagne, puis elle hocha la tête. « Cette fois, oui. »</pre></details></section>
 
-<footer>* "Clicks in quiet passages" counts every sharp step next to silence. Most of them are natural consonants (p, t, k) after a pause, present in both versions; the numbers that show splicing problems are "Hard starts / stops", "Cut-off ending", "Dead digital silence" and "Problems at joins between takes".<br>Local file, generated 2026-10-05 17:21 by bench/listening-page.js. Not published.</footer>
+<h1 id="acting" class="part">Jeu d'acteur / Acting</h1>
+  <p class="lead">Each acting mode compared with a neutral reading of the same words (same voice). "Change vs neutral" combines measured shifts in pitch, pitch range, loudness range, pace, duration and voicing — it cannot hear tears or laughter, so trust your ears. Every take was checked word for word by an independent transcription and re-recorded if needed.</p>
+  <table class="models"><thead><tr><th>Model</th><th>Avg change vs neutral</th><th>Avg word accuracy</th></tr></thead><tbody><tr><td>gpt-realtime-1.5</td><td>8.4</td><td>99.5 %</td></tr><tr><td>gpt-realtime-2</td><td>6.2</td><td>99.3 %</td></tr><tr><td>gpt-realtime-2.1</td><td>5.6</td><td>99.3 %</td></tr><tr><td>gpt-realtime-2.1-mini</td><td>5.6</td><td>99.5 %</td></tr></tbody></table>
+  <p class="note">Newer models were also tried: gpt-live-1 (OpenAI's new expressive voice model) answers "Voice session access denied" for this sign-in; the voice "sol" is "not available for your organization".</p>
+  <ul class="verdicts"><li><b>shouting</b> — <span class="ok">works</span></li><li><b>crying</b> — <span class="ok">works</span></li><li><b>laughing-while-speaking</b> — <span class="ok">works</span></li><li><b>whispering-in-fear</b> — <span class="ok">works</span></li><li><b>angry-rant</b> — <span class="ok">works</span></li><li><b>broken-voice</b> — <span class="ok">works</span></li><li><b>panicked</b> — <span class="ok">works</span></li><li><b>sarcastic</b> — <span class="">noticeable</span></li><li><b>intimate</b> — <span class="ok">works</span></li><li><b>sports-commentator</b> — <span class="ok">works</span></li><li><b>old-storyteller</b> — <span class="ok">works</span></li><li><b>child-wonder</b> — <span class="ok">works</span></li><li><b>dramatic-scene</b> — <span class="ok">works</span></li></ul>
+  <section id="acting-shouting"><h2>shouting</h2>
+      <p class="note">Voice <b>ash</b> · persona: someone yelling across a noisy street to be heard</p>
+      <div class="pair"><div class="side"><figure><figcaption>Neutral reading · gpt-realtime-1.5</figcaption><audio controls preload="none" src="acting/gpt-realtime-1.5/shouting.neutral.mp3"></audio></figure><dl class="m"><div><dt>Pitch</dt><dd>162 Hz</dd></div><div><dt>Pace</dt><dd>3.9 words/s</dd></div></dl></div>
+      <div class="side after"><figure><figcaption>Acted · gpt-realtime-1.5</figcaption><audio controls preload="none" src="acting/gpt-realtime-1.5/shouting.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>182 Hz (+12%)</dd></div>
+      <div><dt>Pitch range</dt><dd>17.9 st (+9.2)</dd></div>
+      <div><dt>Loudness range</dt><dd>20.2 dB (-0.4)</dd></div>
+      <div><dt>Pace</dt><dd>2.6 words/s (-1.3)</dd></div>
+      <div><dt>Duration</dt><dd>6.47 s (+16%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">11.1 · works</dd></div></dl></div></div>
+      <details><summary>Script</summary><pre class="script">Hey! Over here! Grab the rope, the boat is drifting away!</pre></details>
+      <details><summary>Compare with the other models</summary><div class="grid3"><div class="side"><figure><figcaption>gpt-realtime-2</figcaption><audio controls preload="none" src="acting/gpt-realtime-2/shouting.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>245 Hz (+41%)</dd></div>
+      <div><dt>Pitch range</dt><dd>4.1 st (-1.2)</dd></div>
+      <div><dt>Loudness range</dt><dd>18.2 dB (-4.0)</dd></div>
+      <div><dt>Pace</dt><dd>2.9 words/s (-1.5)</dd></div>
+      <div><dt>Duration</dt><dd>6.67 s (+28%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">10.5 · works</dd></div></dl></div><div class="side"><figure><figcaption>gpt-realtime-2.1</figcaption><audio controls preload="none" src="acting/gpt-realtime-2.1/shouting.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>247 Hz (-1%)</dd></div>
+      <div><dt>Pitch range</dt><dd>4.2 st (-8.1)</dd></div>
+      <div><dt>Loudness range</dt><dd>20.1 dB (+1.9)</dd></div>
+      <div><dt>Pace</dt><dd>3.5 words/s (+0.2)</dd></div>
+      <div><dt>Duration</dt><dd>5.9 s (-7%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">5.8 · works</dd></div></dl></div><div class="side"><figure><figcaption>gpt-realtime-2.1-mini</figcaption><audio controls preload="none" src="acting/gpt-realtime-2.1-mini/shouting.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>299 Hz (+17%)</dd></div>
+      <div><dt>Pitch range</dt><dd>2 st (-10.8)</dd></div>
+      <div><dt>Loudness range</dt><dd>21.1 dB (-0.7)</dd></div>
+      <div><dt>Pace</dt><dd>4.2 words/s (-0.1)</dd></div>
+      <div><dt>Duration</dt><dd>4.62 s (-14%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">9.1 · works</dd></div></dl></div></div></details></section>
+<section id="acting-crying"><h2>crying</h2>
+      <p class="note">Voice <b>coral</b> · persona: a person who just received devastating news, fighting back tears</p>
+      <div class="pair"><div class="side"><figure><figcaption>Neutral reading · gpt-realtime-1.5</figcaption><audio controls preload="none" src="acting/gpt-realtime-1.5/crying.neutral.mp3"></audio></figure><dl class="m"><div><dt>Pitch</dt><dd>171 Hz</dd></div><div><dt>Pace</dt><dd>4 words/s</dd></div></dl></div>
+      <div class="side after"><figure><figcaption>Acted · gpt-realtime-1.5</figcaption><audio controls preload="none" src="acting/gpt-realtime-1.5/crying.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>190 Hz (+11%)</dd></div>
+      <div><dt>Pitch range</dt><dd>4.7 st (-4.5)</dd></div>
+      <div><dt>Loudness range</dt><dd>21 dB (+1.8)</dd></div>
+      <div><dt>Pace</dt><dd>3.5 words/s (-0.5)</dd></div>
+      <div><dt>Duration</dt><dd>8.76 s (+20%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">6.2 · works</dd></div></dl></div></div>
+      <details><summary>Script</summary><pre class="script">[sobs] I waited all night by the phone. He never called. He promised me he would.</pre></details>
+      <details><summary>Compare with the other models</summary><div class="grid3"><div class="side"><figure><figcaption>gpt-realtime-2</figcaption><audio controls preload="none" src="acting/gpt-realtime-2/crying.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>276 Hz (+52%)</dd></div>
+      <div><dt>Pitch range</dt><dd>8.2 st (-0.8)</dd></div>
+      <div><dt>Loudness range</dt><dd>20.7 dB (+1.3)</dd></div>
+      <div><dt>Pace</dt><dd>4.1 words/s (+0.1)</dd></div>
+      <div><dt>Duration</dt><dd>7.66 s (+1%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">6.5 · works</dd></div></dl></div><div class="side"><figure><figcaption>gpt-realtime-2.1</figcaption><audio controls preload="none" src="acting/gpt-realtime-2.1/crying.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>306 Hz (+29%)</dd></div>
+      <div><dt>Pitch range</dt><dd>10.4 st (-0.6)</dd></div>
+      <div><dt>Loudness range</dt><dd>21.7 dB (+1.9)</dd></div>
+      <div><dt>Pace</dt><dd>3 words/s (-0.7)</dd></div>
+      <div><dt>Duration</dt><dd>9.24 s (+32%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">7.2 · works</dd></div></dl></div><div class="side"><figure><figcaption>gpt-realtime-2.1-mini</figcaption><audio controls preload="none" src="acting/gpt-realtime-2.1-mini/crying.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>260 Hz (+47%)</dd></div>
+      <div><dt>Pitch range</dt><dd>6.4 st (-0.6)</dd></div>
+      <div><dt>Loudness range</dt><dd>23.8 dB (+5.3)</dd></div>
+      <div><dt>Pace</dt><dd>3.2 words/s (-0.4)</dd></div>
+      <div><dt>Duration</dt><dd>8.24 s (+18%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">8.9 · works</dd></div></dl></div></div></details></section>
+<section id="acting-laughing-while-speaking"><h2>laughing-while-speaking</h2>
+      <p class="note">Voice <b>verse</b> · persona: a friend telling a story they find hilarious and can barely get through</p>
+      <div class="pair"><div class="side"><figure><figcaption>Neutral reading · gpt-realtime-1.5</figcaption><audio controls preload="none" src="acting/gpt-realtime-1.5/laughing-while-speaking.neutral.mp3"></audio></figure><dl class="m"><div><dt>Pitch</dt><dd>156 Hz</dd></div><div><dt>Pace</dt><dd>3.8 words/s</dd></div></dl></div>
+      <div class="side after"><figure><figcaption>Acted · gpt-realtime-1.5</figcaption><audio controls preload="none" src="acting/gpt-realtime-1.5/laughing-while-speaking.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>220 Hz (+41%)</dd></div>
+      <div><dt>Pitch range</dt><dd>9.8 st (+0.1)</dd></div>
+      <div><dt>Loudness range</dt><dd>24.1 dB (+3.1)</dd></div>
+      <div><dt>Pace</dt><dd>3 words/s (-0.8)</dd></div>
+      <div><dt>Duration</dt><dd>8.75 s (+33%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">9.0 · works</dd></div></dl></div></div>
+      <details><summary>Script</summary><pre class="script">[laughs] And then the goat ate his homework, the whole thing, right in front of the teacher!</pre></details>
+      <details><summary>Compare with the other models</summary><div class="grid3"><div class="side"><figure><figcaption>gpt-realtime-2</figcaption><audio controls preload="none" src="acting/gpt-realtime-2/laughing-while-speaking.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>204 Hz (+5%)</dd></div>
+      <div><dt>Pitch range</dt><dd>10.4 st (-1.4)</dd></div>
+      <div><dt>Loudness range</dt><dd>21 dB (+1.7)</dd></div>
+      <div><dt>Pace</dt><dd>3.3 words/s (-0.4)</dd></div>
+      <div><dt>Duration</dt><dd>7.9 s (+42%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">5.8 · works</dd></div></dl></div><div class="side"><figure><figcaption>gpt-realtime-2.1</figcaption><audio controls preload="none" src="acting/gpt-realtime-2.1/laughing-while-speaking.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>189 Hz (-30%)</dd></div>
+      <div><dt>Pitch range</dt><dd>11.1 st (-2.3)</dd></div>
+      <div><dt>Loudness range</dt><dd>20.7 dB (+1.9)</dd></div>
+      <div><dt>Pace</dt><dd>3 words/s (-0.9)</dd></div>
+      <div><dt>Duration</dt><dd>8.84 s (+39%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">9.2 · works</dd></div></dl></div><div class="side"><figure><figcaption>gpt-realtime-2.1-mini</figcaption><audio controls preload="none" src="acting/gpt-realtime-2.1-mini/laughing-while-speaking.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>234 Hz (+11%)</dd></div>
+      <div><dt>Pitch range</dt><dd>8.4 st (-3.8)</dd></div>
+      <div><dt>Loudness range</dt><dd>17.8 dB (-1.0)</dd></div>
+      <div><dt>Pace</dt><dd>3.6 words/s (-0.7)</dd></div>
+      <div><dt>Duration</dt><dd>6.79 s (+23%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>93.8 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">6.9 · works</dd></div></dl></div></div></details></section>
+<section id="acting-whispering-in-fear"><h2>whispering-in-fear</h2>
+      <p class="note">Voice <b>sage</b> · persona: someone hiding in a dark house, terrified of being heard</p>
+      <div class="pair"><div class="side"><figure><figcaption>Neutral reading · gpt-realtime-1.5</figcaption><audio controls preload="none" src="acting/gpt-realtime-1.5/whispering-in-fear.neutral.mp3"></audio></figure><dl class="m"><div><dt>Pitch</dt><dd>172 Hz</dd></div><div><dt>Pace</dt><dd>3.7 words/s</dd></div></dl></div>
+      <div class="side after"><figure><figcaption>Acted · gpt-realtime-1.5</figcaption><audio controls preload="none" src="acting/gpt-realtime-1.5/whispering-in-fear.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>165 Hz (-4%)</dd></div>
+      <div><dt>Pitch range</dt><dd>3.2 st (-0.8)</dd></div>
+      <div><dt>Loudness range</dt><dd>23.1 dB (+6.3)</dd></div>
+      <div><dt>Pace</dt><dd>4 words/s (+0.3)</dd></div>
+      <div><dt>Duration</dt><dd>6.78 s (+16%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">6.3 · works</dd></div></dl></div></div>
+      <details><summary>Script</summary><pre class="script">Ne bouge pas. Il est dans la cuisine. Je l'entends respirer derrière la porte.</pre></details>
+      <details><summary>Compare with the other models</summary><div class="grid3"><div class="side"><figure><figcaption>gpt-realtime-2</figcaption><audio controls preload="none" src="acting/gpt-realtime-2/whispering-in-fear.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>177 Hz (-7%)</dd></div>
+      <div><dt>Pitch range</dt><dd>3.1 st (-1.1)</dd></div>
+      <div><dt>Loudness range</dt><dd>17.5 dB (+2.4)</dd></div>
+      <div><dt>Pace</dt><dd>4 words/s (+0.7)</dd></div>
+      <div><dt>Duration</dt><dd>6.12 s (-14%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="">4.3 · noticeable</dd></div></dl></div><div class="side"><figure><figcaption>gpt-realtime-2.1</figcaption><audio controls preload="none" src="acting/gpt-realtime-2.1/whispering-in-fear.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>194 Hz (+9%)</dd></div>
+      <div><dt>Pitch range</dt><dd>2.3 st (-2.7)</dd></div>
+      <div><dt>Loudness range</dt><dd>20.1 dB (+1.4)</dd></div>
+      <div><dt>Pace</dt><dd>4.3 words/s (+0.9)</dd></div>
+      <div><dt>Duration</dt><dd>6.82 s (-1%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="">4.6 · noticeable</dd></div></dl></div><div class="side"><figure><figcaption>gpt-realtime-2.1-mini</figcaption><audio controls preload="none" src="acting/gpt-realtime-2.1-mini/whispering-in-fear.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>194 Hz (-8%)</dd></div>
+      <div><dt>Pitch range</dt><dd>4.5 st (-2.4)</dd></div>
+      <div><dt>Loudness range</dt><dd>17.4 dB (-1.1)</dd></div>
+      <div><dt>Pace</dt><dd>3.8 words/s (-0.1)</dd></div>
+      <div><dt>Duration</dt><dd>5.67 s (+7%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="">3.1 · noticeable</dd></div></dl></div></div></details></section>
+<section id="acting-angry-rant"><h2>angry-rant</h2>
+      <p class="note">Voice <b>cedar</b> · persona: a customer who has been ignored for an hour and finally explodes</p>
+      <div class="pair"><div class="side"><figure><figcaption>Neutral reading · gpt-realtime-1.5</figcaption><audio controls preload="none" src="acting/gpt-realtime-1.5/angry-rant.neutral.mp3"></audio></figure><dl class="m"><div><dt>Pitch</dt><dd>150 Hz</dd></div><div><dt>Pace</dt><dd>3.4 words/s</dd></div></dl></div>
+      <div class="side after"><figure><figcaption>Acted · gpt-realtime-1.5</figcaption><audio controls preload="none" src="acting/gpt-realtime-1.5/angry-rant.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>203 Hz (+35%)</dd></div>
+      <div><dt>Pitch range</dt><dd>15.1 st (+5.4)</dd></div>
+      <div><dt>Loudness range</dt><dd>18.5 dB (-1.1)</dd></div>
+      <div><dt>Pace</dt><dd>3.5 words/s (+0.1)</dd></div>
+      <div><dt>Duration</dt><dd>8.49 s (+3%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">7.4 · works</dd></div></dl></div></div>
+      <details><summary>Script</summary><pre class="script">One hour! I have been waiting for one entire hour, and nobody, nobody, has even looked at me!</pre></details>
+      <details><summary>Compare with the other models</summary><div class="grid3"><div class="side"><figure><figcaption>gpt-realtime-2</figcaption><audio controls preload="none" src="acting/gpt-realtime-2/angry-rant.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>195 Hz (+21%)</dd></div>
+      <div><dt>Pitch range</dt><dd>11.9 st (-1.0)</dd></div>
+      <div><dt>Loudness range</dt><dd>19.8 dB (-0.2)</dd></div>
+      <div><dt>Pace</dt><dd>3.4 words/s (-0.2)</dd></div>
+      <div><dt>Duration</dt><dd>9.2 s (-2%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="">3.2 · noticeable</dd></div></dl></div><div class="side"><figure><figcaption>gpt-realtime-2.1</figcaption><audio controls preload="none" src="acting/gpt-realtime-2.1/angry-rant.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>186 Hz (+18%)</dd></div>
+      <div><dt>Pitch range</dt><dd>16.6 st (-1.1)</dd></div>
+      <div><dt>Loudness range</dt><dd>19.2 dB (+0.0)</dd></div>
+      <div><dt>Pace</dt><dd>3.1 words/s (-0.7)</dd></div>
+      <div><dt>Duration</dt><dd>9.45 s (+15%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">5.4 · works</dd></div></dl></div><div class="side"><figure><figcaption>gpt-realtime-2.1-mini</figcaption><audio controls preload="none" src="acting/gpt-realtime-2.1-mini/angry-rant.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>174 Hz (-6%)</dd></div>
+      <div><dt>Pitch range</dt><dd>14.2 st (+0.0)</dd></div>
+      <div><dt>Loudness range</dt><dd>20.4 dB (-1.0)</dd></div>
+      <div><dt>Pace</dt><dd>3.6 words/s (-0.7)</dd></div>
+      <div><dt>Duration</dt><dd>8.3 s (+23%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="">4.4 · noticeable</dd></div></dl></div></div></details></section>
+<section id="acting-broken-voice"><h2>broken-voice</h2>
+      <p class="note">Voice <b>marin</b> · persona: an exhausted person at the end of a long tragedy, voice almost gone</p>
+      <div class="pair"><div class="side"><figure><figcaption>Neutral reading · gpt-realtime-1.5</figcaption><audio controls preload="none" src="acting/gpt-realtime-1.5/broken-voice.neutral.mp3"></audio></figure><dl class="m"><div><dt>Pitch</dt><dd>196 Hz</dd></div><div><dt>Pace</dt><dd>4.4 words/s</dd></div></dl></div>
+      <div class="side after"><figure><figcaption>Acted · gpt-realtime-1.5</figcaption><audio controls preload="none" src="acting/gpt-realtime-1.5/broken-voice.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>200 Hz (+2%)</dd></div>
+      <div><dt>Pitch range</dt><dd>4.4 st (-0.4)</dd></div>
+      <div><dt>Loudness range</dt><dd>23.3 dB (+3.1)</dd></div>
+      <div><dt>Pace</dt><dd>3.8 words/s (-0.6)</dd></div>
+      <div><dt>Duration</dt><dd>13.37 s (+98%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">7.8 · works</dd></div></dl></div></div>
+      <details><summary>Script</summary><pre class="script">Je n'ai plus rien à te donner. Ni la force, ni les mots. Laisse-moi juste… me reposer.</pre></details>
+      <details><summary>Compare with the other models</summary><div class="grid3"><div class="side"><figure><figcaption>gpt-realtime-2</figcaption><audio controls preload="none" src="acting/gpt-realtime-2/broken-voice.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>192 Hz (+23%)</dd></div>
+      <div><dt>Pitch range</dt><dd>7.8 st (+5.7)</dd></div>
+      <div><dt>Loudness range</dt><dd>19.6 dB (+0.8)</dd></div>
+      <div><dt>Pace</dt><dd>3.8 words/s (+0.1)</dd></div>
+      <div><dt>Duration</dt><dd>7.94 s (-11%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">6.7 · works</dd></div></dl></div><div class="side"><figure><figcaption>gpt-realtime-2.1</figcaption><audio controls preload="none" src="acting/gpt-realtime-2.1/broken-voice.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>174 Hz (-4%)</dd></div>
+      <div><dt>Pitch range</dt><dd>4.3 st (+0.2)</dd></div>
+      <div><dt>Loudness range</dt><dd>18.4 dB (-0.5)</dd></div>
+      <div><dt>Pace</dt><dd>3.6 words/s (-0.1)</dd></div>
+      <div><dt>Duration</dt><dd>9.05 s (+10%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="warn">1.8 · subtle</dd></div></dl></div><div class="side"><figure><figcaption>gpt-realtime-2.1-mini</figcaption><audio controls preload="none" src="acting/gpt-realtime-2.1-mini/broken-voice.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>179 Hz (-3%)</dd></div>
+      <div><dt>Pitch range</dt><dd>5.6 st (-1.6)</dd></div>
+      <div><dt>Loudness range</dt><dd>17.6 dB (-0.1)</dd></div>
+      <div><dt>Pace</dt><dd>4.3 words/s (+0.5)</dd></div>
+      <div><dt>Duration</dt><dd>7.47 s (-10%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="">3.1 · noticeable</dd></div></dl></div></div></details></section>
+<section id="acting-panicked"><h2>panicked</h2>
+      <p class="note">Voice <b>echo</b> · persona: someone out of breath after running, in a panic</p>
+      <div class="pair"><div class="side"><figure><figcaption>Neutral reading · gpt-realtime-1.5</figcaption><audio controls preload="none" src="acting/gpt-realtime-1.5/panicked.neutral.mp3"></audio></figure><dl class="m"><div><dt>Pitch</dt><dd>110 Hz</dd></div><div><dt>Pace</dt><dd>4.4 words/s</dd></div></dl></div>
+      <div class="side after"><figure><figcaption>Acted · gpt-realtime-1.5</figcaption><audio controls preload="none" src="acting/gpt-realtime-1.5/panicked.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>150 Hz (+36%)</dd></div>
+      <div><dt>Pitch range</dt><dd>10 st (+5.0)</dd></div>
+      <div><dt>Loudness range</dt><dd>17.4 dB (-2.8)</dd></div>
+      <div><dt>Pace</dt><dd>4.2 words/s (-0.2)</dd></div>
+      <div><dt>Duration</dt><dd>6.79 s (+23%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>93.3 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">9.4 · works</dd></div></dl></div></div>
+      <details><summary>Script</summary><pre class="script">[gasps] They're coming, they're right behind me, we have to go, now, run!</pre></details>
+      <details><summary>Compare with the other models</summary><div class="grid3"><div class="side"><figure><figcaption>gpt-realtime-2</figcaption><audio controls preload="none" src="acting/gpt-realtime-2/panicked.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>207 Hz (+68%)</dd></div>
+      <div><dt>Pitch range</dt><dd>4.3 st (-7.1)</dd></div>
+      <div><dt>Loudness range</dt><dd>18.2 dB (-0.7)</dd></div>
+      <div><dt>Pace</dt><dd>4.6 words/s (+0.8)</dd></div>
+      <div><dt>Duration</dt><dd>6.37 s (-17%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">15.8 · works</dd></div></dl></div><div class="side"><figure><figcaption>gpt-realtime-2.1</figcaption><audio controls preload="none" src="acting/gpt-realtime-2.1/panicked.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>158 Hz (+7%)</dd></div>
+      <div><dt>Pitch range</dt><dd>11.1 st (-2.1)</dd></div>
+      <div><dt>Loudness range</dt><dd>20.3 dB (-0.4)</dd></div>
+      <div><dt>Pace</dt><dd>3.6 words/s (+0.0)</dd></div>
+      <div><dt>Duration</dt><dd>8.49 s (+36%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="">4.2 · noticeable</dd></div></dl></div><div class="side"><figure><figcaption>gpt-realtime-2.1-mini</figcaption><audio controls preload="none" src="acting/gpt-realtime-2.1-mini/panicked.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>161 Hz (+26%)</dd></div>
+      <div><dt>Pitch range</dt><dd>9.1 st (+1.2)</dd></div>
+      <div><dt>Loudness range</dt><dd>21.7 dB (+2.6)</dd></div>
+      <div><dt>Pace</dt><dd>3.1 words/s (-1.3)</dd></div>
+      <div><dt>Duration</dt><dd>6.91 s (+33%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">8.9 · works</dd></div></dl></div></div></details></section>
+<section id="acting-sarcastic"><h2>sarcastic</h2>
+      <p class="note">Voice <b>shimmer</b> · persona: a deadpan, unimpressed colleague</p>
+      <div class="pair"><div class="side"><figure><figcaption>Neutral reading · gpt-realtime-1.5</figcaption><audio controls preload="none" src="acting/gpt-realtime-1.5/sarcastic.neutral.mp3"></audio></figure><dl class="m"><div><dt>Pitch</dt><dd>157 Hz</dd></div><div><dt>Pace</dt><dd>3.6 words/s</dd></div></dl></div>
+      <div class="side after"><figure><figcaption>Acted · gpt-realtime-1.5</figcaption><audio controls preload="none" src="acting/gpt-realtime-1.5/sarcastic.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>151 Hz (-4%)</dd></div>
+      <div><dt>Pitch range</dt><dd>5.7 st (+0.3)</dd></div>
+      <div><dt>Loudness range</dt><dd>16.3 dB (-4.1)</dd></div>
+      <div><dt>Pace</dt><dd>3 words/s (-0.6)</dd></div>
+      <div><dt>Duration</dt><dd>7.92 s (+3%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="">4.9 · noticeable</dd></div></dl></div></div>
+      <details><summary>Script</summary><pre class="script">Oh, wonderful. Another meeting that could have been an email. I simply cannot contain my joy.</pre></details>
+      <details><summary>Compare with the other models</summary><div class="grid3"><div class="side"><figure><figcaption>gpt-realtime-2</figcaption><audio controls preload="none" src="acting/gpt-realtime-2/sarcastic.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>160 Hz (+7%)</dd></div>
+      <div><dt>Pitch range</dt><dd>8.8 st (-1.5)</dd></div>
+      <div><dt>Loudness range</dt><dd>15.9 dB (-3.8)</dd></div>
+      <div><dt>Pace</dt><dd>2.7 words/s (+0.0)</dd></div>
+      <div><dt>Duration</dt><dd>9.62 s (+0%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="">3.1 · noticeable</dd></div></dl></div><div class="side"><figure><figcaption>gpt-realtime-2.1</figcaption><audio controls preload="none" src="acting/gpt-realtime-2.1/sarcastic.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>153 Hz (+5%)</dd></div>
+      <div><dt>Pitch range</dt><dd>7.4 st (+2.8)</dd></div>
+      <div><dt>Loudness range</dt><dd>18.7 dB (+3.0)</dd></div>
+      <div><dt>Pace</dt><dd>2.9 words/s (-0.5)</dd></div>
+      <div><dt>Duration</dt><dd>8.52 s (+6%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="">4.5 · noticeable</dd></div></dl></div><div class="side"><figure><figcaption>gpt-realtime-2.1-mini</figcaption><audio controls preload="none" src="acting/gpt-realtime-2.1-mini/sarcastic.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>153 Hz (-9%)</dd></div>
+      <div><dt>Pitch range</dt><dd>7.4 st (-1.8)</dd></div>
+      <div><dt>Loudness range</dt><dd>17.9 dB (+0.9)</dd></div>
+      <div><dt>Pace</dt><dd>3.3 words/s (-0.7)</dd></div>
+      <div><dt>Duration</dt><dd>9.97 s (-10%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="">4.3 · noticeable</dd></div></dl></div></div></details></section>
+<section id="acting-intimate"><h2>intimate</h2>
+      <p class="note">Voice <b>cedar</b> · persona: a warm late-night radio host speaking close to the microphone</p>
+      <div class="pair"><div class="side"><figure><figcaption>Neutral reading · gpt-realtime-1.5</figcaption><audio controls preload="none" src="acting/gpt-realtime-1.5/intimate.neutral.mp3"></audio></figure><dl class="m"><div><dt>Pitch</dt><dd>125 Hz</dd></div><div><dt>Pace</dt><dd>5.7 words/s</dd></div></dl></div>
+      <div class="side after"><figure><figcaption>Acted · gpt-realtime-1.5</figcaption><audio controls preload="none" src="acting/gpt-realtime-1.5/intimate.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>127 Hz (+2%)</dd></div>
+      <div><dt>Pitch range</dt><dd>4.7 st (-4.0)</dd></div>
+      <div><dt>Loudness range</dt><dd>22.8 dB (+2.1)</dd></div>
+      <div><dt>Pace</dt><dd>4.3 words/s (-1.4)</dd></div>
+      <div><dt>Duration</dt><dd>7.67 s (+18%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">8.4 · works</dd></div></dl></div></div>
+      <details><summary>Script</summary><pre class="script">Il est tard. La ville dort. Restez encore un peu avec moi, on a tout notre temps.</pre></details>
+      <details><summary>Compare with the other models</summary><div class="grid3"><div class="side"><figure><figcaption>gpt-realtime-2</figcaption><audio controls preload="none" src="acting/gpt-realtime-2/intimate.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>115 Hz (-5%)</dd></div>
+      <div><dt>Pitch range</dt><dd>8.6 st (+0.2)</dd></div>
+      <div><dt>Loudness range</dt><dd>21.6 dB (+2.4)</dd></div>
+      <div><dt>Pace</dt><dd>4.5 words/s (-0.6)</dd></div>
+      <div><dt>Duration</dt><dd>7.99 s (+9%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="">3.4 · noticeable</dd></div></dl></div><div class="side"><figure><figcaption>gpt-realtime-2.1</figcaption><audio controls preload="none" src="acting/gpt-realtime-2.1/intimate.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>147 Hz (+16%)</dd></div>
+      <div><dt>Pitch range</dt><dd>12.7 st (+5.6)</dd></div>
+      <div><dt>Loudness range</dt><dd>19.5 dB (+2.1)</dd></div>
+      <div><dt>Pace</dt><dd>4.7 words/s (+0.0)</dd></div>
+      <div><dt>Duration</dt><dd>8.03 s (+8%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">5.7 · works</dd></div></dl></div><div class="side"><figure><figcaption>gpt-realtime-2.1-mini</figcaption><audio controls preload="none" src="acting/gpt-realtime-2.1-mini/intimate.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>127 Hz (-10%)</dd></div>
+      <div><dt>Pitch range</dt><dd>7.8 st (-5.4)</dd></div>
+      <div><dt>Loudness range</dt><dd>21.5 dB (+1.5)</dd></div>
+      <div><dt>Pace</dt><dd>4 words/s (-1.0)</dd></div>
+      <div><dt>Duration</dt><dd>7.9 s (+20%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">7.9 · works</dd></div></dl></div></div></details></section>
+<section id="acting-sports-commentator"><h2>sports-commentator</h2>
+      <p class="note">Voice <b>ash</b> · persona: a football commentator as the winning goal goes in</p>
+      <div class="pair"><div class="side"><figure><figcaption>Neutral reading · gpt-realtime-1.5</figcaption><audio controls preload="none" src="acting/gpt-realtime-1.5/sports-commentator.neutral.mp3"></audio></figure><dl class="m"><div><dt>Pitch</dt><dd>142 Hz</dd></div><div><dt>Pace</dt><dd>4 words/s</dd></div></dl></div>
+      <div class="side after"><figure><figcaption>Acted · gpt-realtime-1.5</figcaption><audio controls preload="none" src="acting/gpt-realtime-1.5/sports-commentator.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>280 Hz (+97%)</dd></div>
+      <div><dt>Pitch range</dt><dd>4.3 st (-6.0)</dd></div>
+      <div><dt>Loudness range</dt><dd>17.6 dB (-1.5)</dd></div>
+      <div><dt>Pace</dt><dd>3.3 words/s (-0.7)</dd></div>
+      <div><dt>Duration</dt><dd>9.31 s (+4%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">16.2 · works</dd></div></dl></div></div>
+      <details><summary>Script</summary><pre class="script">Il frappe, il frappe… et c'est le but ! Incroyable ! À la dernière seconde, c'est le but de la victoire !</pre></details>
+      <details><summary>Compare with the other models</summary><div class="grid3"><div class="side"><figure><figcaption>gpt-realtime-2</figcaption><audio controls preload="none" src="acting/gpt-realtime-2/sports-commentator.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>182 Hz (+6%)</dd></div>
+      <div><dt>Pitch range</dt><dd>12.3 st (+1.1)</dd></div>
+      <div><dt>Loudness range</dt><dd>20.9 dB (+0.6)</dd></div>
+      <div><dt>Pace</dt><dd>3.4 words/s (-0.6)</dd></div>
+      <div><dt>Duration</dt><dd>9.99 s (+3%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>90.5 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="warn">2.8 · subtle</dd></div></dl></div><div class="side"><figure><figcaption>gpt-realtime-2.1</figcaption><audio controls preload="none" src="acting/gpt-realtime-2.1/sports-commentator.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>264 Hz (+53%)</dd></div>
+      <div><dt>Pitch range</dt><dd>19.3 st (+10.6)</dd></div>
+      <div><dt>Loudness range</dt><dd>21.8 dB (-0.3)</dd></div>
+      <div><dt>Pace</dt><dd>3.3 words/s (-0.8)</dd></div>
+      <div><dt>Duration</dt><dd>10.68 s (+14%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>90.5 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">13.7 · works</dd></div></dl></div><div class="side"><figure><figcaption>gpt-realtime-2.1-mini</figcaption><audio controls preload="none" src="acting/gpt-realtime-2.1-mini/sports-commentator.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>131 Hz (+1%)</dd></div>
+      <div><dt>Pitch range</dt><dd>10.6 st (-0.7)</dd></div>
+      <div><dt>Loudness range</dt><dd>20.2 dB (+3.7)</dd></div>
+      <div><dt>Pace</dt><dd>4.4 words/s (-0.4)</dd></div>
+      <div><dt>Duration</dt><dd>8.22 s (+4%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="">3.3 · noticeable</dd></div></dl></div></div></details></section>
+<section id="acting-old-storyteller"><h2>old-storyteller</h2>
+      <p class="note">Voice <b>ballad</b> · persona: an old grandfather telling a tale by the fire</p>
+      <div class="pair"><div class="side"><figure><figcaption>Neutral reading · gpt-realtime-1.5</figcaption><audio controls preload="none" src="acting/gpt-realtime-1.5/old-storyteller.neutral.mp3"></audio></figure><dl class="m"><div><dt>Pitch</dt><dd>130 Hz</dd></div><div><dt>Pace</dt><dd>3.6 words/s</dd></div></dl></div>
+      <div class="side after"><figure><figcaption>Acted · gpt-realtime-1.5</figcaption><audio controls preload="none" src="acting/gpt-realtime-1.5/old-storyteller.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>144 Hz (+11%)</dd></div>
+      <div><dt>Pitch range</dt><dd>14.6 st (+2.2)</dd></div>
+      <div><dt>Loudness range</dt><dd>19.4 dB (+1.5)</dd></div>
+      <div><dt>Pace</dt><dd>2.8 words/s (-0.8)</dd></div>
+      <div><dt>Duration</dt><dd>14.21 s (+32%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">6.9 · works</dd></div></dl></div></div>
+      <details><summary>Script</summary><pre class="script">Long ago, before the roads and the lights, this valley belonged to the wolves. And one winter night, a little girl went looking for them.</pre></details>
+      <details><summary>Compare with the other models</summary><div class="grid3"><div class="side"><figure><figcaption>gpt-realtime-2</figcaption><audio controls preload="none" src="acting/gpt-realtime-2/old-storyteller.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>210 Hz (+31%)</dd></div>
+      <div><dt>Pitch range</dt><dd>15.2 st (+2.0)</dd></div>
+      <div><dt>Loudness range</dt><dd>18.7 dB (+1.9)</dd></div>
+      <div><dt>Pace</dt><dd>2.5 words/s (-0.6)</dd></div>
+      <div><dt>Duration</dt><dd>15.76 s (+20%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">7.0 · works</dd></div></dl></div><div class="side"><figure><figcaption>gpt-realtime-2.1</figcaption><audio controls preload="none" src="acting/gpt-realtime-2.1/old-storyteller.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>198 Hz (+23%)</dd></div>
+      <div><dt>Pitch range</dt><dd>11.9 st (-1.8)</dd></div>
+      <div><dt>Loudness range</dt><dd>20.7 dB (+0.0)</dd></div>
+      <div><dt>Pace</dt><dd>2.7 words/s (-0.7)</dd></div>
+      <div><dt>Duration</dt><dd>13.84 s (+19%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">6.4 · works</dd></div></dl></div><div class="side"><figure><figcaption>gpt-realtime-2.1-mini</figcaption><audio controls preload="none" src="acting/gpt-realtime-2.1-mini/old-storyteller.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>183 Hz (-8%)</dd></div>
+      <div><dt>Pitch range</dt><dd>21 st (+4.8)</dd></div>
+      <div><dt>Loudness range</dt><dd>22.5 dB (+0.5)</dd></div>
+      <div><dt>Pace</dt><dd>3.6 words/s (+0.0)</dd></div>
+      <div><dt>Duration</dt><dd>10.87 s (-5%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="">4.0 · noticeable</dd></div></dl></div></div></details></section>
+<section id="acting-child-wonder"><h2>child-wonder</h2>
+      <p class="note">Voice <b>shimmer</b> · persona: a seven-year-old seeing snow for the first time</p>
+      <div class="pair"><div class="side"><figure><figcaption>Neutral reading · gpt-realtime-1.5</figcaption><audio controls preload="none" src="acting/gpt-realtime-1.5/child-wonder.neutral.mp3"></audio></figure><dl class="m"><div><dt>Pitch</dt><dd>194 Hz</dd></div><div><dt>Pace</dt><dd>4.3 words/s</dd></div></dl></div>
+      <div class="side after"><figure><figcaption>Acted · gpt-realtime-1.5</figcaption><audio controls preload="none" src="acting/gpt-realtime-1.5/child-wonder.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>262 Hz (+35%)</dd></div>
+      <div><dt>Pitch range</dt><dd>11.6 st (+1.7)</dd></div>
+      <div><dt>Loudness range</dt><dd>17.7 dB (-1.6)</dd></div>
+      <div><dt>Pace</dt><dd>3.7 words/s (-0.6)</dd></div>
+      <div><dt>Duration</dt><dd>7.62 s (+0%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">6.3 · works</dd></div></dl></div></div>
+      <details><summary>Script</summary><pre class="script">Maman, regarde ! [gasps] Il neige ! Tout est blanc, même la voiture ! On peut sortir ?</pre></details>
+      <details><summary>Compare with the other models</summary><div class="grid3"><div class="side"><figure><figcaption>gpt-realtime-2</figcaption><audio controls preload="none" src="acting/gpt-realtime-2/child-wonder.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>313 Hz (+33%)</dd></div>
+      <div><dt>Pitch range</dt><dd>13.2 st (+4.5)</dd></div>
+      <div><dt>Loudness range</dt><dd>19.8 dB (+2.5)</dd></div>
+      <div><dt>Pace</dt><dd>4.1 words/s (-0.6)</dd></div>
+      <div><dt>Duration</dt><dd>9.32 s (+25%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">8.8 · works</dd></div></dl></div><div class="side"><figure><figcaption>gpt-realtime-2.1</figcaption><audio controls preload="none" src="acting/gpt-realtime-2.1/child-wonder.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>210 Hz (+0%)</dd></div>
+      <div><dt>Pitch range</dt><dd>11 st (-0.3)</dd></div>
+      <div><dt>Loudness range</dt><dd>14.9 dB (+2.1)</dd></div>
+      <div><dt>Pace</dt><dd>3.9 words/s (+0.0)</dd></div>
+      <div><dt>Duration</dt><dd>9.87 s (+22%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="">3.3 · noticeable</dd></div></dl></div><div class="side"><figure><figcaption>gpt-realtime-2.1-mini</figcaption><audio controls preload="none" src="acting/gpt-realtime-2.1-mini/child-wonder.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>220 Hz (+26%)</dd></div>
+      <div><dt>Pitch range</dt><dd>6.5 st (-3.3)</dd></div>
+      <div><dt>Loudness range</dt><dd>17 dB (-0.4)</dd></div>
+      <div><dt>Pace</dt><dd>4.2 words/s (-0.4)</dd></div>
+      <div><dt>Duration</dt><dd>6.92 s (+1%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">5.7 · works</dd></div></dl></div></div></details></section>
+<section id="acting-dramatic-scene"><h2>dramatic scene (emotion switches)</h2>
+      <p class="note">Voice <b>marin</b> · cues [calm] → [scared] → [angry] → [sad]</p>
+      <div class="pair"><div class="side"><figure><figcaption>Neutral reading · gpt-realtime-1.5</figcaption><audio controls preload="none" src="acting/gpt-realtime-1.5/dramatic-scene.neutral.mp3"></audio></figure><dl class="m"><div><dt>Pitch</dt><dd>183 Hz</dd></div><div><dt>Pace</dt><dd>4.6 words/s</dd></div></dl></div>
+      <div class="side after"><figure><figcaption>Acted · gpt-realtime-1.5</figcaption><audio controls preload="none" src="acting/gpt-realtime-1.5/dramatic-scene.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>198 Hz (+8%)</dd></div>
+      <div><dt>Pitch range</dt><dd>10.7 st (+7.0)</dd></div>
+      <div><dt>Loudness range</dt><dd>23.5 dB (+5.6)</dd></div>
+      <div><dt>Pace</dt><dd>4 words/s (-0.6)</dd></div>
+      <div><dt>Duration</dt><dd>19.13 s (+24%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="ok">8.9 · works</dd></div></dl></div></div>
+      <details><summary>Script</summary><pre class="script">[calm] The house was quiet when I came home. [pause 0.6s] [scared] Then I saw the door. It was open. [pause 0.6s] [angry] Who did this? Who dared to come in here? [pause 0.6s] [sad] And then I found the letter… and I understood. She was gone.</pre></details>
+      <details><summary>Compare with the other models</summary><div class="grid3"><div class="side"><figure><figcaption>gpt-realtime-2</figcaption><audio controls preload="none" src="acting/gpt-realtime-2/dramatic-scene.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>191 Hz (+7%)</dd></div>
+      <div><dt>Pitch range</dt><dd>10.1 st (+1.4)</dd></div>
+      <div><dt>Loudness range</dt><dd>16.9 dB (-1.3)</dd></div>
+      <div><dt>Pace</dt><dd>3.9 words/s (-0.1)</dd></div>
+      <div><dt>Duration</dt><dd>17.79 s (+6%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="warn">2.6 · subtle</dd></div></dl></div><div class="side"><figure><figcaption>gpt-realtime-2.1</figcaption><audio controls preload="none" src="acting/gpt-realtime-2.1/dramatic-scene.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>179 Hz (-2%)</dd></div>
+      <div><dt>Pitch range</dt><dd>7.3 st (-1.5)</dd></div>
+      <div><dt>Loudness range</dt><dd>15.7 dB (-0.9)</dd></div>
+      <div><dt>Pace</dt><dd>3.8 words/s (-0.2)</dd></div>
+      <div><dt>Duration</dt><dd>17.42 s (-1%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="warn">1.7 · subtle</dd></div></dl></div><div class="side"><figure><figcaption>gpt-realtime-2.1-mini</figcaption><audio controls preload="none" src="acting/gpt-realtime-2.1-mini/dramatic-scene.mp3"></audio></figure><dl class="m">
+      <div><dt>Pitch</dt><dd>189 Hz (-4%)</dd></div>
+      <div><dt>Pitch range</dt><dd>7.4 st (-2.2)</dd></div>
+      <div><dt>Loudness range</dt><dd>17.9 dB (-0.8)</dd></div>
+      <div><dt>Pace</dt><dd>4 words/s (-0.1)</dd></div>
+      <div><dt>Duration</dt><dd>16.44 s (+2%)</dd></div>
+      <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+      <div><dt>Change vs neutral</dt><dd class="warn">2.7 · subtle</dd></div></dl></div></div></details></section>
+
+<footer>* "Clicks in quiet passages" counts every sharp step next to silence. Most of them are natural consonants (p, t, k) after a pause, present in both versions; the numbers that show splicing problems are "Hard starts / stops", "Cut-off ending", "Dead digital silence" and "Problems at joins between takes".<br>Local file, generated 2026-10-05 17:46 by bench/listening-page.js. Not published.</footer>
 </main>
 </body>
 </html>

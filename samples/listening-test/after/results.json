@@ -53,41 +53,41 @@
     "files": [
       {
         "file": "07-clips-video/01-plan-1.mp3",
-        "durationSec": 3.15,
+        "durationSec": 3.55,
         "targetSec": 3.5,
-        "fits": false,
-        "accuracy": 100
-      },
-      {
-        "file": "07-clips-video/02-plan-2.mp3",
-        "durationSec": 3.79,
-        "targetSec": 4,
         "fits": true,
         "accuracy": 100
       },
       {
+        "file": "07-clips-video/02-plan-2.mp3",
+        "durationSec": 4.12,
+        "targetSec": 4,
+        "fits": true,
+        "accuracy": 87.5
+      },
+      {
         "file": "07-clips-video/03-plan-3.mp3",
-        "durationSec": 4.27,
+        "durationSec": 4.07,
         "targetSec": 4,
         "fits": true,
         "accuracy": 100
       },
       {
         "file": "07-clips-video/04-plan-4.mp3",
-        "durationSec": 2.5,
+        "durationSec": 2.82,
         "targetSec": 2.5,
-        "fits": true,
+        "fits": false,
         "accuracy": 100
       }
     ],
-    "totalSec": 13.71
+    "totalSec": 14.56
   },
   "08-fr-long-2min": {
     "file": "08-fr-long-2min.mp3",
-    "durationSec": 98.77,
+    "durationSec": 100.18,
     "passages": 5,
     "accuracy": 100,
-    "verifiedAccuracy": 98.6,
+    "verifiedAccuracy": 99.7,
     "warnings": []
   }
 }

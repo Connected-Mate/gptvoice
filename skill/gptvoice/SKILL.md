@@ -26,6 +26,7 @@ The **gptvoice** MCP server drives OpenAI's realtime voice model with the user's
 | Higher / lower voice | `pitch_shift` in semitones (±1–4 natural) | audio processing, exact |
 | Exact silence | `[pause 1.5s]` in the text | exact |
 | Whisper / shout | `volume`: whisper, soft, projected, shout · or `[whispers]` cue | strong |
+| A full performance | `acting`: shouting, crying, laughing-while-speaking, whispering-in-fear, angry-rant, broken-voice, panicked, sarcastic, intimate, sports-commentator, old-storyteller, child-wonder (persona + concrete vocal behaviour; combine with `[sobs]`, `[laughs]`, `[gasps]` cues in the text for the strongest result) | measured on all 12 (sarcastic subtler) |
 | Emotion | `emotion`: joy, excitement, sadness, anger, fear, tenderness, surprise, calm, seriousness, sarcasm, awe, confidence, nostalgia… (or free text) + `intensity` 0–1 | clear |
 | Genre | `narration`: audiobook, trailer, documentary, ad, character, news, podcast, meditation, kids, elearning, announcement | clear |
 | Laugh, sigh, gasp… | `[laughs]` `[sighs]` `[gasps]` `[coughs]` `[sobs]`… at the point in the text | works |
@@ -55,6 +56,10 @@ Human-sounding results come from this loop: short lines, one intention per line,
 5. **Direct with concrete words** ("slow, low, voice breaking") in `emotion`/`style`, not just labels; never put directions in the text itself.
 6. **Speed near 1.0** (0.8–1.2 sounds natural). To fit a shot, rewrite the line before pushing speed to extremes.
 7. **Check by ear AND with `inspect_audio`**: its "Smoothness" line flags clicks, hard cuts, cut-off endings and dead air. Default output is already smoothed (natural tails kept, fades, 40 ms crossfades, room tone, loudness ≈ -19 dB RMS).
+
+## Model choice
+
+Keep the default `gpt-realtime-1.5`: in the acting benchmark it was the MOST expressive of the four accessible models (avg change vs neutral 8.4 vs 6.2 for gpt-realtime-2, 5.6 for 2.1 / 2.1-mini) at 99.5 % word accuracy. `gpt-live-1` exists but refuses this sign-in.
 
 ## How to direct well
 

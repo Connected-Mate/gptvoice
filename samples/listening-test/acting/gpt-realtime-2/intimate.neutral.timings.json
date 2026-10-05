@@ -1,0 +1,21 @@
+{
+  "file": "intimate.neutral.mp3",
+  "durationSec": 7.363,
+  "passages": [
+    {
+      "start": 0.21,
+      "end": 6.903,
+      "text": "Il est tard. La ville dort. Restez encore un peu avec moi, on a tout notre temps.",
+      "speaker": null,
+      "voice": "cedar"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0.21,
+      "end": 6.903,
+      "text": "Il est tard. La ville dort. Restez encore un peu avec moi, on a tout notre temps.",
+      "speaker": null
+    }
+  ]
+}

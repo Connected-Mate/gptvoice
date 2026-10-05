@@ -13,6 +13,7 @@ export const PRESET_FIELDS = [
   "voice",
   "speed",
   "pitch_shift",
+  "acting",
   "emotion",
   "intensity",
   "pitch",

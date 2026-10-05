@@ -1,0 +1,60 @@
+{
+  "file": "dramatic-scene.mp3",
+  "durationSec": 17.417,
+  "passages": [
+    {
+      "start": 0.21,
+      "end": 3.958,
+      "text": "The house was quiet when I came home.",
+      "speaker": null,
+      "voice": "marin"
+    },
+    {
+      "start": 4.558,
+      "end": 7.713,
+      "text": "Then I saw the door. It was open.",
+      "speaker": null,
+      "voice": "marin"
+    },
+    {
+      "start": 8.313,
+      "end": 11.437,
+      "text": "Who did this? Who dared to come in here?",
+      "speaker": null,
+      "voice": "marin"
+    },
+    {
+      "start": 12.037,
+      "end": 16.957,
+      "text": "And then I found the letter… and I understood. She was gone.",
+      "speaker": null,
+      "voice": "marin"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0.21,
+      "end": 3.958,
+      "text": "The house was quiet when I came home.",
+      "speaker": null
+    },
+    {
+      "start": 4.558,
+      "end": 7.713,
+      "text": "Then I saw the door. It was open.",
+      "speaker": null
+    },
+    {
+      "start": 8.313,
+      "end": 11.437,
+      "text": "Who did this? Who dared to come in here?",
+      "speaker": null
+    },
+    {
+      "start": 12.037,
+      "end": 16.957,
+      "text": "And then I found the letter… and I understood. She was gone.",
+      "speaker": null
+    }
+  ]
+}

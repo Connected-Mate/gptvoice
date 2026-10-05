@@ -1,0 +1,21 @@
+{
+  "file": "panicked.neutral.mp3",
+  "durationSec": 7.65,
+  "passages": [
+    {
+      "start": 0.21,
+      "end": 7.19,
+      "text": "They're coming, they're right behind me, we have to go, now, run!",
+      "speaker": null,
+      "voice": "echo"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0.21,
+      "end": 7.19,
+      "text": "They're coming, they're right behind me, we have to go, now, run!",
+      "speaker": null
+    }
+  ]
+}

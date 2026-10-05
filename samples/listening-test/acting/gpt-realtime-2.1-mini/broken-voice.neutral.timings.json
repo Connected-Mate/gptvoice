@@ -1,0 +1,21 @@
+{
+  "file": "broken-voice.neutral.mp3",
+  "durationSec": 8.32,
+  "passages": [
+    {
+      "start": 0.21,
+      "end": 7.86,
+      "text": "Je n'ai plus rien à te donner. Ni la force, ni les mots. Laisse-moi juste… me reposer.",
+      "speaker": null,
+      "voice": "marin"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0.21,
+      "end": 7.86,
+      "text": "Je n'ai plus rien à te donner. Ni la force, ni les mots. Laisse-moi juste… me reposer.",
+      "speaker": null
+    }
+  ]
+}

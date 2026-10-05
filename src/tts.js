@@ -283,7 +283,7 @@ function unitsFor(text, settings, { firstPause, speaker, extraStyle } = {}) {
 // Assembly shared by narration and dialogue
 // ---------------------------------------------------------------------------
 
-async function render(units, { out, format, baseDir, subtitles, manifest, model, verify, normalize = true, redos, getCreds, onProgress }) {
+async function render(units, { out, format, baseDir, subtitles, manifest, model, verify, normalize = true, redos, padToSec, getCreds, onProgress }) {
   if (!units.length) throw new VoiceError("there is nothing to speak (only cues, no words)", "invalid");
   const fmt = resolveFormat(out, format);
   const target = withExtension(out, fmt);
@@ -323,6 +323,12 @@ async function render(units, { out, format, baseDir, subtitles, manifest, model,
   const starts = [];
   let pcm = crossfadeConcat(parts.map((p) => p.pcm), { xfadeMs: XFADE_MS, starts });
   if (normalize) pcm = normalizeLoudness(pcm);
+  // Clip shorter than its shot: extend the room-tone tail to the exact shot length.
+  let paddedSec = 0;
+  if (padToSec && pcmDurationSec(pcm) < padToSec) {
+    paddedSec = padToSec - pcmDurationSec(pcm);
+    pcm = Buffer.concat([pcm, roomTone(paddedSec * 1000, { seed: 4242 })]);
+  }
   pcm = fadeEdges(pcm, { inMs: 10, outMs: 200 });
   const segments = [];
   parts.forEach((p, k) => {
@@ -388,6 +394,7 @@ async function render(units, { out, format, baseDir, subtitles, manifest, model,
     versioned,
     subtitlesPath,
     manifestPath,
+    paddedSec: Math.round(paddedSec * 100) / 100,
     format: fmt,
     durationSec: Math.round(pcmDurationSec(pcm) * 100) / 100,
     passages: spoken.length,
@@ -408,7 +415,7 @@ async function render(units, { out, format, baseDir, subtitles, manifest, model,
  * pronunciations, preset, verify, format, subtitles, model.
  */
 export async function generateSpeech(opts) {
-  const { text, out, format, baseDir = process.cwd(), subtitles = false, manifest = false, model, verify = false, normalize = true, redos, getCreds, onProgress } = opts;
+  const { text, out, format, baseDir = process.cwd(), subtitles = false, manifest = false, model, verify = false, normalize = true, redos, padToSec, getCreds, onProgress } = opts;
   const t = validateText(text);
   if (!out) throw new VoiceError("an output path is required (e.g. narration.mp3)", "invalid");
   const settings = await resolveSettings(opts);
@@ -417,7 +424,7 @@ export async function generateSpeech(opts) {
     if (!para.trim()) return;
     units.push(...unitsFor(para, settings, { firstPause: p > 0 && units.length ? PARAGRAPH_PAUSE_MS : 0 }));
   });
-  return render(units, { out, format, baseDir, subtitles, manifest, model, verify, normalize, redos, getCreds, onProgress });
+  return render(units, { out, format, baseDir, subtitles, manifest, model, verify, normalize, redos, padToSec, getCreds, onProgress });
 }
 
 /**
@@ -428,7 +435,7 @@ export async function generateSpeech(opts) {
  * (emotion, speed, …) apply to every line.
  */
 export async function generateDialogue(opts) {
-  const { script, lines, voices = {}, format, out, baseDir = process.cwd(), subtitles = false, manifest = false, model, verify = false, normalize = true, redos, getCreds, onProgress } = opts;
+  const { script, lines, voices = {}, format, out, baseDir = process.cwd(), subtitles = false, manifest = false, model, verify = false, normalize = true, redos, padToSec, getCreds, onProgress } = opts;
   const turns = lines?.length ? lines.map((l) => ({ ...l })) : parseScript(script ?? "");
   if (!turns.length) throw new VoiceError("the dialogue is empty — give at least one line like `ALICE: Hello`", "invalid");
   if (!out) throw new VoiceError("an output path is required (e.g. dialogue.mp3)", "invalid");
@@ -469,7 +476,7 @@ export async function generateDialogue(opts) {
     const s = turn.voice ? { ...settingsFor(turn.speaker), voice: validateVoice(turn.voice) } : settingsFor(turn.speaker);
     units.push(...unitsFor(text, s, { firstPause: units.length ? DIALOGUE_PAUSE_MS : 0, speaker: turn.speaker, extraStyle: turn.style }));
   });
-  const result = await render(units, { out, format, baseDir, subtitles, manifest, model, verify, normalize, redos, getCreds, onProgress });
+  const result = await render(units, { out, format, baseDir, subtitles, manifest, model, verify, normalize, redos, padToSec, getCreds, onProgress });
   result.cast = Object.fromEntries([...cast.entries()].map(([k, v]) => [k, v.voice]));
   return result;
 }
@@ -488,11 +495,13 @@ const slug = (s) =>
     .slice(0, 40) || "clip";
 
 const FIT_TOLERANCE = (target) => Math.max(0.3, target * 0.05);
+const NATURAL_MAX = 1.15; // beyond this the realtime voice starts to sound rushed
 
 /**
  * Generate one clip per line: `01-intro.mp3`, `02-…` with .srt and .timings.json,
- * plus `clips.json` (the manifest). A line with `target_seconds` is re-timed by
- * adjusting `speed` (up to 2 refits, within 0.25-1.5) until it fits ±5 %.
+ * plus `clips.json` (the manifest). A line with `target_seconds` must not be
+ * longer than its shot (±5 %): too-long takes are re-taken, then sped up gently
+ * (≤ 1.15); shorter takes are padded with room tone to the exact shot length.
  * Lines take any control (voice, preset, emotion…); shared controls apply to all.
  */
 export async function generateClips(opts) {
@@ -512,18 +521,32 @@ export async function generateClips(opts) {
     let speed = lineControls.speed ?? shared.speed;
     const finalFiles = [`.${format}`, ".srt", ".timings.json"].map((ext) => path.join(dir, name + ext));
     for (const f of finalFiles) await fs.rm(f, { force: true });
-    // Each take goes to its own name; the take closest to the target wins.
+    // Fitting without sounding rushed (listening feedback): a voice SHORTER than
+    // its shot is fine — the clip is padded with room tone to the shot length.
+    // Only a take that is too long is retried: first a plain re-take (takes vary
+    // by ±10 %), then a gentle speed-up capped at NATURAL_MAX. Never slowed down
+    // or sped up beyond the natural range; otherwise the text must change.
     const takes = [];
+    const tooLong = (d) => target && d > target + FIT_TOLERANCE(target);
     for (let attempt = 0; attempt < (fit && target ? 3 : 1); attempt++) {
-      const take = await generateSpeech({ ...shared, ...lineControls, speed, text, out: path.join(dir, `${name}.take${attempt + 1}.${format}`), format, subtitles: true, manifest: true, verify, getCreds });
+      const take = await generateSpeech({ ...shared, ...lineControls, speed, text, out: path.join(dir, `${name}.take${attempt + 1}.${format}`), format, subtitles: true, manifest: true, verify, padToSec: fit && target ? target : undefined, getCreds });
+      take.speechSec = take.durationSec - (take.paddedSec ?? 0);
       takes.push({ ...take, speed: speed ?? 1 });
-      if (!target || Math.abs(take.durationSec - target) <= FIT_TOLERANCE(target)) break;
-      const current = speed ?? 1;
-      const next = Math.min(1.5, Math.max(0.25, Math.round(current * (take.durationSec / target) * 100) / 100));
-      if (next === current) break; // speed limit reached: the text must change
-      speed = next;
+      if (!tooLong(take.speechSec)) break;
+      if (attempt === 1) {
+        const current = speed ?? 1;
+        const next = Math.min(NATURAL_MAX, Math.round(current * (take.speechSec / target) * 100) / 100);
+        if (next <= current) break; // already at the natural limit: the text must change
+        speed = next;
+      }
     }
-    const best = target ? takes.reduce((a, b) => (Math.abs(b.durationSec - target) < Math.abs(a.durationSec - target) ? b : a)) : takes[0];
+    // Prefer takes that fit, then the most natural speed, then the one that fills the shot best.
+    const fitting = takes.filter((t) => !tooLong(t.speechSec));
+    const best = !target
+      ? takes[0]
+      : fitting.length
+        ? fitting.reduce((a, b) => (Math.abs(b.speed - 1) < Math.abs(a.speed - 1) || (b.speed === a.speed && b.speechSec > a.speechSec) ? b : a))
+        : takes.reduce((a, b) => (b.speechSec < a.speechSec ? b : a));
     const r = { ...best };
     for (const t of takes) {
       const files = [t.savedPath, t.subtitlesPath, t.manifestPath];
@@ -541,7 +564,7 @@ export async function generateClips(opts) {
       }
     }
     speed = best.speed;
-    const fits = target ? Math.abs(r.durationSec - target) <= FIT_TOLERANCE(target) : null;
+    const fits = target ? !tooLong(r.speechSec) : null;
     clips.push({
       index: i + 1,
       id: id ?? name.slice(3),
@@ -549,6 +572,7 @@ export async function generateClips(opts) {
       subtitles: r.subtitlesPath,
       timings: r.manifestPath,
       durationSec: r.durationSec,
+      speechSec: Math.round(r.speechSec * 100) / 100,
       targetSec: target ?? null,
       fits,
       speed,

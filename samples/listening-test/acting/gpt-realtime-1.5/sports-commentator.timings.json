@@ -1,0 +1,27 @@
+{
+  "file": "sports-commentator.mp3",
+  "durationSec": 9.309,
+  "passages": [
+    {
+      "start": 0.21,
+      "end": 8.849,
+      "text": "Il frappe, il frappe… et c'est le but ! Incroyable ! À la dernière seconde, c'est le but de la victoire !",
+      "speaker": null,
+      "voice": "ash"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0.21,
+      "end": 4.53,
+      "text": "Il frappe, il frappe… et c'est le but ! Incroyable !",
+      "speaker": null
+    },
+    {
+      "start": 4.53,
+      "end": 8.849,
+      "text": "À la dernière seconde, c'est le but de la victoire !",
+      "speaker": null
+    }
+  ]
+}

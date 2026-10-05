@@ -1,0 +1,21 @@
+{
+  "file": "whispering-in-fear.mp3",
+  "durationSec": 6.12,
+  "passages": [
+    {
+      "start": 0.21,
+      "end": 5.66,
+      "text": "Ne bouge pas. Il est dans la cuisine. Je l'entends respirer derrière la porte.",
+      "speaker": null,
+      "voice": "sage"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0.21,
+      "end": 5.66,
+      "text": "Ne bouge pas. Il est dans la cuisine. Je l'entends respirer derrière la porte.",
+      "speaker": null
+    }
+  ]
+}

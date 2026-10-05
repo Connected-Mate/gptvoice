@@ -1,0 +1,27 @@
+{
+  "file": "old-storyteller.neutral.mp3",
+  "durationSec": 10.77,
+  "passages": [
+    {
+      "start": 0.21,
+      "end": 10.31,
+      "text": "Long ago, before the roads and the lights, this valley belonged to the wolves. And one winter night, a little girl went looking for them.",
+      "speaker": null,
+      "voice": "ballad"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0.21,
+      "end": 6.002,
+      "text": "Long ago, before the roads and the lights, this valley belonged to the wolves.",
+      "speaker": null
+    },
+    {
+      "start": 6.002,
+      "end": 10.31,
+      "text": "And one winter night, a little girl went looking for them.",
+      "speaker": null
+    }
+  ]
+}

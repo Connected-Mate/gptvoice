@@ -1,0 +1,27 @@
+{
+  "file": "angry-rant.mp3",
+  "durationSec": 8.299,
+  "passages": [
+    {
+      "start": 0.21,
+      "end": 7.839,
+      "text": "One hour! I have been waiting for one entire hour, and nobody, nobody, has even looked at me!",
+      "speaker": null,
+      "voice": "cedar"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0.21,
+      "end": 0.956,
+      "text": "One hour!",
+      "speaker": null
+    },
+    {
+      "start": 0.956,
+      "end": 7.839,
+      "text": "I have been waiting for one entire hour, and nobody, nobody, has even looked at me!",
+      "speaker": null
+    }
+  ]
+}

@@ -52,8 +52,62 @@ export function expandCue(cue) {
   return EMOTIONS[alias];
 }
 
+// Acting modes: a persona plus concrete vocal behaviour, written the way
+// OpenAI's realtime prompting guide recommends (character, tone, pacing,
+// non-verbal cues as sounds, explicit examples of HOW — never extra words).
+export const ACTING_MODES = {
+  shouting: {
+    persona: "someone yelling across a noisy street to be heard",
+    voice: "SHOUT at full power: very loud, chest voice, high energy, stretched vowels on key words, a short gasp for air between phrases",
+  },
+  crying: {
+    persona: "a person who just received devastating news, fighting back tears",
+    voice: "a voice wet with tears: trembling, catching breath (shaky inhales), syllables breaking and wobbling, small sobs between phrases, quieter on the last words of each sentence",
+  },
+  "laughing-while-speaking": {
+    persona: "a friend telling a story they find hilarious and can barely get through",
+    voice: "laugh THROUGH the words: giggles bubbling inside syllables, breathy chuckles between phrases, smiling voice, struggling to keep a straight face",
+  },
+  "whispering-in-fear": {
+    persona: "someone hiding in a dark house, terrified of being heard",
+    voice: "a trembling, breathy WHISPER, fast shallow breathing, tiny pauses as if listening for a noise, voice shaking on every phrase",
+  },
+  "angry-rant": {
+    persona: "a customer who has been ignored for an hour and finally explodes",
+    voice: "furious and escalating: hard consonants, punchy stressed words, speeding up as the anger builds, louder at the end of each sentence, exasperated breaths",
+  },
+  "broken-voice": {
+    persona: "an exhausted person at the end of a long tragedy, voice almost gone",
+    voice: "VERY slow and quiet, about half your normal speed and volume; hoarse and fragile; the voice cracks and wavers on emotional words and fades almost to a whisper at the end of each sentence; long exhausted pauses between phrases",
+  },
+  panicked: {
+    persona: "someone out of breath after running, in a panic",
+    voice: "OUT OF BREATH and panicked: gasping inhales between short phrases, fast and urgent, pitch high and unsteady, words tumbling out",
+  },
+  sarcastic: {
+    persona: "a deadpan, unimpressed colleague",
+    voice: "dry sarcasm: flat, drawn-out stressed words, exaggerated fake enthusiasm on the compliments, slight sighs, ironic rising-then-falling intonation",
+  },
+  intimate: {
+    persona: "a warm late-night radio host speaking close to the microphone",
+    voice: "intimate and velvety: MUCH slower, lower and quieter than normal, half-whispered close to the microphone, breathy, a soft smile in the voice, lingering on vowels, long unhurried pauses",
+  },
+  "sports-commentator": {
+    persona: "a football commentator as the winning goal goes in",
+    voice: "explosive commentary: rapid-fire, rising excitement, very loud peaks, stretched vowels on the climax word, breathless energy",
+  },
+  "old-storyteller": {
+    persona: "an old grandfather telling a tale by the fire",
+    voice: "aged and warm: slower, slightly raspy and lower, gentle wavering, knowing chuckles, long meaningful pauses",
+  },
+  "child-wonder": {
+    persona: "a seven-year-old seeing snow for the first time",
+    voice: "a small child's voice: MUCH higher and lighter than your normal voice, fast and eager, breathless gasps of amazement, bouncy rhythm, big delighted rises in pitch",
+  },
+};
+
 export const NARRATION_STYLES = {
-  audiobook: "audiobook narrator: clear, immersive, even pacing, subtle character shading, never theatrical",
+  audiobook: "audiobook narrator: clear and immersive; vary the melody and pace from sentence to sentence so it never drones; give quoted lines their own voice; natural breaths; never theatrical",
   trailer: "movie-trailer voice: deep, slow, dramatic, weighty pauses between phrases, building tension",
   documentary: "documentary narrator: calm authority, informative, measured, neutral warmth",
   ad: "advertising voice-over: upbeat, persuasive, friendly, punchy on key words, smiling",
@@ -96,6 +150,7 @@ const PAUSES = {
 };
 
 export const CONTROL_VALUES = {
+  acting: Object.keys(ACTING_MODES),
   emotion: Object.keys(EMOTIONS),
   narration: Object.keys(NARRATION_STYLES),
   pitch: Object.keys(PITCH),
@@ -119,6 +174,12 @@ function pick(table, name, value) {
  */
 export function deliveryLines(c = {}) {
   const lines = [];
+  if (c.acting) {
+    const m = ACTING_MODES[String(c.acting).toLowerCase().trim()];
+    if (!m) throw new VoiceError(`unknown acting mode "${c.acting}". Use one of: ${Object.keys(ACTING_MODES).join(", ")}`, "invalid");
+    lines.push(`Character: you are ${m.persona}. Stay fully in character for every word.`);
+    lines.push(`Voice: ${m.voice}.`);
+  }
   if (c.narration) lines.push(`Narration style: ${pick(NARRATION_STYLES, "narration style", c.narration)}.`);
   if (c.character) lines.push(`Character to embody: ${String(c.character).slice(0, 300)}.`);
   if (c.emotion) {

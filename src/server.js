@@ -33,6 +33,7 @@ const controls = {
   preset: z.string().max(40).optional().describe("Name of a saved preset (save_voice_preset). Explicit settings override the preset."),
   speed: z.number().min(0.25).max(1.5).optional().describe("Native speaking-rate multiplier, 0.25-1.5 (1 = normal). Measured: works."),
   pitch_shift: z.number().min(-12).max(12).optional().describe("Real pitch shift in semitones (audio processing, duration kept). ±1-4 sounds natural; larger values sound processed."),
+  acting: z.enum(CONTROL_VALUES.acting).optional().describe("Acting mode (persona + vocal behaviour): shouting, crying, laughing-while-speaking, whispering-in-fear, angry-rant, broken-voice, panicked, sarcastic, intimate, sports-commentator, old-storyteller, child-wonder. Words stay verbatim."),
   emotion: z.string().max(200).optional().describe(`Emotion: ${Object.keys(EMOTIONS).join(", ")} — or free text ("bittersweet").`),
   intensity: z.number().min(0).max(1).optional().describe("0 = subtle and very stable … 1 = big, theatrical. Like ElevenLabs 'stability' inverted."),
   pitch: z.enum(CONTROL_VALUES.pitch).optional().describe("Register. Best-effort (the model shifts it a little, see README)."),
