@@ -1,0 +1,284 @@
+{
+  "voice": "cedar",
+  "text": "The storm came early that night, and the old keeper climbed the stairs to light the lamp once more.",
+  "baseline": [
+    {
+      "durationSec": 5.62,
+      "activeSec": 4.12,
+      "f0Median": 131,
+      "f0Semitones": 1.98,
+      "loudnessDb": -21.16,
+      "voicedRatio": 0.54,
+      "frames": 556,
+      "acc": 1
+    },
+    {
+      "durationSec": 5.5,
+      "activeSec": 4.27,
+      "f0Median": 131,
+      "f0Semitones": 2.63,
+      "loudnessDb": -21.15,
+      "voicedRatio": 0.52,
+      "frames": 544,
+      "acc": 1
+    },
+    {
+      "durationSec": 5.45,
+      "activeSec": 4.35,
+      "f0Median": 128,
+      "f0Semitones": 3.07,
+      "loudnessDb": -22.21,
+      "voicedRatio": 0.54,
+      "frames": 540,
+      "acc": 1
+    },
+    {
+      "durationSec": 6.22,
+      "activeSec": 4.52,
+      "f0Median": 128,
+      "f0Semitones": 2.1,
+      "loudnessDb": -21.93,
+      "voicedRatio": 0.51,
+      "frames": 616,
+      "acc": 0.9473684210526316
+    }
+  ],
+  "results": {
+    "baseline": [
+      {
+        "durationSec": 5.62,
+        "activeSec": 4.12,
+        "f0Median": 131,
+        "f0Semitones": 1.98,
+        "loudnessDb": -21.16,
+        "voicedRatio": 0.54,
+        "frames": 556,
+        "acc": 1
+      },
+      {
+        "durationSec": 5.5,
+        "activeSec": 4.27,
+        "f0Median": 131,
+        "f0Semitones": 2.63,
+        "loudnessDb": -21.15,
+        "voicedRatio": 0.52,
+        "frames": 544,
+        "acc": 1
+      },
+      {
+        "durationSec": 5.45,
+        "activeSec": 4.35,
+        "f0Median": 128,
+        "f0Semitones": 3.07,
+        "loudnessDb": -22.21,
+        "voicedRatio": 0.54,
+        "frames": 540,
+        "acc": 1
+      },
+      {
+        "durationSec": 6.22,
+        "activeSec": 4.52,
+        "f0Median": 128,
+        "f0Semitones": 2.1,
+        "loudnessDb": -21.93,
+        "voicedRatio": 0.51,
+        "frames": 616,
+        "acc": 0.9473684210526316
+      }
+    ],
+    "cue [pause 1s]": [
+      {
+        "durationSec": 6.89,
+        "activeSec": 4.82,
+        "f0Median": 128,
+        "f0Semitones": 2.57,
+        "loudnessDb": -21.27,
+        "voicedRatio": 0.57,
+        "frames": 684,
+        "acc": 1
+      },
+      {
+        "durationSec": 6.65,
+        "activeSec": 4.93,
+        "f0Median": 128,
+        "f0Semitones": 2.58,
+        "loudnessDb": -22.3,
+        "voicedRatio": 0.54,
+        "frames": 660,
+        "acc": 1
+      }
+    ],
+    "cue [whispers]": [
+      {
+        "durationSec": 8.14,
+        "activeSec": 5.45,
+        "f0Median": 121,
+        "f0Semitones": 1.19,
+        "loudnessDb": -23.65,
+        "voicedRatio": 0.54,
+        "frames": 808,
+        "acc": 0.7894736842105263
+      },
+      {
+        "durationSec": 9.24,
+        "activeSec": 5.68,
+        "f0Median": 123,
+        "f0Semitones": 2.15,
+        "loudnessDb": -23.67,
+        "voicedRatio": 0.57,
+        "frames": 919,
+        "acc": 0.7894736842105263
+      }
+    ],
+    "cue [excited]": [
+      {
+        "durationSec": 5.86,
+        "activeSec": 4.94,
+        "f0Median": 214,
+        "f0Semitones": 4.29,
+        "loudnessDb": -19.22,
+        "voicedRatio": 0.52,
+        "frames": 580,
+        "acc": 1
+      },
+      {
+        "durationSec": 5.78,
+        "activeSec": 4.71,
+        "f0Median": 184,
+        "f0Semitones": 4.71,
+        "loudnessDb": -19,
+        "voicedRatio": 0.45,
+        "frames": 573,
+        "acc": 1
+      }
+    ],
+    "cue [sad]": [
+      {
+        "durationSec": 6.1,
+        "activeSec": 4.38,
+        "f0Median": 124,
+        "f0Semitones": 1.9,
+        "loudnessDb": -22.53,
+        "voicedRatio": 0.57,
+        "frames": 604,
+        "acc": 1
+      },
+      {
+        "durationSec": 6.43,
+        "activeSec": 4.4,
+        "f0Median": 114,
+        "f0Semitones": 1.51,
+        "loudnessDb": -23.43,
+        "voicedRatio": 0.56,
+        "frames": 638,
+        "acc": 1
+      }
+    ],
+    "cue [sighs]": [
+      {
+        "durationSec": 7.22,
+        "activeSec": 4.93,
+        "f0Median": 124,
+        "f0Semitones": 2.26,
+        "loudnessDb": -22.08,
+        "voicedRatio": 0.48,
+        "frames": 717,
+        "acc": 1
+      },
+      {
+        "durationSec": 6.89,
+        "activeSec": 4.8,
+        "f0Median": 118,
+        "f0Semitones": 2.41,
+        "loudnessDb": -22.64,
+        "voicedRatio": 0.46,
+        "frames": 684,
+        "acc": 1
+      }
+    ],
+    "cue [laughs]": [
+      {
+        "durationSec": 7.39,
+        "activeSec": 5.06,
+        "f0Median": 133,
+        "f0Semitones": 2.94,
+        "loudnessDb": -20.31,
+        "voicedRatio": 0.51,
+        "frames": 734,
+        "acc": 1
+      },
+      {
+        "durationSec": 6.82,
+        "activeSec": 4.94,
+        "f0Median": 129,
+        "f0Semitones": 3.15,
+        "loudnessDb": -20.84,
+        "voicedRatio": 0.47,
+        "frames": 676,
+        "acc": 1
+      }
+    ]
+  },
+  "table": [
+    {
+      "name": "cue [pause 1s]",
+      "durationSec": 1.0724999999999998,
+      "f0Median": -1.5,
+      "f0Semitones": 0.13000000000000034,
+      "loudnessDb": -0.17249999999999588,
+      "voicedRatio": 0.027499999999999858,
+      "accuracy": 1,
+      "verdict": "changes duration"
+    },
+    {
+      "name": "cue [whispers]",
+      "durationSec": 2.9925000000000015,
+      "f0Median": -7.5,
+      "f0Semitones": -0.7749999999999999,
+      "loudnessDb": -2.047499999999996,
+      "voicedRatio": 0.027499999999999858,
+      "accuracy": 0.7894736842105263,
+      "verdict": "changes duration+loudness"
+    },
+    {
+      "name": "cue [excited]",
+      "durationSec": 0.1225000000000005,
+      "f0Median": 69.5,
+      "f0Semitones": 2.055,
+      "loudnessDb": 2.502500000000005,
+      "voicedRatio": -0.04250000000000009,
+      "accuracy": 1,
+      "verdict": "changes f0+f0+loudness"
+    },
+    {
+      "name": "cue [sad]",
+      "durationSec": 0.5674999999999999,
+      "f0Median": -10.5,
+      "f0Semitones": -0.7399999999999998,
+      "loudnessDb": -1.3674999999999962,
+      "voicedRatio": 0.03749999999999987,
+      "accuracy": 1,
+      "verdict": "changes f0"
+    },
+    {
+      "name": "cue [sighs]",
+      "durationSec": 1.3575,
+      "f0Median": -8.5,
+      "f0Semitones": -0.10999999999999988,
+      "loudnessDb": -0.7474999999999952,
+      "voicedRatio": -0.05750000000000011,
+      "accuracy": 1,
+      "verdict": "changes duration+f0"
+    },
+    {
+      "name": "cue [laughs]",
+      "durationSec": 1.4075000000000006,
+      "f0Median": 1.5,
+      "f0Semitones": 0.6000000000000001,
+      "loudnessDb": 1.037500000000005,
+      "voicedRatio": -0.03750000000000009,
+      "accuracy": 1,
+      "verdict": "changes duration"
+    }
+  ]
+}

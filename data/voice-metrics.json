@@ -1,0 +1,242 @@
+{
+  "alloy": {
+    "en": {
+      "durationSec": 6.02,
+      "activeSec": 4.64,
+      "f0Median": 142,
+      "f0Semitones": 2.08,
+      "loudnessDb": -20.26,
+      "voicedRatio": 0.55,
+      "frames": 597,
+      "wordsPerSec": 2.82,
+      "accuracy": 1
+    },
+    "fr": {
+      "durationSec": 6.64,
+      "activeSec": 5.41,
+      "f0Median": 147,
+      "f0Semitones": 3.21,
+      "loudnessDb": -18.48,
+      "voicedRatio": 0.63,
+      "frames": 658,
+      "wordsPerSec": 2.71,
+      "accuracy": 1
+    }
+  },
+  "ash": {
+    "en": {
+      "durationSec": 7.17,
+      "activeSec": 5.39,
+      "f0Median": 111,
+      "f0Semitones": 3.01,
+      "loudnessDb": -22.02,
+      "voicedRatio": 0.37,
+      "frames": 712,
+      "wordsPerSec": 2.37,
+      "accuracy": 1
+    },
+    "fr": {
+      "durationSec": 7.11,
+      "activeSec": 5.51,
+      "f0Median": 113,
+      "f0Semitones": 2.97,
+      "loudnessDb": -22.11,
+      "voicedRatio": 0.43,
+      "frames": 706,
+      "wordsPerSec": 2.53,
+      "accuracy": 1
+    }
+  },
+  "ballad": {
+    "en": {
+      "durationSec": 6.58,
+      "activeSec": 4.29,
+      "f0Median": 152,
+      "f0Semitones": 3.8,
+      "loudnessDb": -23.78,
+      "voicedRatio": 0.4,
+      "frames": 653,
+      "wordsPerSec": 2.58,
+      "accuracy": 1
+    },
+    "fr": {
+      "durationSec": 7.17,
+      "activeSec": 4.96,
+      "f0Median": 163,
+      "f0Semitones": 3.58,
+      "loudnessDb": -24.24,
+      "voicedRatio": 0.44,
+      "frames": 712,
+      "wordsPerSec": 2.51,
+      "accuracy": 1
+    }
+  },
+  "cedar": {
+    "en": {
+      "durationSec": 5.71,
+      "activeSec": 3.9,
+      "f0Median": 137,
+      "f0Semitones": 2.39,
+      "loudnessDb": -21.1,
+      "voicedRatio": 0.47,
+      "frames": 566,
+      "wordsPerSec": 2.98,
+      "accuracy": 1
+    },
+    "fr": {
+      "durationSec": 7.26,
+      "activeSec": 5.04,
+      "f0Median": 144,
+      "f0Semitones": 3.47,
+      "loudnessDb": -20.92,
+      "voicedRatio": 0.54,
+      "frames": 721,
+      "wordsPerSec": 2.48,
+      "accuracy": 1
+    }
+  },
+  "coral": {
+    "en": {
+      "durationSec": 7.23,
+      "activeSec": 4.88,
+      "f0Median": 194,
+      "f0Semitones": 3.09,
+      "loudnessDb": -28.18,
+      "voicedRatio": 0.7,
+      "frames": 717,
+      "wordsPerSec": 2.35,
+      "accuracy": 1
+    },
+    "fr": {
+      "durationSec": 6.57,
+      "activeSec": 4.54,
+      "f0Median": 220,
+      "f0Semitones": 3.26,
+      "loudnessDb": -26.99,
+      "voicedRatio": 0.67,
+      "frames": 652,
+      "wordsPerSec": 2.74,
+      "accuracy": 1
+    }
+  },
+  "echo": {
+    "en": {
+      "durationSec": 6.03,
+      "activeSec": 4.37,
+      "f0Median": 126,
+      "f0Semitones": 2.2,
+      "loudnessDb": -20.55,
+      "voicedRatio": 0.49,
+      "frames": 598,
+      "wordsPerSec": 2.82,
+      "accuracy": 1
+    },
+    "fr": {
+      "durationSec": 7.4,
+      "activeSec": 5.14,
+      "f0Median": 105,
+      "f0Semitones": 2.87,
+      "loudnessDb": -20.13,
+      "voicedRatio": 0.57,
+      "frames": 735,
+      "wordsPerSec": 2.43,
+      "accuracy": 1
+    }
+  },
+  "marin": {
+    "en": {
+      "durationSec": 6.03,
+      "activeSec": 4.5,
+      "f0Median": 203,
+      "f0Semitones": 2.23,
+      "loudnessDb": -20.35,
+      "voicedRatio": 0.57,
+      "frames": 598,
+      "wordsPerSec": 2.82,
+      "accuracy": 1
+    },
+    "fr": {
+      "durationSec": 6.25,
+      "activeSec": 4.7,
+      "f0Median": 211,
+      "f0Semitones": 2.57,
+      "loudnessDb": -19.74,
+      "voicedRatio": 0.68,
+      "frames": 620,
+      "wordsPerSec": 2.88,
+      "accuracy": 1
+    }
+  },
+  "sage": {
+    "en": {
+      "durationSec": 7.78,
+      "activeSec": 3.97,
+      "f0Median": 186,
+      "f0Semitones": 2.26,
+      "loudnessDb": -34.16,
+      "voicedRatio": 0.68,
+      "frames": 773,
+      "wordsPerSec": 2.19,
+      "accuracy": 1
+    },
+    "fr": {
+      "durationSec": 7.66,
+      "activeSec": 3.96,
+      "f0Median": 191,
+      "f0Semitones": 2.93,
+      "loudnessDb": -33.3,
+      "voicedRatio": 0.67,
+      "frames": 761,
+      "wordsPerSec": 2.35,
+      "accuracy": 1
+    }
+  },
+  "shimmer": {
+    "en": {
+      "durationSec": 5.83,
+      "activeSec": 4.52,
+      "f0Median": 145,
+      "f0Semitones": 2.58,
+      "loudnessDb": -20.27,
+      "voicedRatio": 0.59,
+      "frames": 578,
+      "wordsPerSec": 2.92,
+      "accuracy": 1
+    },
+    "fr": {
+      "durationSec": 7.53,
+      "activeSec": 5.75,
+      "f0Median": 154,
+      "f0Semitones": 2.54,
+      "loudnessDb": -19.3,
+      "voicedRatio": 0.72,
+      "frames": 748,
+      "wordsPerSec": 2.39,
+      "accuracy": 1
+    }
+  },
+  "verse": {
+    "en": {
+      "durationSec": 6.72,
+      "activeSec": 4.93,
+      "f0Median": 137,
+      "f0Semitones": 2.29,
+      "loudnessDb": -25.22,
+      "voicedRatio": 0.5,
+      "frames": 667,
+      "wordsPerSec": 2.53,
+      "accuracy": 1
+    },
+    "fr": {
+      "durationSec": 7.63,
+      "activeSec": 5.65,
+      "f0Median": 139,
+      "f0Semitones": 3.03,
+      "loudnessDb": -24.69,
+      "voicedRatio": 0.46,
+      "frames": 758,
+      "wordsPerSec": 2.36,
+      "accuracy": 1
+    }
+  }
+}

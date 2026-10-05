@@ -14,7 +14,7 @@ const MAX_SECONDS = 25 * 60;
 const MIN_WORDS_PER_SEC = 1;
 const FALLBACK_MODEL = "whisper-1";
 
-async function decodeToPcm(abs) {
+export async function decodeToPcm(abs) {
   const buf = await fs.readFile(abs).catch((err) => {
     throw new VoiceError(`cannot read ${abs}: ${err?.code || err?.message}`, "invalid");
   });

@@ -24,6 +24,12 @@ When you see **"✅ Setup complete"**, you're done.
 Read "Welcome to our channel!" in a cheerful, warm voice and save it to welcome.mp3 using the gptvoice tool.
 ```
 
+Want more control? Ask for an emotion, a speed, a whisper, a laugh, a trailer voice… or put cues right in your text:
+
+```
+[whispers] Don't wake them… [pause 1s] [laughs] Too late!
+```
+
 That's it.
 
 ## Handy commands
@@ -33,7 +39,9 @@ npm run status                                                    # signed in? w
 npm run speak -- -t "Hello there" -o hello.mp3 --voice cedar      # speak from the terminal
 npm run speak -- -f story.txt -o story.mp3 --subtitles            # long text + .srt subtitles
 npm run speak -- --dialogue scene.txt -o scene.mp3                # several characters
-npm run speak -- --voices                                         # list voices
+npm run speak -- --voices --gender female                         # browse voices (samples in samples/voices/)
+npm run speak -- -t "Bonjour !" -o hi.mp3 --emotion joy --speed 1.1 --verify   # controls + word check
+npm run speak -- --save-preset brand --voice coral --narration ad  # save a preset, reuse with --preset brand
 ```
 
 ## Troubleshooting

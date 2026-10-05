@@ -49,6 +49,118 @@ export function joinPcm(segments, pauseMs = 0) {
   return Buffer.concat(parts);
 }
 
+export function applyGainDb(pcm, db) {
+  if (!db) return pcm;
+  const g = 10 ** (db / 20);
+  const out = Buffer.alloc(pcm.length);
+  for (let i = 0; i + 1 < pcm.length; i += 2) {
+    out.writeInt16LE(Math.max(-32768, Math.min(32767, Math.round(pcm.readInt16LE(i) * g))), i);
+  }
+  return out;
+}
+
+/**
+ * Bring speech to a consistent level: RMS over active (non-silent) 20 ms frames
+ * to `targetDb` dBFS, never letting peaks exceed `peakDb`. Silence stays silent.
+ */
+export function normalizeLoudness(pcm, { targetDb = -19, peakDb = -1 } = {}) {
+  const n = Math.floor(pcm.length / 2);
+  if (!n) return pcm;
+  const frame = 480;
+  let sum = 0;
+  let count = 0;
+  let peak = 0;
+  for (let s = 0; s < n; s += frame) {
+    let e = 0;
+    const end = Math.min(n, s + frame);
+    for (let i = s; i < end; i++) {
+      const v = pcm.readInt16LE(i * 2) / 32768;
+      e += v * v;
+      if (Math.abs(v) > peak) peak = Math.abs(v);
+    }
+    const rms = Math.sqrt(e / (end - s));
+    if (rms > 0.01) {
+      sum += e;
+      count += end - s;
+    }
+  }
+  if (!count || !peak) return pcm;
+  const currentDb = 10 * Math.log10(sum / count);
+  const gainDb = Math.min(targetDb - currentDb, peakDb - 20 * Math.log10(peak));
+  return applyGainDb(pcm, Math.abs(gainDb) < 0.1 ? 0 : gainDb);
+}
+
+// ---------------------------------------------------------------------------
+// Pitch shifting (real DSP, voice-independent): WSOLA time-stretch by r, then
+// resample by r. Duration is preserved; formants shift with pitch, so keep it
+// within about ±4 semitones for a natural sound.
+// ---------------------------------------------------------------------------
+
+function wsolaStretch(x, factor) {
+  // factor > 1 → longer output. Waveform-similarity overlap-add.
+  const N = 720; // 30 ms at 24 kHz
+  const Hs = N / 2;
+  const Ha = Hs / factor;
+  const tol = 240; // ±10 ms search
+  const win = new Float32Array(N);
+  for (let i = 0; i < N; i++) win[i] = 0.5 - 0.5 * Math.cos((2 * Math.PI * i) / N);
+  const outLen = Math.ceil(x.length * factor) + N;
+  const out = new Float32Array(outLen);
+  const norm = new Float32Array(outLen);
+  let prev = 0; // analysis start of the previous frame
+  for (let k = 0; ; k++) {
+    const synth = k * Hs;
+    const nominal = Math.round(k * Ha);
+    if (nominal + N + tol >= x.length || synth + N >= outLen) break;
+    let start = nominal;
+    if (k > 0) {
+      // Best match to the natural continuation of the previous frame.
+      const target = prev + Hs;
+      let best = -Infinity;
+      for (let off = -tol; off <= tol; off += 2) {
+        const s = nominal + off;
+        if (s < 0) continue;
+        let c = 0;
+        for (let i = 0; i < Hs; i += 2) c += x[s + i] * x[target + i];
+        if (c > best) {
+          best = c;
+          start = s;
+        }
+      }
+    }
+    for (let i = 0; i < N; i++) {
+      out[synth + i] += x[start + i] * win[i];
+      norm[synth + i] += win[i];
+    }
+    prev = start;
+  }
+  for (let i = 0; i < outLen; i++) if (norm[i] > 1e-3) out[i] /= norm[i];
+  return out.subarray(0, Math.ceil(x.length * factor));
+}
+
+export const MAX_PITCH_SHIFT = 12;
+
+export function pitchShift(pcm, semitones) {
+  const st = Number(semitones);
+  if (!st) return pcm;
+  if (!(Math.abs(st) <= MAX_PITCH_SHIFT)) throw new Error(`pitch_shift must be between -${MAX_PITCH_SHIFT} and ${MAX_PITCH_SHIFT} semitones`);
+  const n = Math.floor(pcm.length / 2);
+  if (n < 2000) return pcm;
+  const x = new Float32Array(n);
+  for (let i = 0; i < n; i++) x[i] = pcm.readInt16LE(i * 2) / 32768;
+  const r = 2 ** (st / 12);
+  const stretched = wsolaStretch(x, r);
+  const out = Buffer.alloc(n * 2);
+  for (let i = 0; i < n; i++) {
+    const p = i * r;
+    const i0 = Math.floor(p);
+    const i1 = Math.min(stretched.length - 1, i0 + 1);
+    const v = i0 < stretched.length ? stretched[i0] + (stretched[i1] - stretched[i0]) * (p - i0) : 0;
+    out.writeInt16LE(Math.max(-32768, Math.min(32767, Math.round(v * 32767))), i * 2);
+  }
+  return out;
+}
+
 export function pcmToWav(pcm, rate = SAMPLE_RATE, channels = 1) {
   const header = Buffer.alloc(44);
   header.write("RIFF", 0);

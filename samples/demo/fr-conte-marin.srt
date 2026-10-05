@@ -1,0 +1,15 @@
+1
+00:00:00,000 --> 00:00:02,141
+Il était une fois, au bord de la mer,
+
+2
+00:00:02,141 --> 00:00:05,440
+une vieille horloge qui ne donnait jamais la bonne heure.
+
+3
+00:00:06,240 --> 00:00:09,496
+Un soir, quelqu'un frappa à la porte du clocher…
+
+4
+00:00:10,096 --> 00:00:13,837
+C'était une enfant, une lanterne à la main !

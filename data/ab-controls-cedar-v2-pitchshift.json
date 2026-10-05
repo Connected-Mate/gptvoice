@@ -1,0 +1,156 @@
+{
+  "voice": "cedar",
+  "text": "The storm came early that night, and the old keeper climbed the stairs to light the lamp once more.",
+  "baseline": [
+    {
+      "durationSec": 5.88,
+      "activeSec": 4.57,
+      "f0Median": 121,
+      "f0Semitones": 2.26,
+      "loudnessDb": -21.9,
+      "voicedRatio": 0.49,
+      "frames": 583,
+      "acc": 1
+    },
+    {
+      "durationSec": 5.42,
+      "activeSec": 4.28,
+      "f0Median": 133,
+      "f0Semitones": 2.24,
+      "loudnessDb": -21.79,
+      "voicedRatio": 0.53,
+      "frames": 537,
+      "acc": 1
+    },
+    {
+      "durationSec": 5.76,
+      "activeSec": 4.41,
+      "f0Median": 133,
+      "f0Semitones": 2.37,
+      "loudnessDb": -21.28,
+      "voicedRatio": 0.56,
+      "frames": 571,
+      "acc": 1
+    },
+    {
+      "durationSec": 5.33,
+      "activeSec": 4.07,
+      "f0Median": 129,
+      "f0Semitones": 2.93,
+      "loudnessDb": -21.38,
+      "voicedRatio": 0.46,
+      "frames": 528,
+      "acc": 1
+    }
+  ],
+  "results": {
+    "baseline": [
+      {
+        "durationSec": 5.88,
+        "activeSec": 4.57,
+        "f0Median": 121,
+        "f0Semitones": 2.26,
+        "loudnessDb": -21.9,
+        "voicedRatio": 0.49,
+        "frames": 583,
+        "acc": 1
+      },
+      {
+        "durationSec": 5.42,
+        "activeSec": 4.28,
+        "f0Median": 133,
+        "f0Semitones": 2.24,
+        "loudnessDb": -21.79,
+        "voicedRatio": 0.53,
+        "frames": 537,
+        "acc": 1
+      },
+      {
+        "durationSec": 5.76,
+        "activeSec": 4.41,
+        "f0Median": 133,
+        "f0Semitones": 2.37,
+        "loudnessDb": -21.28,
+        "voicedRatio": 0.56,
+        "frames": 571,
+        "acc": 1
+      },
+      {
+        "durationSec": 5.33,
+        "activeSec": 4.07,
+        "f0Median": 129,
+        "f0Semitones": 2.93,
+        "loudnessDb": -21.38,
+        "voicedRatio": 0.46,
+        "frames": 528,
+        "acc": 1
+      }
+    ],
+    "pitch_shift +4": [
+      {
+        "durationSec": 5.33,
+        "activeSec": 4.25,
+        "f0Median": 168,
+        "f0Semitones": 3.22,
+        "loudnessDb": -20.57,
+        "voicedRatio": 0.61,
+        "frames": 528,
+        "acc": 1
+      },
+      {
+        "durationSec": 5.14,
+        "activeSec": 4.21,
+        "f0Median": 162,
+        "f0Semitones": 3.62,
+        "loudnessDb": -21.81,
+        "voicedRatio": 0.63,
+        "frames": 508,
+        "acc": 1
+      }
+    ],
+    "pitch_shift -4": [
+      {
+        "durationSec": 5.4,
+        "activeSec": 4.44,
+        "f0Median": 108,
+        "f0Semitones": 2.53,
+        "loudnessDb": -21.28,
+        "voicedRatio": 0.52,
+        "frames": 535,
+        "acc": 1
+      },
+      {
+        "durationSec": 5.33,
+        "activeSec": 4.19,
+        "f0Median": 104,
+        "f0Semitones": 2.54,
+        "loudnessDb": -21.8,
+        "voicedRatio": 0.47,
+        "frames": 528,
+        "acc": 1
+      }
+    ]
+  },
+  "table": [
+    {
+      "name": "pitch_shift -4",
+      "durationSec": -0.23249999999999993,
+      "f0Median": -23,
+      "f0Semitones": 0.08499999999999996,
+      "loudnessDb": 0.04749999999999943,
+      "voicedRatio": -0.015000000000000013,
+      "accuracy": 1,
+      "verdict": "changes f0"
+    },
+    {
+      "name": "pitch_shift +4",
+      "durationSec": -0.3625000000000007,
+      "f0Median": 36,
+      "f0Semitones": 0.9699999999999998,
+      "loudnessDb": 0.39750000000000085,
+      "voicedRatio": 0.10999999999999999,
+      "accuracy": 1,
+      "verdict": "changes f0+f0+voiced"
+    }
+  ]
+}

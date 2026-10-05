@@ -32,9 +32,19 @@ after(async () => {
 
 const text = (r) => r.content.map((c) => c.text).join("\n");
 
-test("exposes the five tools", async () => {
+test("exposes the nine tools", async () => {
   const { tools } = await client.listTools();
-  assert.deepEqual(tools.map((t) => t.name).sort(), ["generate_dialogue", "generate_speech", "list_voices", "transcribe_audio", "voice_auth_status"]);
+  assert.deepEqual(tools.map((t) => t.name).sort(), [
+    "delete_voice_preset",
+    "favorite_voice",
+    "generate_dialogue",
+    "generate_speech",
+    "list_voice_presets",
+    "list_voices",
+    "save_voice_preset",
+    "transcribe_audio",
+    "voice_auth_status",
+  ]);
 });
 
 test("voice_auth_status reports the signed-in plan", async () => {
@@ -44,8 +54,9 @@ test("voice_auth_status reports the signed-in plan", async () => {
 
 test("list_voices lists marin and cedar", async () => {
   const r = await client.callTool({ name: "list_voices", arguments: {} });
-  assert.match(text(r), /- marin:/);
-  assert.match(text(r), /- cedar:/);
+  assert.match(text(r), /- marin \(recommended\) — female;/);
+  assert.match(text(r), /- cedar \(recommended\) — male;/);
+  assert.match(text(r), /samples: .*marin-en\.mp3/);
 });
 
 test("generate_speech writes into the project dir and reports details", async () => {

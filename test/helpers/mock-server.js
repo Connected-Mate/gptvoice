@@ -69,3 +69,32 @@ export function ttsBehavior({ spoken, audioMs = 400, failWith } = {}) {
     });
   };
 }
+
+/**
+ * Handles both speech and transcription sessions. Transcription returns
+ * `heard()` (default: the last script spoken, i.e. a perfect listener).
+ */
+export function smartBehavior({ heard, spoken } = {}) {
+  const state = { lastScript: "" };
+  const tts = ttsBehavior({ spoken });
+  const behavior = (ctx) => {
+    if (/intent=transcription/.test(ctx.conn.url)) {
+      ctx.send({ type: "session.created" });
+      ctx.ws.on("message", (d) => {
+        const m = JSON.parse(String(d));
+        if (m.type === "session.update") ctx.send({ type: "session.updated" });
+        if (m.type === "input_audio_buffer.commit") {
+          ctx.send({ type: "conversation.item.input_audio_transcription.completed", transcript: heard ? heard(state.lastScript) : state.lastScript });
+        }
+      });
+      return;
+    }
+    ctx.ws.on("message", (d) => {
+      const m = JSON.parse(String(d));
+      if (m.type === "session.update") state.lastScript = m.session.instructions.split('"""')[1]?.trim() ?? "";
+    });
+    tts(ctx);
+  };
+  behavior.state = state;
+  return behavior;
+}

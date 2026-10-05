@@ -1,0 +1,15 @@
+1
+00:00:00,000 --> 00:00:01,379
+We won the match!
+
+2
+00:00:01,879 --> 00:00:03,239
+We lost the match.
+
+3
+00:00:03,739 --> 00:00:05,625
+Who lost the match?!
+
+4
+00:00:06,125 --> 00:00:09,475
+Shh… nobody knows about the match.
