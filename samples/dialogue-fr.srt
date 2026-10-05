@@ -1,0 +1,15 @@
+1
+00:00:00,000 --> 00:00:06,306
+LÉA: Tu as entendu ? On peut faire parler nos films sans payer un centime de plus !
+
+2
+00:00:06,756 --> 00:00:10,992
+HUGO: Sans clé d'API ? Ça me paraît trop beau pour être vrai.
+
+3
+00:00:11,442 --> 00:00:16,541
+LÉA: Il suffit de se connecter avec son compte ChatGPT. Le reste se fait tout seul.
+
+4
+00:00:16,991 --> 00:00:20,167
+HUGO: Bon… alors on enregistre la bande-annonce ce soir.

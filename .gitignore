@@ -1,0 +1,7 @@
+node_modules/
+test-output/
+.DS_Store
+*.log
+# credentials never live in the repo (they're in ~/.gptvoice), but just in case
+auth.json
+.env

@@ -1,0 +1,31 @@
+{
+  "name": "gptvoice",
+  "version": "0.1.0",
+  "description": "Text-to-speech for Claude Code, powered by OpenAI's realtime voice model through your ChatGPT subscription sign-in — no API key. MCP server + skill + CLI.",
+  "type": "module",
+  "private": true,
+  "bin": {
+    "gptvoice-login": "src/login.js",
+    "gptvoice-server": "src/server.js",
+    "gptvoice-speak": "src/speak.js"
+  },
+  "scripts": {
+    "setup": "bash install.sh",
+    "login": "node src/login.js",
+    "logout": "node src/login.js --logout",
+    "status": "node src/login.js --status",
+    "server": "node src/server.js",
+    "speak": "node src/speak.js",
+    "test": "node --test 'test/*.test.js'",
+    "test:live": "GPTVOICE_LIVE=1 node --test --test-concurrency=1 test/live.test.js"
+  },
+  "engines": {
+    "node": ">=22"
+  },
+  "dependencies": {
+    "@breezystack/lamejs": "^1.2.7",
+    "@modelcontextprotocol/sdk": "^1.32.0",
+    "ws": "^8.22.0",
+    "zod": "^3.25.76"
+  }
+}

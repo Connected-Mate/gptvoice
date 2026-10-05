@@ -1,0 +1,19 @@
+1
+00:00:00,000 --> 00:00:03,868
+Il était une fois, dans une petite ville au bord de la mer,
+
+2
+00:00:03,868 --> 00:00:07,605
+une vieille horloge qui ne donnait jamais la bonne heure.
+
+3
+00:00:07,605 --> 00:00:12,392
+Les habitants s'en moquaient gentiment, mais personne n'osait la réparer.
+
+4
+00:00:13,092 --> 00:00:17,338
+Un matin d'hiver, une enfant curieuse grimpa jusqu'au clocher.
+
+5
+00:00:17,338 --> 00:00:22,680
+Ce qu'elle découvrit derrière le cadran allait changer la ville pour toujours.
