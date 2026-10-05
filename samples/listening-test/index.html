@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>GPTVoice listening test</title>
+<style>
+:root { --bg:#f7f6f2; --fg:#1d1f1e; --muted:#5b605d; --card:#ffffff; --line:#dcd9cf; --ok:#1f7a4d; --warn:#a4400f; --accent:#24527a; }
+@media (prefers-color-scheme: dark) { :root { --bg:#131514; --fg:#ecebe6; --muted:#a3a8a4; --card:#1c1f1d; --line:#323632; --ok:#6fd3a0; --warn:#f0a070; --accent:#8cbbe6; } }
+* { box-sizing: border-box; }
+body { margin:0; background:var(--bg); color:var(--fg); font:16px/1.55 ui-sans-serif, -apple-system, "Segoe UI", Roboto, sans-serif; }
+main { max-width: 1100px; margin: 0 auto; padding: 24px 16px 64px; }
+h1 { font-size: 1.7rem; margin: 0 0 4px; }
+h2 { font-size: 1.15rem; margin: 0 0 12px; }
+h3 { font-size: 1rem; margin: 16px 0 4px; }
+.lead { color: var(--muted); margin: 0 0 20px; max-width: 70ch; }
+.summary { display:grid; grid-template-columns: repeat(auto-fit, minmax(200px,1fr)); gap: 8px; margin: 0 0 28px; }
+.summary div { background: var(--card); border:1px solid var(--line); border-radius: 8px; padding: 10px 12px; }
+.summary b { display:block; font-size: 1.1rem; }
+section { background: var(--card); border:1px solid var(--line); border-radius: 10px; padding: 16px; margin: 0 0 18px; }
+.pair { display:grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 720px) { .pair { grid-template-columns: 1fr; } }
+.side { border-top: 3px solid var(--line); padding-top: 8px; min-width: 0; }
+.side.after { border-top-color: var(--accent); }
+figure { margin: 0 0 8px; }
+figcaption { font-weight: 600; margin-bottom: 4px; }
+audio { width: 100%; }
+dl.m { display:grid; grid-template-columns: 1fr; margin: 0; font-size: .9rem; }
+dl.m div { display:flex; justify-content: space-between; gap: 8px; border-bottom: 1px dotted var(--line); padding: 2px 0; }
+dt { color: var(--muted); }
+dd { margin: 0; text-align: right; }
+.ok { color: var(--ok); } .warn { color: var(--warn); font-weight: 600; }
+.script { white-space: pre-wrap; font: inherit; color: var(--fg); margin: 6px 0 0; }
+details { margin-top: 10px; } summary { cursor: pointer; color: var(--accent); }
+.note, .fit { color: var(--muted); font-size: .9rem; margin: 4px 0; }
+footer { color: var(--muted); font-size: .85rem; margin-top: 24px; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+</style>
+</head>
+<body>
+<main>
+<h1>GPTVoice — listening test</h1>
+<p class="lead">The same scripts, generated twice: <strong>Before</strong> = previous pipeline, <strong>After</strong> = new pipeline (whole sentences, natural endings kept, fades and crossfades, room tone, even loudness). Listen with headphones. Numbers are measured automatically; your ears decide.</p>
+<div class="summary">
+  <div>Clicks in quiet passages*<b>31 → 35</b></div>
+  <div>Hard starts/stops<b>4 → 3</b></div>
+  <div>Cut-off endings<b>0 → 0</b></div>
+  <div>Files with dead silence<b>6 → 0</b></div>
+  <div>Problems at joins between takes<b>0/16 → 0/15</b></div>
+</div>
+<section id="01-fr-narration"><h2>Narration FR multi-paragraphes (~45 s)</h2><div class="pair"><div class="side"><figure><figcaption>Before</figcaption><audio controls preload="none" src="before/01-fr-narration.mp3"></audio></figure>
+  <dl class="m">
+    <div><dt>Duration</dt><dd>46.42 s · 3 takes</dd></div>
+    <div><dt>Word accuracy</dt><dd>98.9 % (independent transcription)</dd></div>
+    <div><dt>Clicks in quiet passages*</dt><dd>4</dd></div>
+    <div><dt>Problems at joins between takes</dt><dd class="ok">0 (of 2 joins)</dd></div>
+    <div><dt>Hard starts / stops</dt><dd class="warn">0 / 1</dd></div>
+    <div><dt>Cut-off ending</dt><dd class="ok">no</dd></div>
+    <div><dt>Dead digital silence</dt><dd class="warn">2 gap(s), 1.33 s</dd></div>
+    <div><dt>Speech level</dt><dd>-19.67 dB RMS</dd></div>
+  </dl></div><div class="side after"><figure><figcaption>After</figcaption><audio controls preload="none" src="after/01-fr-narration.mp3"></audio></figure>
+  <dl class="m">
+    <div><dt>Duration</dt><dd>44.18 s · 3 takes</dd></div>
+    <div><dt>Word accuracy</dt><dd>98.9 % (independent transcription)</dd></div>
+    <div><dt>Clicks in quiet passages*</dt><dd>4</dd></div>
+    <div><dt>Problems at joins between takes</dt><dd class="ok">0 (of 2 joins)</dd></div>
+    <div><dt>Hard starts / stops</dt><dd class="ok">0 / 0</dd></div>
+    <div><dt>Cut-off ending</dt><dd class="ok">no</dd></div>
+    <div><dt>Dead digital silence</dt><dd class="ok">none</dd></div>
+    <div><dt>Speech level</dt><dd>-19.64 dB RMS</dd></div>
+  </dl></div></div>
+    <details><summary>Script</summary><pre class="script">Chaque soir, depuis trente-sept ans, la gardienne du phare montait les cent douze marches de la tour. Elle nettoyait la lentille, vérifiait la mèche, puis allumait la lampe. Personne en ville ne connaissait son nom, mais tout le monde connaissait sa lumière.
+
+Cette nuit-là, la tempête arriva plus tôt que prévu. Le vent hurlait contre les vitres, et la pluie frappait la porte comme une main impatiente. Elle hésita un instant, puis elle reprit sa montée, marche après marche.
+
+Tout en haut, la radio grésilla. « Vous m'entendez ? » demanda une voix lointaine. Elle prit le micro, respira profondément, et répondit simplement : « Je suis là. Suivez la lumière. »</pre></details></section>
+<section id="02-en-documentary"><h2>EN documentary (~30 s)</h2><div class="pair"><div class="side"><figure><figcaption>Before</figcaption><audio controls preload="none" src="before/02-en-documentary.mp3"></audio></figure>
+  <dl class="m">
+    <div><dt>Duration</dt><dd>31.08 s · 2 takes</dd></div>
+    <div><dt>Word accuracy</dt><dd>98.6 % (independent transcription)</dd></div>
+    <div><dt>Clicks in quiet passages*</dt><dd>3</dd></div>
+    <div><dt>Problems at joins between takes</dt><dd class="ok">0 (of 1 joins)</dd></div>
+    <div><dt>Hard starts / stops</dt><dd class="warn">1 / 0</dd></div>
+    <div><dt>Cut-off ending</dt><dd class="ok">no</dd></div>
+    <div><dt>Dead digital silence</dt><dd class="warn">1 gap(s), 0.677 s</dd></div>
+    <div><dt>Speech level</dt><dd>-19.57 dB RMS</dd></div>
+  </dl></div><div class="side after"><figure><figcaption>After</figcaption><audio controls preload="none" src="after/02-en-documentary.mp3"></audio></figure>
+  <dl class="m">
+    <div><dt>Duration</dt><dd>31.13 s · 2 takes</dd></div>
+    <div><dt>Word accuracy</dt><dd>98.6 % (independent transcription)</dd></div>
+    <div><dt>Clicks in quiet passages*</dt><dd>1</dd></div>
+    <div><dt>Problems at joins between takes</dt><dd class="ok">0 (of 1 joins)</dd></div>
+    <div><dt>Hard starts / stops</dt><dd class="warn">0 / 1</dd></div>
+    <div><dt>Cut-off ending</dt><dd class="ok">no</dd></div>
+    <div><dt>Dead digital silence</dt><dd class="ok">none</dd></div>
+    <div><dt>Speech level</dt><dd>-19.58 dB RMS</dd></div>
+  </dl></div></div>
+    <details><summary>Script</summary><pre class="script">Off the coast of Brittany, the tides rise and fall by more than twelve metres. Twice a day, entire villages watch the sea retreat for miles, revealing a landscape of sand, rock and seaweed.
+
+For centuries, fishermen have read these rhythms like a calendar. Today, scientists measure them with satellites, but the lesson remains the same: the ocean keeps its own time, and everything on the shore adapts to it.</pre></details></section>
+<section id="03-fr-pub"><h2>Pub FR énergique (~10 s)</h2><div class="pair"><div class="side"><figure><figcaption>Before</figcaption><audio controls preload="none" src="before/03-fr-pub.mp3"></audio></figure>
+  <dl class="m">
+    <div><dt>Duration</dt><dd>9.79 s · 1 take</dd></div>
+    <div><dt>Word accuracy</dt><dd>96 % (independent transcription)</dd></div>
+    <div><dt>Clicks in quiet passages*</dt><dd>2</dd></div>
+    
+    <div><dt>Hard starts / stops</dt><dd class="ok">0 / 0</dd></div>
+    <div><dt>Cut-off ending</dt><dd class="ok">no</dd></div>
+    <div><dt>Dead digital silence</dt><dd class="ok">none</dd></div>
+    <div><dt>Speech level</dt><dd>-19.56 dB RMS</dd></div>
+  </dl></div><div class="side after"><figure><figcaption>After</figcaption><audio controls preload="none" src="after/03-fr-pub.mp3"></audio></figure>
+  <dl class="m">
+    <div><dt>Duration</dt><dd>11.28 s · 1 take</dd></div>
+    <div><dt>Word accuracy</dt><dd>100 % (independent transcription)</dd></div>
+    <div><dt>Clicks in quiet passages*</dt><dd>0</dd></div>
+    
+    <div><dt>Hard starts / stops</dt><dd class="ok">0 / 0</dd></div>
+    <div><dt>Cut-off ending</dt><dd class="ok">no</dd></div>
+    <div><dt>Dead digital silence</dt><dd class="ok">none</dd></div>
+    <div><dt>Speech level</dt><dd>-19.52 dB RMS</dd></div>
+  </dl></div></div>
+    <details><summary>Script</summary><pre class="script">Nouveau ! La voix de vos vidéos, en un clic. Choisissez une voix, une émotion, un style. Et c'est prêt. Essayez GPTVoice dès aujourd'hui !</pre></details></section>
+<section id="04-en-emotions"><h2>EN emotional range: calm → excited → sad (one passage)</h2><div class="pair"><div class="side"><figure><figcaption>Before</figcaption><audio controls preload="none" src="before/04-en-emotions.mp3"></audio></figure>
+  <dl class="m">
+    <div><dt>Duration</dt><dd>18.7 s · 3 takes</dd></div>
+    <div><dt>Word accuracy</dt><dd>96.2 % (independent transcription)</dd></div>
+    <div><dt>Clicks in quiet passages*</dt><dd>1</dd></div>
+    <div><dt>Problems at joins between takes</dt><dd class="ok">0 (of 2 joins)</dd></div>
+    <div><dt>Hard starts / stops</dt><dd class="ok">0 / 0</dd></div>
+    <div><dt>Cut-off ending</dt><dd class="ok">no</dd></div>
+    <div><dt>Dead digital silence</dt><dd class="warn">2 gap(s), 0.188 s</dd></div>
+    <div><dt>Speech level</dt><dd>-19.62 dB RMS</dd></div>
+  </dl></div><div class="side after"><figure><figcaption>After</figcaption><audio controls preload="none" src="after/04-en-emotions.mp3"></audio></figure>
+  <dl class="m">
+    <div><dt>Duration</dt><dd>22.08 s · 3 takes</dd></div>
+    <div><dt>Word accuracy</dt><dd>100 % (independent transcription)</dd></div>
+    <div><dt>Clicks in quiet passages*</dt><dd>1</dd></div>
+    <div><dt>Problems at joins between takes</dt><dd class="ok">0 (of 2 joins)</dd></div>
+    <div><dt>Hard starts / stops</dt><dd class="ok">0 / 0</dd></div>
+    <div><dt>Cut-off ending</dt><dd class="ok">no</dd></div>
+    <div><dt>Dead digital silence</dt><dd class="ok">none</dd></div>
+    <div><dt>Speech level</dt><dd>-19.97 dB RMS</dd></div>
+  </dl></div></div>
+    <details><summary>Script</summary><pre class="script">[calm] The letter arrived on a quiet Sunday morning. I opened it slowly, expecting nothing at all. [excited] And then I saw it: we had won! After all those years, we had actually won! [sad] But by the time I ran to tell her, the house was empty, and the only answer was the silence.</pre></details></section>
+<section id="05-fr-conte-chuchote"><h2>Conte FR chuchoté avec [pause] et [chuchote]</h2><div class="pair"><div class="side"><figure><figcaption>Before</figcaption><audio controls preload="none" src="before/05-fr-conte-chuchote.mp3"></audio></figure>
+  <dl class="m">
+    <div><dt>Duration</dt><dd>30.29 s · 4 takes</dd></div>
+    <div><dt>Word accuracy</dt><dd>100 % (independent transcription)</dd></div>
+    <div><dt>Clicks in quiet passages*</dt><dd>3</dd></div>
+    <div><dt>Problems at joins between takes</dt><dd class="ok">0 (of 3 joins)</dd></div>
+    <div><dt>Hard starts / stops</dt><dd class="warn">0 / 1</dd></div>
+    <div><dt>Cut-off ending</dt><dd class="ok">no</dd></div>
+    <div><dt>Dead digital silence</dt><dd class="warn">3 gap(s), 1.784 s</dd></div>
+    <div><dt>Speech level</dt><dd>-21.62 dB RMS</dd></div>
+  </dl></div><div class="side after"><figure><figcaption>After</figcaption><audio controls preload="none" src="after/05-fr-conte-chuchote.mp3"></audio></figure>
+  <dl class="m">
+    <div><dt>Duration</dt><dd>39.46 s · 4 takes</dd></div>
+    <div><dt>Word accuracy</dt><dd>100 % (independent transcription)</dd></div>
+    <div><dt>Clicks in quiet passages*</dt><dd>8</dd></div>
+    <div><dt>Problems at joins between takes</dt><dd class="ok">0 (of 3 joins)</dd></div>
+    <div><dt>Hard starts / stops</dt><dd class="warn">0 / 2</dd></div>
+    <div><dt>Cut-off ending</dt><dd class="ok">no</dd></div>
+    <div><dt>Dead digital silence</dt><dd class="ok">none</dd></div>
+    <div><dt>Speech level</dt><dd>-22.9 dB RMS</dd></div>
+  </dl></div></div>
+    <details><summary>Script</summary><pre class="script">Il était une fois une petite souris qui vivait sous le plancher d'une vieille bibliothèque. [pause 1s] Chaque nuit, quand tout le monde dormait, elle sortait lire un livre. [chuchote] Mais cette nuit-là, quelqu'un avait laissé une bougie allumée… [pause 0.8s] Et dans la lumière, un chat la regardait.</pre></details></section>
+<section id="06-dialogue-fr-en"><h2>Dialogue FR/EN, 2 voix, avec [laughs]</h2><div class="pair"><div class="side"><figure><figcaption>Before</figcaption><audio controls preload="none" src="before/06-dialogue-fr-en.mp3"></audio></figure>
+  <dl class="m">
+    <div><dt>Duration</dt><dd>24.55 s · 5 takes</dd></div>
+    <div><dt>Word accuracy</dt><dd>98.2 % (independent transcription)</dd></div>
+    <div><dt>Clicks in quiet passages*</dt><dd>3</dd></div>
+    <div><dt>Problems at joins between takes</dt><dd class="ok">0 (of 4 joins)</dd></div>
+    <div><dt>Hard starts / stops</dt><dd class="ok">0 / 0</dd></div>
+    <div><dt>Cut-off ending</dt><dd class="ok">no</dd></div>
+    <div><dt>Dead digital silence</dt><dd class="warn">4 gap(s), 1.353 s</dd></div>
+    <div><dt>Speech level</dt><dd>-19.58 dB RMS</dd></div>
+  </dl></div><div class="side after"><figure><figcaption>After</figcaption><audio controls preload="none" src="after/06-dialogue-fr-en.mp3"></audio></figure>
+  <dl class="m">
+    <div><dt>Duration</dt><dd>25.2 s · 4 takes</dd></div>
+    <div><dt>Word accuracy</dt><dd>100 % (independent transcription)</dd></div>
+    <div><dt>Clicks in quiet passages*</dt><dd>3</dd></div>
+    <div><dt>Problems at joins between takes</dt><dd class="ok">0 (of 3 joins)</dd></div>
+    <div><dt>Hard starts / stops</dt><dd class="ok">0 / 0</dd></div>
+    <div><dt>Cut-off ending</dt><dd class="ok">no</dd></div>
+    <div><dt>Dead digital silence</dt><dd class="ok">none</dd></div>
+    <div><dt>Speech level</dt><dd>-20.28 dB RMS</dd></div>
+  </dl></div></div>
+    <details><summary>Script</summary><pre class="script">CLAIRE (amusée): [laughs] Tu as vraiment commandé un croissant en anglais ?
+JAMES: I tried! I said &quot;one croissant, please&quot;, and she answered in perfect French.
+CLAIRE: Normal, on est à Paris. [laughs] La prochaine fois, dis simplement « un croissant, s'il vous plaît ».
+JAMES (laughing): Un croissant, s'il vous plaît. Okay… I think I can do that.</pre></details></section>
+<section id="07-clips-video"><h2>Clips vidéo : 4 plans avec durée cible</h2><p class="note">Four separate clips, each fitted to its shot length (speed adjusted, best take kept).</p><div class="clip"><h3>Shot 1 · target 3.5 s</h3><p class="script">Une ville s'éveille au bord de la mer.</p>
+      <div class="pair"><div class="side"><figure><figcaption>Before</figcaption><audio controls preload="none" src="before/07-clips-video/01-plan-1.mp3"></audio></figure>
+  <dl class="m">
+    <div><dt>Duration</dt><dd>3.41 s</dd></div>
+    <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+    <div><dt>Clicks in quiet passages*</dt><dd>0</dd></div>
+    
+    <div><dt>Hard starts / stops</dt><dd class="ok">0 / 0</dd></div>
+    <div><dt>Cut-off ending</dt><dd class="ok">no</dd></div>
+    <div><dt>Dead digital silence</dt><dd class="ok">none</dd></div>
+    <div><dt>Speech level</dt><dd>-19.49 dB RMS</dd></div>
+  </dl><p class="fit">3.35 s — fits</p></div>
+      <div class="side after"><figure><figcaption>After</figcaption><audio controls preload="none" src="after/07-clips-video/01-plan-1.mp3"></audio></figure>
+  <dl class="m">
+    <div><dt>Duration</dt><dd>3.22 s</dd></div>
+    <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+    <div><dt>Clicks in quiet passages*</dt><dd>0</dd></div>
+    
+    <div><dt>Hard starts / stops</dt><dd class="ok">0 / 0</dd></div>
+    <div><dt>Cut-off ending</dt><dd class="ok">no</dd></div>
+    <div><dt>Dead digital silence</dt><dd class="ok">none</dd></div>
+    <div><dt>Speech level</dt><dd>-19.56 dB RMS</dd></div>
+  </dl><p class="fit">3.15 s — does not fit</p></div></div></div><div class="clip"><h3>Shot 2 · target 4 s</h3><p class="script">Chaque matin, les bateaux partent avant le jour.</p>
+      <div class="pair"><div class="side"><figure><figcaption>Before</figcaption><audio controls preload="none" src="before/07-clips-video/02-plan-2.mp3"></audio></figure>
+  <dl class="m">
+    <div><dt>Duration</dt><dd>4.01 s</dd></div>
+    <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+    <div><dt>Clicks in quiet passages*</dt><dd>0</dd></div>
+    
+    <div><dt>Hard starts / stops</dt><dd class="warn">0 / 1</dd></div>
+    <div><dt>Cut-off ending</dt><dd class="ok">no</dd></div>
+    <div><dt>Dead digital silence</dt><dd class="ok">none</dd></div>
+    <div><dt>Speech level</dt><dd>-19.69 dB RMS</dd></div>
+  </dl><p class="fit">3.95 s — fits</p></div>
+      <div class="side after"><figure><figcaption>After</figcaption><audio controls preload="none" src="after/07-clips-video/02-plan-2.mp3"></audio></figure>
+  <dl class="m">
+    <div><dt>Duration</dt><dd>3.86 s</dd></div>
+    <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+    <div><dt>Clicks in quiet passages*</dt><dd>0</dd></div>
+    
+    <div><dt>Hard starts / stops</dt><dd class="ok">0 / 0</dd></div>
+    <div><dt>Cut-off ending</dt><dd class="ok">no</dd></div>
+    <div><dt>Dead digital silence</dt><dd class="ok">none</dd></div>
+    <div><dt>Speech level</dt><dd>-19.97 dB RMS</dd></div>
+  </dl><p class="fit">3.79 s — fits</p></div></div></div><div class="clip"><h3>Shot 3 · target 4 s</h3><p class="script">Mais aujourd'hui, l'un d'eux ne reviendra pas.</p>
+      <div class="pair"><div class="side"><figure><figcaption>Before</figcaption><audio controls preload="none" src="before/07-clips-video/03-plan-3.mp3"></audio></figure>
+  <dl class="m">
+    <div><dt>Duration</dt><dd>4.49 s</dd></div>
+    <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+    <div><dt>Clicks in quiet passages*</dt><dd>0</dd></div>
+    
+    <div><dt>Hard starts / stops</dt><dd class="ok">0 / 0</dd></div>
+    <div><dt>Cut-off ending</dt><dd class="ok">no</dd></div>
+    <div><dt>Dead digital silence</dt><dd class="ok">none</dd></div>
+    <div><dt>Speech level</dt><dd>-19.57 dB RMS</dd></div>
+  </dl><p class="fit">4.42 s — does not fit</p></div>
+      <div class="side after"><figure><figcaption>After</figcaption><audio controls preload="none" src="after/07-clips-video/03-plan-3.mp3"></audio></figure>
+  <dl class="m">
+    <div><dt>Duration</dt><dd>4.32 s</dd></div>
+    <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+    <div><dt>Clicks in quiet passages*</dt><dd>1</dd></div>
+    
+    <div><dt>Hard starts / stops</dt><dd class="ok">0 / 0</dd></div>
+    <div><dt>Cut-off ending</dt><dd class="ok">no</dd></div>
+    <div><dt>Dead digital silence</dt><dd class="ok">none</dd></div>
+    <div><dt>Speech level</dt><dd>-19.52 dB RMS</dd></div>
+  </dl><p class="fit">4.27 s — fits</p></div></div></div><div class="clip"><h3>Shot 4 · target 2.5 s</h3><p class="script">Le Phare. Bientôt.</p>
+      <div class="pair"><div class="side"><figure><figcaption>Before</figcaption><audio controls preload="none" src="before/07-clips-video/04-plan-4.mp3"></audio></figure>
+  <dl class="m">
+    <div><dt>Duration</dt><dd>2.54 s</dd></div>
+    <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+    <div><dt>Clicks in quiet passages*</dt><dd>0</dd></div>
+    
+    <div><dt>Hard starts / stops</dt><dd class="ok">0 / 0</dd></div>
+    <div><dt>Cut-off ending</dt><dd class="ok">no</dd></div>
+    <div><dt>Dead digital silence</dt><dd class="ok">none</dd></div>
+    <div><dt>Speech level</dt><dd>-19.67 dB RMS</dd></div>
+  </dl><p class="fit">2.49 s — fits</p></div>
+      <div class="side after"><figure><figcaption>After</figcaption><audio controls preload="none" src="after/07-clips-video/04-plan-4.mp3"></audio></figure>
+  <dl class="m">
+    <div><dt>Duration</dt><dd>2.57 s</dd></div>
+    <div><dt>Word accuracy</dt><dd>100 %</dd></div>
+    <div><dt>Clicks in quiet passages*</dt><dd>0</dd></div>
+    
+    <div><dt>Hard starts / stops</dt><dd class="ok">0 / 0</dd></div>
+    <div><dt>Cut-off ending</dt><dd class="ok">no</dd></div>
+    <div><dt>Dead digital silence</dt><dd class="ok">none</dd></div>
+    <div><dt>Speech level</dt><dd>-19.77 dB RMS</dd></div>
+  </dl><p class="fit">2.5 s — fits</p></div></div></div></section>
+<section id="08-fr-long-2min"><h2>Texte long FR (~1 min 40) — teste les jointures</h2><div class="pair"><div class="side"><figure><figcaption>Before</figcaption><audio controls preload="none" src="before/08-fr-long-2min.mp3"></audio></figure>
+  <dl class="m">
+    <div><dt>Duration</dt><dd>99.48 s · 5 takes</dd></div>
+    <div><dt>Word accuracy</dt><dd>98.9 % (independent transcription)</dd></div>
+    <div><dt>Clicks in quiet passages*</dt><dd>15</dd></div>
+    <div><dt>Problems at joins between takes</dt><dd class="ok">0 (of 4 joins)</dd></div>
+    <div><dt>Hard starts / stops</dt><dd class="ok">0 / 0</dd></div>
+    <div><dt>Cut-off ending</dt><dd class="ok">no</dd></div>
+    <div><dt>Dead digital silence</dt><dd class="warn">5 gap(s), 2.774 s</dd></div>
+    <div><dt>Speech level</dt><dd>-19.62 dB RMS</dd></div>
+  </dl></div><div class="side after"><figure><figcaption>After</figcaption><audio controls preload="none" src="after/08-fr-long-2min.mp3"></audio></figure>
+  <dl class="m">
+    <div><dt>Duration</dt><dd>98.83 s · 5 takes</dd></div>
+    <div><dt>Word accuracy</dt><dd>98.6 % (independent transcription)</dd></div>
+    <div><dt>Clicks in quiet passages*</dt><dd>17</dd></div>
+    <div><dt>Problems at joins between takes</dt><dd class="ok">0 (of 4 joins)</dd></div>
+    <div><dt>Hard starts / stops</dt><dd class="ok">0 / 0</dd></div>
+    <div><dt>Cut-off ending</dt><dd class="ok">no</dd></div>
+    <div><dt>Dead digital silence</dt><dd class="ok">none</dd></div>
+    <div><dt>Speech level</dt><dd>-19.66 dB RMS</dd></div>
+  </dl></div></div>
+    <details><summary>Script</summary><pre class="script">Le train de nuit quitta Paris à vingt-deux heures quinze, sous une pluie fine qui faisait briller les rails. Dans le compartiment numéro sept, une femme d'une soixantaine d'années rangeait soigneusement un vieux carnet dans son sac. Elle n'avait pas pris ce train depuis plus de trente ans.
+
+À l'époque, elle était étudiante. Elle partait chaque été rejoindre sa grand-mère dans un petit village des Alpes, où l'on parlait encore un patois que plus personne ne comprend aujourd'hui. Elle se souvenait de l'odeur du foin, du bruit des cloches, et de ce silence immense, le soir, quand la montagne avalait toutes les lumières.
+
+Le contrôleur passa vérifier les billets. Il remarqua le carnet, dont la couverture de cuir était usée jusqu'à la trame. « Un souvenir ? » demanda-t-il poliment. Elle sourit. « Une promesse », répondit-elle. Il n'insista pas, mais il resta un instant sur le seuil, comme s'il attendait la suite de l'histoire.
+
+Alors elle raconta. La lettre écrite à vingt ans, jamais envoyée. Le garçon du village, qui voulait devenir guide de haute montagne. Le dernier été, la dispute idiote, le départ précipité. Et ces trente années passées à se demander ce qui serait arrivé si elle avait simplement posté cette lettre.
+
+Le train ralentit à l'approche de Grenoble. Dehors, l'aube commençait à dessiner les sommets. Elle ouvrit le carnet à la dernière page, où l'enveloppe attendait toujours, jaunie, avec un timbre qui ne valait plus rien. « Vous allez la poster ? » demanda le contrôleur. Elle regarda la montagne, puis elle hocha la tête. « Cette fois, oui. »</pre></details></section>
+
+<footer>* "Clicks in quiet passages" counts every sharp step next to silence. Most of them are natural consonants (p, t, k) after a pause, present in both versions; the numbers that show splicing problems are "Hard starts / stops", "Cut-off ending", "Dead digital silence" and "Problems at joins between takes".<br>Local file, generated 2026-10-05 17:21 by bench/listening-page.js. Not published.</footer>
+</main>
+</body>
+</html>

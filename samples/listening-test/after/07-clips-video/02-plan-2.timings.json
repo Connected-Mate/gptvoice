@@ -1,0 +1,21 @@
+{
+  "file": "02-plan-2.mp3",
+  "durationSec": 3.792,
+  "passages": [
+    {
+      "start": 0.21,
+      "end": 3.332,
+      "text": "Chaque matin, les bateaux partent avant le jour.",
+      "speaker": null,
+      "voice": "cedar"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0.21,
+      "end": 3.332,
+      "text": "Chaque matin, les bateaux partent avant le jour.",
+      "speaker": null
+    }
+  ]
+}

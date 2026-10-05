@@ -1,0 +1,19 @@
+1
+00:00:00,210 --> 00:00:04,139
+CLAIRE: Tu as vraiment commandé un croissant en anglais ?
+
+2
+00:00:04,439 --> 00:00:10,689
+JAMES: I tried! I said "one croissant, please", and she answered in perfect French.
+
+3
+00:00:10,989 --> 00:00:12,813
+CLAIRE: Normal, on est à Paris.
+
+4
+00:00:12,813 --> 00:00:18,204
+CLAIRE: La prochaine fois, dis simplement « un croissant, s'il vous plaît ».
+
+5
+00:00:18,504 --> 00:00:24,669
+JAMES: Un croissant, s'il vous plaît. Okay… I think I can do that.

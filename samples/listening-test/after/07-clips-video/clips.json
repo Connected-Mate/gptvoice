@@ -1,0 +1,70 @@
+{
+  "createdAt": "2026-10-05T17:18:00.952Z",
+  "totalSec": 13.71,
+  "clips": [
+    {
+      "index": 1,
+      "id": "plan-1",
+      "file": "/Users/0104389S/gptvoice/samples/listening-test/after/07-clips-video/01-plan-1.mp3",
+      "subtitles": "/Users/0104389S/gptvoice/samples/listening-test/after/07-clips-video/01-plan-1.srt",
+      "timings": "/Users/0104389S/gptvoice/samples/listening-test/after/07-clips-video/01-plan-1.timings.json",
+      "durationSec": 3.15,
+      "targetSec": 3.5,
+      "fits": false,
+      "speed": 1.17,
+      "takes": 3,
+      "accuracy": 100,
+      "warnings": [],
+      "text": "Une ville s'éveille au bord de la mer.",
+      "timelineStart": 0
+    },
+    {
+      "index": 2,
+      "id": "plan-2",
+      "file": "/Users/0104389S/gptvoice/samples/listening-test/after/07-clips-video/02-plan-2.mp3",
+      "subtitles": "/Users/0104389S/gptvoice/samples/listening-test/after/07-clips-video/02-plan-2.srt",
+      "timings": "/Users/0104389S/gptvoice/samples/listening-test/after/07-clips-video/02-plan-2.timings.json",
+      "durationSec": 3.79,
+      "targetSec": 4,
+      "fits": true,
+      "speed": 1.14,
+      "takes": 3,
+      "accuracy": 100,
+      "warnings": [],
+      "text": "Chaque matin, les bateaux partent avant le jour.",
+      "timelineStart": 3.15
+    },
+    {
+      "index": 3,
+      "id": "plan-3",
+      "file": "/Users/0104389S/gptvoice/samples/listening-test/after/07-clips-video/03-plan-3.mp3",
+      "subtitles": "/Users/0104389S/gptvoice/samples/listening-test/after/07-clips-video/03-plan-3.srt",
+      "timings": "/Users/0104389S/gptvoice/samples/listening-test/after/07-clips-video/03-plan-3.timings.json",
+      "durationSec": 4.27,
+      "targetSec": 4,
+      "fits": true,
+      "speed": 1,
+      "takes": 1,
+      "accuracy": 100,
+      "warnings": [],
+      "text": "Mais aujourd'hui, l'un d'eux ne reviendra pas.",
+      "timelineStart": 6.94
+    },
+    {
+      "index": 4,
+      "id": "plan-4",
+      "file": "/Users/0104389S/gptvoice/samples/listening-test/after/07-clips-video/04-plan-4.mp3",
+      "subtitles": "/Users/0104389S/gptvoice/samples/listening-test/after/07-clips-video/04-plan-4.srt",
+      "timings": "/Users/0104389S/gptvoice/samples/listening-test/after/07-clips-video/04-plan-4.timings.json",
+      "durationSec": 2.5,
+      "targetSec": 2.5,
+      "fits": true,
+      "speed": 1.37,
+      "takes": 2,
+      "accuracy": 100,
+      "warnings": [],
+      "text": "Le Phare. Bientôt.",
+      "timelineStart": 11.21
+    }
+  ]
+}

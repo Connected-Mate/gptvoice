@@ -1,0 +1,19 @@
+1
+00:00:00,000 --> 00:00:02,909
+The letter arrived on a quiet Sunday morning.
+
+2
+00:00:02,909 --> 00:00:05,818
+I opened it slowly, expecting nothing at all.
+
+3
+00:00:05,938 --> 00:00:11,487
+And then I saw it: we had won! After all those years, we had actually won!
+
+4
+00:00:11,607 --> 00:00:15,855
+But by the time I ran to tell her, the house was empty,
+
+5
+00:00:15,855 --> 00:00:18,635
+and the only answer was the silence.

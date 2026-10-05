@@ -1,0 +1,23 @@
+1
+00:00:00,000 --> 00:00:06,111
+Off the coast of Brittany, the tides rise and fall by more than twelve metres.
+
+2
+00:00:06,111 --> 00:00:10,890
+Twice a day, entire villages watch the sea retreat for miles,
+
+3
+00:00:10,890 --> 00:00:14,651
+revealing a landscape of sand, rock and seaweed.
+
+4
+00:00:15,351 --> 00:00:20,064
+For centuries, fishermen have read these rhythms like a calendar.
+
+5
+00:00:20,064 --> 00:00:25,864
+Today, scientists measure them with satellites, but the lesson remains the same:
+
+6
+00:00:25,864 --> 00:00:31,011
+the ocean keeps its own time, and everything on the shore adapts to it.

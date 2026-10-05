@@ -1,0 +1,59 @@
+{
+  "file": "04-en-emotions.mp3",
+  "durationSec": 22.019,
+  "passages": [
+    {
+      "start": 0.21,
+      "end": 6.56,
+      "text": "The letter arrived on a quiet Sunday morning. I opened it slowly, expecting nothing at all.",
+      "speaker": null,
+      "voice": "cedar"
+    },
+    {
+      "start": 6.81,
+      "end": 13.11,
+      "text": "And then I saw it: we had won! After all those years, we had actually won!",
+      "speaker": null,
+      "voice": "cedar"
+    },
+    {
+      "start": 13.36,
+      "end": 21.559,
+      "text": "But by the time I ran to tell her, the house was empty, and the only answer was the silence.",
+      "speaker": null,
+      "voice": "cedar"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0.21,
+      "end": 3.385,
+      "text": "The letter arrived on a quiet Sunday morning.",
+      "speaker": null
+    },
+    {
+      "start": 3.385,
+      "end": 6.56,
+      "text": "I opened it slowly, expecting nothing at all.",
+      "speaker": null
+    },
+    {
+      "start": 6.81,
+      "end": 13.11,
+      "text": "And then I saw it: we had won! After all those years, we had actually won!",
+      "speaker": null
+    },
+    {
+      "start": 13.36,
+      "end": 18.315,
+      "text": "But by the time I ran to tell her, the house was empty,",
+      "speaker": null
+    },
+    {
+      "start": 18.315,
+      "end": 21.559,
+      "text": "and the only answer was the silence.",
+      "speaker": null
+    }
+  ]
+}

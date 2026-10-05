@@ -1,0 +1,73 @@
+{
+  "file": "06-dialogue-fr-en.mp3",
+  "durationSec": 24.503,
+  "passages": [
+    {
+      "start": 0,
+      "end": 4.197,
+      "text": "Tu as vraiment commandé un croissant en anglais ?",
+      "speaker": "CLAIRE",
+      "voice": "coral"
+    },
+    {
+      "start": 4.647,
+      "end": 10.424,
+      "text": "I tried! I said \"one croissant, please\", and she answered in perfect French.",
+      "speaker": "JAMES",
+      "voice": "verse"
+    },
+    {
+      "start": 10.874,
+      "end": 12.882,
+      "text": "Normal, on est à Paris.",
+      "speaker": "CLAIRE",
+      "voice": "coral"
+    },
+    {
+      "start": 13.002,
+      "end": 17.568,
+      "text": "La prochaine fois, dis simplement « un croissant, s'il vous plaît ».",
+      "speaker": "CLAIRE",
+      "voice": "coral"
+    },
+    {
+      "start": 18.018,
+      "end": 24.503,
+      "text": "Un croissant, s'il vous plaît. Okay… I think I can do that.",
+      "speaker": "JAMES",
+      "voice": "verse"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0,
+      "end": 4.197,
+      "text": "Tu as vraiment commandé un croissant en anglais ?",
+      "speaker": "CLAIRE"
+    },
+    {
+      "start": 4.647,
+      "end": 10.424,
+      "text": "I tried! I said \"one croissant, please\", and she answered in perfect French.",
+      "speaker": "JAMES"
+    },
+    {
+      "start": 10.874,
+      "end": 12.882,
+      "text": "Normal, on est à Paris.",
+      "speaker": "CLAIRE"
+    },
+    {
+      "start": 13.002,
+      "end": 17.568,
+      "text": "La prochaine fois, dis simplement « un croissant, s'il vous plaît ».",
+      "speaker": "CLAIRE"
+    },
+    {
+      "start": 18.018,
+      "end": 24.503,
+      "text": "Un croissant, s'il vous plaît. Okay… I think I can do that.",
+      "speaker": "JAMES"
+    }
+  ]
+}

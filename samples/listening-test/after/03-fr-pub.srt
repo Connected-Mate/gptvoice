@@ -1,0 +1,7 @@
+1
+00:00:00,210 --> 00:00:06,983
+Nouveau ! La voix de vos vidéos, en un clic. Choisissez une voix, une émotion, un style.
+
+2
+00:00:06,983 --> 00:00:10,755
+Et c'est prêt. Essayez GPTVoice dès aujourd'hui !

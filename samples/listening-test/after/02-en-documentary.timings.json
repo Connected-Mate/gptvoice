@@ -1,0 +1,58 @@
+{
+  "file": "02-en-documentary.mp3",
+  "durationSec": 31.07,
+  "passages": [
+    {
+      "start": 0.21,
+      "end": 14.41,
+      "text": "Off the coast of Brittany, the tides rise and fall by more than twelve metres. Twice a day, entire villages watch the sea retreat for miles, revealing a landscape of sand, rock and seaweed.",
+      "speaker": null,
+      "voice": "ash"
+    },
+    {
+      "start": 15.01,
+      "end": 30.61,
+      "text": "For centuries, fishermen have read these rhythms like a calendar. Today, scientists measure them with satellites, but the lesson remains the same: the ocean keeps its own time, and everything on the shore adapts to it.",
+      "speaker": null,
+      "voice": "ash"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0.21,
+      "end": 6.133,
+      "text": "Off the coast of Brittany, the tides rise and fall by more than twelve metres.",
+      "speaker": null
+    },
+    {
+      "start": 6.133,
+      "end": 10.765,
+      "text": "Twice a day, entire villages watch the sea retreat for miles,",
+      "speaker": null
+    },
+    {
+      "start": 10.765,
+      "end": 14.41,
+      "text": "revealing a landscape of sand, rock and seaweed.",
+      "speaker": null
+    },
+    {
+      "start": 15.01,
+      "end": 19.704,
+      "text": "For centuries, fishermen have read these rhythms like a calendar.",
+      "speaker": null
+    },
+    {
+      "start": 19.704,
+      "end": 25.482,
+      "text": "Today, scientists measure them with satellites, but the lesson remains the same:",
+      "speaker": null
+    },
+    {
+      "start": 25.482,
+      "end": 30.61,
+      "text": "the ocean keeps its own time, and everything on the shore adapts to it.",
+      "speaker": null
+    }
+  ]
+}

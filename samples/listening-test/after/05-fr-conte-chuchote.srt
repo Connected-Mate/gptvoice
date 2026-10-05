@@ -1,0 +1,19 @@
+1
+00:00:00,210 --> 00:00:05,301
+Il était une fois une petite souris qui vivait sous le plancher d'une vieille
+
+2
+00:00:05,301 --> 00:00:06,160
+bibliothèque.
+
+3
+00:00:07,160 --> 00:00:13,060
+Chaque nuit, quand tout le monde dormait, elle sortait lire un livre.
+
+4
+00:00:13,310 --> 00:00:28,477
+Mais cette nuit-là, quelqu'un avait laissé une bougie allumée…
+
+5
+00:00:29,277 --> 00:00:38,926
+Et dans la lumière, un chat la regardait.

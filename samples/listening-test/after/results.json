@@ -1,0 +1,93 @@
+{
+  "01-fr-narration": {
+    "file": "01-fr-narration.mp3",
+    "durationSec": 44.12,
+    "passages": 3,
+    "accuracy": 100,
+    "verifiedAccuracy": 98.9,
+    "warnings": []
+  },
+  "02-en-documentary": {
+    "file": "02-en-documentary.mp3",
+    "durationSec": 31.07,
+    "passages": 2,
+    "accuracy": 100,
+    "verifiedAccuracy": 98.6,
+    "warnings": []
+  },
+  "03-fr-pub": {
+    "file": "03-fr-pub.mp3",
+    "durationSec": 11.21,
+    "passages": 1,
+    "accuracy": 100,
+    "verifiedAccuracy": 100,
+    "warnings": []
+  },
+  "04-en-emotions": {
+    "file": "04-en-emotions.mp3",
+    "durationSec": 22.02,
+    "passages": 3,
+    "accuracy": 100,
+    "verifiedAccuracy": 100,
+    "warnings": []
+  },
+  "05-fr-conte-chuchote": {
+    "file": "05-fr-conte-chuchote.mp3",
+    "durationSec": 39.39,
+    "passages": 4,
+    "accuracy": 79.5,
+    "verifiedAccuracy": 100,
+    "warnings": [
+      "passage 3 may not be word-perfect (0%: added \"speaking\", added \"in\", added \"a\", added \"whispered\", added \"playful\", added \"warm\"): heard \"[speaking in a whispered, playful, warm, animated, clear, and a bit slower children's storyteller style, every word inte\""
+    ]
+  },
+  "06-dialogue-fr-en": {
+    "file": "06-dialogue-fr-en.mp3",
+    "durationSec": 25.13,
+    "passages": 4,
+    "accuracy": 100,
+    "verifiedAccuracy": 100,
+    "warnings": []
+  },
+  "07-clips-video": {
+    "files": [
+      {
+        "file": "07-clips-video/01-plan-1.mp3",
+        "durationSec": 3.15,
+        "targetSec": 3.5,
+        "fits": false,
+        "accuracy": 100
+      },
+      {
+        "file": "07-clips-video/02-plan-2.mp3",
+        "durationSec": 3.79,
+        "targetSec": 4,
+        "fits": true,
+        "accuracy": 100
+      },
+      {
+        "file": "07-clips-video/03-plan-3.mp3",
+        "durationSec": 4.27,
+        "targetSec": 4,
+        "fits": true,
+        "accuracy": 100
+      },
+      {
+        "file": "07-clips-video/04-plan-4.mp3",
+        "durationSec": 2.5,
+        "targetSec": 2.5,
+        "fits": true,
+        "accuracy": 100
+      }
+    ],
+    "totalSec": 13.71
+  },
+  "08-fr-long-2min": {
+    "file": "08-fr-long-2min.mp3",
+    "durationSec": 98.77,
+    "passages": 5,
+    "accuracy": 100,
+    "verifiedAccuracy": 98.6,
+    "warnings": []
+  }
+}

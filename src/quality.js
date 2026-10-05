@@ -92,14 +92,18 @@ function findAbruptEdges(x, { silentDb = -60, minJumpDb = 30, maxRampMs = 2.5 } 
   return { onsets, offsets };
 }
 
-/** Runs of exact digital zero longer than `minMs` (silence with no room tone). */
+/**
+ * Runs of exact digital zero longer than `minMs` (silence with no room tone),
+ * ignoring the first/last 300 ms where a file fade legitimately reaches zero.
+ */
 function digitalSilence(x, minMs = 50) {
   const min = Math.round((minMs / 1000) * SAMPLE_RATE);
+  const edge = Math.round(0.3 * SAMPLE_RATE);
   let run = 0;
   let total = 0;
   let count = 0;
-  for (let i = 0; i <= x.length; i++) {
-    if (i < x.length && x[i] === 0) run++;
+  for (let i = edge; i <= x.length - edge; i++) {
+    if (i < x.length - edge && x[i] === 0) run++;
     else {
       if (run >= min) {
         total += run;

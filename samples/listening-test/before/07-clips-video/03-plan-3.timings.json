@@ -1,0 +1,21 @@
+{
+  "file": "03-plan-3.mp3",
+  "durationSec": 4.425,
+  "passages": [
+    {
+      "start": 0,
+      "end": 4.425,
+      "text": "Mais aujourd'hui, l'un d'eux ne reviendra pas.",
+      "speaker": null,
+      "voice": "cedar"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0,
+      "end": 4.425,
+      "text": "Mais aujourd'hui, l'un d'eux ne reviendra pas.",
+      "speaker": null
+    }
+  ]
+}

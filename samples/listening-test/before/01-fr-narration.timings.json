@@ -1,0 +1,83 @@
+{
+  "file": "01-fr-narration.mp3",
+  "durationSec": 46.361,
+  "passages": [
+    {
+      "start": 0,
+      "end": 18.334,
+      "text": "Chaque soir, depuis trente-sept ans, la gardienne du phare montait les cent douze marches de la tour. Elle nettoyait la lentille, vérifiait la mèche, puis allumait la lampe. Personne en ville ne connaissait son nom, mais tout le monde connaissait sa lumière.",
+      "speaker": null,
+      "voice": "marin"
+    },
+    {
+      "start": 19.034,
+      "end": 33.155,
+      "text": "Cette nuit-là, la tempête arriva plus tôt que prévu. Le vent hurlait contre les vitres, et la pluie frappait la porte comme une main impatiente. Elle hésita un instant, puis elle reprit sa montée, marche après marche.",
+      "speaker": null,
+      "voice": "marin"
+    },
+    {
+      "start": 33.855,
+      "end": 46.361,
+      "text": "Tout en haut, la radio grésilla. « Vous m'entendez ? » demanda une voix lointaine. Elle prit le micro, respira profondément, et répondit simplement : « Je suis là. Suivez la lumière. »",
+      "speaker": null,
+      "voice": "marin"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0,
+      "end": 6.374,
+      "text": "Chaque soir, depuis trente-sept ans, la gardienne du phare montait les cent douze marches",
+      "speaker": null
+    },
+    {
+      "start": 6.374,
+      "end": 12.318,
+      "text": "de la tour. Elle nettoyait la lentille, vérifiait la mèche, puis allumait la lampe.",
+      "speaker": null
+    },
+    {
+      "start": 12.318,
+      "end": 18.334,
+      "text": "Personne en ville ne connaissait son nom, mais tout le monde connaissait sa lumière.",
+      "speaker": null
+    },
+    {
+      "start": 19.034,
+      "end": 22.449,
+      "text": "Cette nuit-là, la tempête arriva plus tôt que prévu.",
+      "speaker": null
+    },
+    {
+      "start": 22.449,
+      "end": 27.638,
+      "text": "Le vent hurlait contre les vitres, et la pluie frappait la porte comme une main",
+      "speaker": null
+    },
+    {
+      "start": 27.638,
+      "end": 33.155,
+      "text": "impatiente. Elle hésita un instant, puis elle reprit sa montée, marche après marche.",
+      "speaker": null
+    },
+    {
+      "start": 33.855,
+      "end": 39.489,
+      "text": "Tout en haut, la radio grésilla. « Vous m'entendez ? » demanda une voix lointaine.",
+      "speaker": null
+    },
+    {
+      "start": 39.489,
+      "end": 44.986,
+      "text": "Elle prit le micro, respira profondément, et répondit simplement : « Je suis là.",
+      "speaker": null
+    },
+    {
+      "start": 44.986,
+      "end": 46.361,
+      "text": "Suivez la lumière. »",
+      "speaker": null
+    }
+  ]
+}

@@ -1,0 +1,66 @@
+{
+  "file": "05-fr-conte-chuchote.mp3",
+  "durationSec": 30.223,
+  "passages": [
+    {
+      "start": 0,
+      "end": 5.834,
+      "text": "Il était une fois une petite souris qui vivait sous le plancher d'une vieille bibliothèque.",
+      "speaker": null,
+      "voice": "sage"
+    },
+    {
+      "start": 6.834,
+      "end": 11.408,
+      "text": "Chaque nuit, quand tout le monde dormait, elle sortait lire un livre.",
+      "speaker": null,
+      "voice": "sage"
+    },
+    {
+      "start": 11.528,
+      "end": 14.978,
+      "text": "Mais cette nuit-là, quelqu'un avait laissé une bougie allumée…",
+      "speaker": null,
+      "voice": "sage"
+    },
+    {
+      "start": 15.778,
+      "end": 30.223,
+      "text": "Et dans la lumière, un chat la regardait.",
+      "speaker": null,
+      "voice": "sage"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0,
+      "end": 4.991,
+      "text": "Il était une fois une petite souris qui vivait sous le plancher d'une vieille",
+      "speaker": null
+    },
+    {
+      "start": 4.991,
+      "end": 5.834,
+      "text": "bibliothèque.",
+      "speaker": null
+    },
+    {
+      "start": 6.834,
+      "end": 11.408,
+      "text": "Chaque nuit, quand tout le monde dormait, elle sortait lire un livre.",
+      "speaker": null
+    },
+    {
+      "start": 11.528,
+      "end": 14.978,
+      "text": "Mais cette nuit-là, quelqu'un avait laissé une bougie allumée…",
+      "speaker": null
+    },
+    {
+      "start": 15.778,
+      "end": 30.223,
+      "text": "Et dans la lumière, un chat la regardait.",
+      "speaker": null
+    }
+  ]
+}

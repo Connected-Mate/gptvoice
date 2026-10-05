@@ -1,0 +1,27 @@
+{
+  "file": "03-fr-pub.mp3",
+  "durationSec": 11.215,
+  "passages": [
+    {
+      "start": 0.21,
+      "end": 10.755,
+      "text": "Nouveau ! La voix de vos vidéos, en un clic. Choisissez une voix, une émotion, un style. Et c'est prêt. Essayez GPTVoice dès aujourd'hui !",
+      "speaker": null,
+      "voice": "coral"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0.21,
+      "end": 6.983,
+      "text": "Nouveau ! La voix de vos vidéos, en un clic. Choisissez une voix, une émotion, un style.",
+      "speaker": null
+    },
+    {
+      "start": 6.983,
+      "end": 10.755,
+      "text": "Et c'est prêt. Essayez GPTVoice dès aujourd'hui !",
+      "speaker": null
+    }
+  ]
+}

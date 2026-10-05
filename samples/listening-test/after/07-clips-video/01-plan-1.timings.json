@@ -1,0 +1,21 @@
+{
+  "file": "01-plan-1.mp3",
+  "durationSec": 3.153,
+  "passages": [
+    {
+      "start": 0.21,
+      "end": 2.693,
+      "text": "Une ville s'éveille au bord de la mer.",
+      "speaker": null,
+      "voice": "cedar"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0.21,
+      "end": 2.693,
+      "text": "Une ville s'éveille au bord de la mer.",
+      "speaker": null
+    }
+  ]
+}
