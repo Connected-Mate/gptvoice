@@ -6,7 +6,7 @@
 
 **A voice studio for Claude Code — narration, voice-overs, dialogues — through your ChatGPT sign-in.**
 
-No API key. No extra subscription. Sign in with your ChatGPT account once, and Claude Code can turn any text into an MP3/WAV: film narration, trailer voices, ads, podcasts, audiobook chapters, multi-character scenes — with emotions, inline cues, presets and subtitles.
+No API key to manage. Sign in with your ChatGPT account once, and Claude Code can turn any text into an MP3/WAV: film narration, trailer voices, ads, podcasts, audiobook chapters, multi-character scenes — with emotions, inline cues, presets and subtitles.
 
 [Listen to the demos](samples/demo/) · [Hear every voice](samples/voices/) · Sister project: [GPTImage](https://github.com/Connected-Mate/gptimage)
 
@@ -16,7 +16,7 @@ No API key. No extra subscription. Sign in with your ChatGPT account once, and C
 
 > ⚠️ **Grey area, by design — read this.** "Sign in with ChatGPT" is officially meant for Codex. GPTVoice reuses that sign-in to drive OpenAI's **realtime voice model** (the one behind voice conversations) as a text-to-speech engine. It works, but it is **not an officially sanctioned use**:
 > - Keep it personal and reasonable. Heavy use can hit plan limits (429) or, worst case, lead to account restrictions.
-> - OpenAI's realtime endpoint accepts this sign-in, while its paid API routes (`/v1/audio/speech`, `/v1/responses`) refuse it. OpenAI does **not document where realtime usage from this sign-in is counted**. After your first generations, glance at <https://platform.openai.com/usage>: if usage ever shows up there, stop.
+> - **It may cost money.** The realtime endpoint (`api.openai.com`) routes these calls to **your personal OpenAI API organization** — the platform org id inside your sign-in token. Proof: sending a fake `OpenAI-Organization` header fails with "No such organization", and your token's own org id is accepted. Each call reports API usage (≈20 audio tokens per second of speech) and API rate limits. So usage may draw on that org's API credits or a card on file — roughly **$0.03–0.08 per minute of audio at API prices** if it is billed — and it is **not proven to be included in your ChatGPT plan**. We could not see the balance without your login. Before heavy use, open <https://platform.openai.com/usage> and check whether your first generations appear; (on the regular API, an org with no credits and no card gets an "insufficient_quota" error instead of a charge — not verified for this path).
 > - Synthetic voices: never use them to impersonate a real person.
 >
 > You accept these risks by using GPTVoice. Not affiliated with OpenAI.
