@@ -23,7 +23,8 @@ No API key to manage. Sign in with your ChatGPT account once, and Claude Code ca
 
 ## What you get
 
-- A **local MCP server** with 9 tools: `generate_speech`, `generate_dialogue`, `transcribe_audio`, `list_voices`, `favorite_voice`, `save_voice_preset`, `list_voice_presets`, `delete_voice_preset`, `voice_auth_status`.
+- A **local MCP server** with 11 tools: `generate_speech`, `generate_dialogue`, `generate_clips`, `inspect_audio`, `transcribe_audio`, `list_voices`, `favorite_voice`, `save_voice_preset`, `list_voice_presets`, `delete_voice_preset`, `voice_auth_status`.
+- **Clip workflow for video**: one clip per shot with a target length (speed auto-fitted), and an **inspector that lets the agent "see" the voice** — per-sentence timings, pauses, pace, pitch, loudness, and a picture of the waveform and pitch line — so it rewrites lines until they fit and sound human.
 - A **Claude Code skill** (`/gptvoice`) that teaches the agent how to direct voices well.
 - A **CLI** (`npm run speak`) with every option.
 - **ElevenLabs-style controls**: emotion, intensity, speed, pitch, intonation, volume (whisper → shout), accent, pauses, breaths, narration styles, characters — plus **inline cues** (`[pause 1s]`, `[whispers]`, `[laughs]`…) and a **pronunciation dictionary**.
@@ -66,6 +67,20 @@ Make a scene: Léa (excited, coral) and Hugo (sceptical, ash). Hugo whispers the
 ```
 Save a preset "doc-fr": voice cedar, documentary narration, speed 0.95, and pronounce SNCF as "èss-ène-cé-èf".
 ```
+
+## Clips for video, and letting the agent "see" the voice
+
+GPTVoice speaks sentence by sentence, so for a film or a video the best results come from **separate clips aligned on the timeline**, not one long take.
+
+```bash
+npm run speak -- --clips lines.json --out-dir clips --voice cedar --narration audiobook
+npm run speak -- --inspect clips --picture
+```
+
+`lines.json`: `[{"id": "intro", "text": "…", "target_seconds": 4}, {"id": "storm", "text": "…", "target_seconds": 5, "emotion": "fear"}]`
+
+- `generate_clips` writes `01-intro.mp3`, `02-storm.mp3`… each with `.srt` and `.timings.json`, plus `clips.json` (durations, target fit, a back-to-back timeline suggestion). With `target_seconds`, the speed is adjusted and the take **closest to the shot length is kept** (up to 3 takes, ±5 %). If it still cannot fit at the speed limit, the clip is flagged "edit the text". In a live test, 4 of 4 clips with targets 3.5–5 s landed within 0.05–0.21 s.
+- `inspect_audio` (file or folder) reports total and speech time, leading/trailing silence, **every pause** (measured from the audio, ~10 ms resolution), words per second, and **per sentence**: start/end, pace, pitch, loudness. Sentence times are exact per passage when the clip has its `.timings.json`, otherwise estimated (transcription laid over the detected speech, cuts snapped to pauses). `picture: true` writes `<clip>.speech.png`: waveform (blue), pitch line (red, 60–400 Hz log scale), pauses (orange), sentence starts (green), 1-second ticks — an image a coding agent can open to judge rhythm and melody, then rewrite the line.
 
 ## Voices
 
@@ -191,6 +206,7 @@ The script lives in the session instructions rather than in a chat message: a ch
 | `src/direction.js` | Prompt engine: verbatim rules, controls → acoustic directions |
 | `src/cues.js` | Inline cues, sounds, pronunciation hints |
 | `src/accuracy.js` | Word accuracy (WER) with FR/EN number normalization |
+| `src/inspect.js`, `src/png.js` | Clip inspection: pauses, per-sentence timing/pace/pitch/loudness, PNG picture |
 | `src/voices.js` | Voice catalog, filters, level calibration |
 | `src/config.js` | Presets & favorites |
 | `src/tts.js` | Orchestration: chunking, retries, verification, assembly, SRT |
@@ -215,7 +231,7 @@ The script lives in the session instructions rather than in a chat message: a ch
 ## Tests
 
 ```bash
-npm test            # 91 offline tests (mock realtime server + real MCP client)
+npm test            # 97 offline tests (mock realtime server + real MCP client)
 npm run test:live   # live: speak, transcribe back, compare (uses your plan)
 node bench/run.js --reps 4                 # accuracy benchmark (uses your plan)
 node bench/ab-controls.js --voice cedar    # control A/B test (uses your plan)

@@ -32,13 +32,15 @@ after(async () => {
 
 const text = (r) => r.content.map((c) => c.text).join("\n");
 
-test("exposes the nine tools", async () => {
+test("exposes the eleven tools", async () => {
   const { tools } = await client.listTools();
   assert.deepEqual(tools.map((t) => t.name).sort(), [
     "delete_voice_preset",
     "favorite_voice",
+    "generate_clips",
     "generate_dialogue",
     "generate_speech",
+    "inspect_audio",
     "list_voice_presets",
     "list_voices",
     "save_voice_preset",

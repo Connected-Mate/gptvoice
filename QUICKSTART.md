@@ -41,6 +41,8 @@ npm run speak -- -f story.txt -o story.mp3 --subtitles            # long text + 
 npm run speak -- --dialogue scene.txt -o scene.mp3                # several characters
 npm run speak -- --voices --gender female                         # browse voices (samples in samples/voices/)
 npm run speak -- -t "Bonjour !" -o hi.mp3 --emotion joy --speed 1.1 --verify   # controls + word check
+npm run speak -- --clips lines.json --out-dir clips              # one clip per shot, fitted to target_seconds
+npm run speak -- --inspect clips --picture                        # see timings, pauses, pitch per sentence
 npm run speak -- --save-preset brand --voice coral --narration ad  # save a preset, reuse with --preset brand
 ```
 

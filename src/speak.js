@@ -12,7 +12,9 @@
 
 import fs from "node:fs/promises";
 import { describeVoice, findVoices } from "./voices.js";
-import { generateDialogue, generateSpeech, resolveSettings } from "./tts.js";
+import { generateClips, generateDialogue, generateSpeech, resolveSettings } from "./tts.js";
+import { describeInspection, inspectAudio, inspectFolder } from "./inspect.js";
+import { statSync } from "node:fs";
 import { transcribeFile } from "./transcribe.js";
 import { deletePreset, loadConfig, savePreset, setFavorite } from "./config.js";
 
@@ -23,6 +25,8 @@ const USAGE = `Usage:
   speak --save-preset NAME [voice & controls]     speak --presets     speak --delete-preset NAME
   speak --favorite VOICE | --unfavorite VOICE
   speak --transcribe audio.mp3 [--language fr]
+  speak --clips lines.json [--out-dir clips] [controls]     (lines.json: [{"id":"intro","text":"…","target_seconds":4}])
+  speak --inspect clip.mp3|folder [--picture] [--target 4.5] [--min-pause 0.25]
 
 Voice & controls:
   --voice marin  --preset NAME  --speed 0.25-1.5  --pitch-shift -12..12 (semitones)  --emotion joy|sadness|anger|fear|excitement|tenderness|calm|…
@@ -42,8 +46,9 @@ const VALUE_FLAGS = {
   "--dialogue": "dialogue", "-d": "dialogue", "--cast": "cast", "--transcribe": "transcribe",
   "--gender": "gender", "--tag": "tag", "--save-preset": "savePreset", "--delete-preset": "deletePreset",
   "--favorite": "favorite", "--unfavorite": "unfavorite", "--model": "model",
+  "--clips": "clips", "--out-dir": "outDir", "--inspect": "inspect", "--target": "target", "--min-pause": "minPause",
 };
-const BOOL_FLAGS = { "--subtitles": "subtitles", "--verify": "verify", "--breaths": "breaths", "--voices": "listVoices", "--presets": "listPresets", "--favorites": "favoritesOnly", "--help": "help", "-h": "help" };
+const BOOL_FLAGS = { "--picture": "picture", "--subtitles": "subtitles", "--verify": "verify", "--breaths": "breaths", "--voices": "listVoices", "--presets": "listPresets", "--favorites": "favoritesOnly", "--help": "help", "-h": "help" };
 
 function parseArgs(argv) {
   const out = { baseDir: process.cwd(), tags: [], say: {} };
@@ -122,6 +127,26 @@ async function main() {
     const voice = (args.favorite || args.unfavorite).toLowerCase();
     await resolveSettings({ voice });
     return console.log(`favorites: ${(await setFavorite(voice, Boolean(args.favorite))).join(", ") || "(none)"}`);
+  }
+  if (args.inspect) {
+    const isDir = statSync(args.inspect, { throwIfNoEntry: false })?.isDirectory();
+    const opts = { baseDir: args.baseDir, picture: args.picture, minPauseSec: args.minPause ? Number(args.minPause) : undefined, language: args.language };
+    const rs = isDir ? await inspectFolder(args.inspect, opts) : [await inspectAudio(args.inspect, { ...opts, targetSec: args.target ? Number(args.target) : undefined })];
+    console.log(rs.map(describeInspection).join("\n\n"));
+    return;
+  }
+  if (args.clips) {
+    let lines;
+    try {
+      lines = JSON.parse(await readText(args.clips));
+    } catch (err) {
+      throw new Error(`cannot parse ${args.clips} as JSON: ${err.message}`);
+    }
+    const r = await generateClips({ ...controlsOf(args), lines, out_dir: args.outDir ?? "clips", format: args.format, baseDir: args.baseDir, verify: args.verify, onProgress: (d, n) => process.stderr.write(`\r  clip ${d}/${n}…`) });
+    process.stderr.write("\n");
+    for (const c of r.clips) console.log(`${c.file}  ${c.durationSec}s${c.targetSec ? ` / target ${c.targetSec}s ${c.fits ? "✓" : "✗ edit the text"} (speed ${c.speed})` : ""}`);
+    console.log(`manifest: ${r.manifestPath} · total ${r.totalSec}s`);
+    return;
   }
   if (args.transcribe) {
     process.stderr.write("Transcribing…\n");

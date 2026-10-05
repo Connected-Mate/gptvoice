@@ -13,6 +13,8 @@ The **gptvoice** MCP server drives OpenAI's realtime voice model with the user's
 - **`generate_dialogue`** — several characters → one file. `script`: one turn per line, `NAME: text` or `NAME (direction): text`. `voices`: speaker → voice **or preset name**.
 - **`list_voices`** — catalog with gender, measured tags, best uses and sample files; filters `gender`, `tags`, `favorites_only`.
 - **`favorite_voice`**, **`save_voice_preset`**, **`list_voice_presets`**, **`delete_voice_preset`** — persistent favorites and named presets.
+- **`generate_clips`** — a SET of clips, one file per line (`01-intro.mp3`, `02-…`), each with `.srt` + `.timings.json`, plus `clips.json`. Give `target_seconds` per line to fit a shot (speed auto-adjusted, best take kept).
+- **`inspect_audio`** — "see" a clip or a whole folder: duration, exact pauses, words/s, per-sentence start/end, pitch and loudness, optional PNG picture (waveform + pitch line + pauses) you can open with your image-reading tool.
 - **`transcribe_audio`** — audio file → text.
 - **`voice_auth_status`**.
 
@@ -32,6 +34,17 @@ The **gptvoice** MCP server drives OpenAI's realtime voice model with the user's
 | Names, acronyms | `pronunciations: {"Nguyen": "win"}` or inline `{Nguyen\|win}` | exact |
 
 Defaults: voice `marin` (female) or `cedar` (male) are the most natural. Every voice speaks every language — the text decides.
+
+## Video workflow: clips, not one long take
+
+For anything that goes on a video timeline, **do not generate one long narration**. Work like a dubbing studio:
+
+1. **Plan the lines against the shots**: one line per shot/beat, with its shot length → `generate_clips` with `id` and `target_seconds` per line (e.g. `01-intro`, `02-storm`…). Clips are named in order so they sort on the timeline.
+2. **Look at what you got**: `inspect_audio` on the clips folder (`picture: true` for the PNGs, then open them). Check: does each clip fit its shot? Any rushed line (> 3.5 words/s), dead air (long pauses), a flat line (melody < 2 st) where emotion was wanted, a whisper too quiet next to a shout?
+3. **Rewrite, don't just retry**: if a clip "does NOT fit" even at the speed limit, change the WORDS (shorter/longer line), move or resize `[pause]` cues, or change the delivery (emotion/narration). Regenerate only that line. Iterate until every clip fits and reads naturally.
+4. **Hand over**: give the user the folder, `clips.json` (durations + a back-to-back `timelineStart` suggestion) and the `.srt` files, and tell them to drop each clip under its shot.
+
+Human-sounding results come from this loop: short lines, one intention per line, a pause where a person would breathe, and an inspection before delivering.
 
 ## How to direct well
 

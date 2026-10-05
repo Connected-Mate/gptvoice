@@ -196,7 +196,8 @@ function srtTime(sec) {
   return `${h}:${m}:${s},${String(ms % 1000).padStart(3, "0")}`;
 }
 
-export function buildSrt(segments) {
+/** Sentence-level cues, timed proportionally inside each passage. */
+export function sentenceCues(segments) {
   // segments: [{ start, duration, text, speaker? }]
   const cues = [];
   for (const seg of segments) {
@@ -206,11 +207,15 @@ export function buildSrt(segments) {
     let t = seg.start;
     for (const s of sentences) {
       const d = (seg.duration * s.length) / total;
-      cues.push({ start: t, end: t + d, text: seg.speaker ? `${seg.speaker}: ${s}` : s });
+      cues.push({ start: t, end: t + d, text: s, speaker: seg.speaker });
       t += d;
     }
   }
-  return cues.map((c, i) => `${i + 1}\n${srtTime(c.start)} --> ${srtTime(c.end)}\n${c.text}\n`).join("\n");
+  return cues;
+}
+
+export function buildSrt(segments) {
+  return sentenceCues(segments).map((c) => ({ ...c, text: c.speaker ? `${c.speaker}: ${c.text}` : c.text })).map((c, i) => `${i + 1}\n${srtTime(c.start)} --> ${srtTime(c.end)}\n${c.text}\n`).join("\n");
 }
 
 // ---------------------------------------------------------------------------
@@ -262,7 +267,7 @@ function unitsFor(text, settings, { firstPause, speaker, extraStyle } = {}) {
 // Assembly shared by narration and dialogue
 // ---------------------------------------------------------------------------
 
-async function render(units, { out, format, baseDir, subtitles, model, verify, normalize = true, redos, getCreds, onProgress }) {
+async function render(units, { out, format, baseDir, subtitles, manifest, model, verify, normalize = true, redos, getCreds, onProgress }) {
   if (!units.length) throw new VoiceError("there is nothing to speak (only cues, no words)", "invalid");
   const fmt = resolveFormat(out, format);
   const target = withExtension(out, fmt);
@@ -289,7 +294,7 @@ async function render(units, { out, format, baseDir, subtitles, model, verify, n
     }
     parts.push(u.pcm);
     const duration = pcmDurationSec(u.pcm);
-    segments.push({ start: cursor, duration, text: u.expected, speaker: u.speaker });
+    segments.push({ start: cursor, duration, text: u.expected, speaker: u.speaker, voice: u.voice });
     cursor += duration;
     if (u.pauseAfter) {
       parts.push(silence(u.pauseAfter));
@@ -305,6 +310,25 @@ async function render(units, { out, format, baseDir, subtitles, model, verify, n
   if (subtitles) {
     subtitlesPath = savedPath.slice(0, -path.extname(savedPath).length) + ".srt";
     await fs.writeFile(subtitlesPath, buildSrt(segments));
+  }
+
+  let manifestPath = null;
+  if (manifest) {
+    manifestPath = savedPath.slice(0, -path.extname(savedPath).length) + ".timings.json";
+    const r2 = (v) => Math.round(v * 1000) / 1000;
+    await fs.writeFile(
+      manifestPath,
+      JSON.stringify(
+        {
+          file: path.basename(savedPath),
+          durationSec: r2(pcmDurationSec(pcm)),
+          passages: segments.map((g) => ({ start: r2(g.start), end: r2(g.start + g.duration), text: g.text, speaker: g.speaker ?? null, voice: g.voice })),
+          sentences: sentenceCues(segments).map((c) => ({ start: r2(c.start), end: r2(c.end), text: c.text, speaker: c.speaker ?? null })),
+        },
+        null,
+        2,
+      ) + "\n",
+    );
   }
 
   // Word-weighted accuracy over the whole file.
@@ -335,6 +359,7 @@ async function render(units, { out, format, baseDir, subtitles, model, verify, n
     savedPath,
     versioned,
     subtitlesPath,
+    manifestPath,
     format: fmt,
     durationSec: Math.round(pcmDurationSec(pcm) * 100) / 100,
     passages: spoken.length,
@@ -355,7 +380,7 @@ async function render(units, { out, format, baseDir, subtitles, model, verify, n
  * pronunciations, preset, verify, format, subtitles, model.
  */
 export async function generateSpeech(opts) {
-  const { text, out, format, baseDir = process.cwd(), subtitles = false, model, verify = false, normalize = true, redos, getCreds, onProgress } = opts;
+  const { text, out, format, baseDir = process.cwd(), subtitles = false, manifest = false, model, verify = false, normalize = true, redos, getCreds, onProgress } = opts;
   const t = validateText(text);
   if (!out) throw new VoiceError("an output path is required (e.g. narration.mp3)", "invalid");
   const settings = await resolveSettings(opts);
@@ -364,7 +389,7 @@ export async function generateSpeech(opts) {
     if (!para.trim()) return;
     units.push(...unitsFor(para, settings, { firstPause: p > 0 && units.length ? PARAGRAPH_PAUSE_MS : 0 }));
   });
-  return render(units, { out, format, baseDir, subtitles, model, verify, normalize, redos, getCreds, onProgress });
+  return render(units, { out, format, baseDir, subtitles, manifest, model, verify, normalize, redos, getCreds, onProgress });
 }
 
 /**
@@ -375,7 +400,7 @@ export async function generateSpeech(opts) {
  * (emotion, speed, …) apply to every line.
  */
 export async function generateDialogue(opts) {
-  const { script, lines, voices = {}, format, out, baseDir = process.cwd(), subtitles = false, model, verify = false, normalize = true, redos, getCreds, onProgress } = opts;
+  const { script, lines, voices = {}, format, out, baseDir = process.cwd(), subtitles = false, manifest = false, model, verify = false, normalize = true, redos, getCreds, onProgress } = opts;
   const turns = lines?.length ? lines.map((l) => ({ ...l })) : parseScript(script ?? "");
   if (!turns.length) throw new VoiceError("the dialogue is empty — give at least one line like `ALICE: Hello`", "invalid");
   if (!out) throw new VoiceError("an output path is required (e.g. dialogue.mp3)", "invalid");
@@ -416,7 +441,102 @@ export async function generateDialogue(opts) {
     const s = turn.voice ? { ...settingsFor(turn.speaker), voice: validateVoice(turn.voice) } : settingsFor(turn.speaker);
     units.push(...unitsFor(text, s, { firstPause: units.length ? DIALOGUE_PAUSE_MS : 0, speaker: turn.speaker, extraStyle: turn.style }));
   });
-  const result = await render(units, { out, format, baseDir, subtitles, model, verify, normalize, redos, getCreds, onProgress });
+  const result = await render(units, { out, format, baseDir, subtitles, manifest, model, verify, normalize, redos, getCreds, onProgress });
   result.cast = Object.fromEntries([...cast.entries()].map(([k, v]) => [k, v.voice]));
   return result;
+}
+
+// ---------------------------------------------------------------------------
+// Clips: one file per line, for placing on a video timeline
+// ---------------------------------------------------------------------------
+
+const slug = (s) =>
+  String(s)
+    .normalize("NFKD")
+    .replace(/[̀-ͯ]/g, "")
+    .replace(/[^a-zA-Z0-9]+/g, "-")
+    .replace(/^-+|-+$/g, "")
+    .toLowerCase()
+    .slice(0, 40) || "clip";
+
+const FIT_TOLERANCE = (target) => Math.max(0.3, target * 0.05);
+
+/**
+ * Generate one clip per line: `01-intro.mp3`, `02-…` with .srt and .timings.json,
+ * plus `clips.json` (the manifest). A line with `target_seconds` is re-timed by
+ * adjusting `speed` (up to 2 refits, within 0.25-1.5) until it fits ±5 %.
+ * Lines take any control (voice, preset, emotion…); shared controls apply to all.
+ */
+export async function generateClips(opts) {
+  const { lines, out_dir: outDir = "clips", format = "mp3", baseDir = process.cwd(), fit = true, verify = false, getCreds, onProgress } = opts;
+  if (!Array.isArray(lines) || !lines.length) throw new VoiceError("give at least one line: [{ id, text, target_seconds? }]", "invalid");
+  if (lines.length > 200) throw new VoiceError("too many lines in one call (max 200)", "invalid");
+  const shared = Object.fromEntries(PRESET_FIELDS.concat(["preset", "model"]).filter((k) => opts[k] !== undefined).map((k) => [k, opts[k]]));
+  const dir = path.isAbsolute(outDir) ? outDir : path.resolve(baseDir, outDir);
+  const seen = new Set();
+  const clips = [];
+  for (const [i, line] of lines.entries()) {
+    const text = validateText(line.text);
+    let name = `${String(i + 1).padStart(2, "0")}-${slug(line.id ?? text.split(/\s+/).slice(0, 4).join(" "))}`;
+    while (seen.has(name)) name += "-b";
+    seen.add(name);
+    const { id, text: _t, target_seconds: target, ...lineControls } = line;
+    let speed = lineControls.speed ?? shared.speed;
+    const finalFiles = [`.${format}`, ".srt", ".timings.json"].map((ext) => path.join(dir, name + ext));
+    for (const f of finalFiles) await fs.rm(f, { force: true });
+    // Each take goes to its own name; the take closest to the target wins.
+    const takes = [];
+    for (let attempt = 0; attempt < (fit && target ? 3 : 1); attempt++) {
+      const take = await generateSpeech({ ...shared, ...lineControls, speed, text, out: path.join(dir, `${name}.take${attempt + 1}.${format}`), format, subtitles: true, manifest: true, verify, getCreds });
+      takes.push({ ...take, speed: speed ?? 1 });
+      if (!target || Math.abs(take.durationSec - target) <= FIT_TOLERANCE(target)) break;
+      const current = speed ?? 1;
+      const next = Math.min(1.5, Math.max(0.25, Math.round(current * (take.durationSec / target) * 100) / 100));
+      if (next === current) break; // speed limit reached: the text must change
+      speed = next;
+    }
+    const best = target ? takes.reduce((a, b) => (Math.abs(b.durationSec - target) < Math.abs(a.durationSec - target) ? b : a)) : takes[0];
+    const r = { ...best };
+    for (const t of takes) {
+      const files = [t.savedPath, t.subtitlesPath, t.manifestPath];
+      if (t === best) {
+        await fs.rename(files[0], finalFiles[0]);
+        await fs.rename(files[1], finalFiles[1]);
+        // keep the timings manifest pointing at the final file name
+        const m = JSON.parse(await fs.readFile(files[2], "utf8"));
+        m.file = path.basename(finalFiles[0]);
+        await fs.writeFile(finalFiles[2], JSON.stringify(m, null, 2) + "\n");
+        await fs.rm(files[2], { force: true });
+        [r.savedPath, r.subtitlesPath, r.manifestPath] = finalFiles;
+      } else {
+        for (const f of files) await fs.rm(f, { force: true });
+      }
+    }
+    speed = best.speed;
+    const fits = target ? Math.abs(r.durationSec - target) <= FIT_TOLERANCE(target) : null;
+    clips.push({
+      index: i + 1,
+      id: id ?? name.slice(3),
+      file: r.savedPath,
+      subtitles: r.subtitlesPath,
+      timings: r.manifestPath,
+      durationSec: r.durationSec,
+      targetSec: target ?? null,
+      fits,
+      speed,
+      takes: takes.length,
+      accuracy: r.verifiedAccuracy ?? r.accuracy,
+      warnings: r.warnings,
+      text,
+    });
+    onProgress?.(i + 1, lines.length);
+  }
+  let t = 0;
+  for (const c of clips) {
+    c.timelineStart = Math.round(t * 100) / 100; // back-to-back suggestion
+    t += c.durationSec;
+  }
+  const manifestPath = path.join(dir, "clips.json");
+  await fs.writeFile(manifestPath, JSON.stringify({ createdAt: new Date().toISOString(), totalSec: Math.round(t * 100) / 100, clips }, null, 2) + "\n");
+  return { dir, manifestPath, clips, totalSec: Math.round(t * 100) / 100 };
 }

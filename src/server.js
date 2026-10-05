@@ -11,7 +11,9 @@ import { loadAuth, planFromToken, storePaths } from "./auth.js";
 import { DEFAULT_VOICE, VOICES, VOICE_IDS, describeVoice, findVoices } from "./voices.js";
 import { CONTROL_VALUES, EMOTIONS } from "./direction.js";
 import { deletePreset, loadConfig, savePreset, setFavorite } from "./config.js";
-import { generateDialogue, generateSpeech, resolveSettings } from "./tts.js";
+import { generateClips, generateDialogue, generateSpeech, resolveSettings } from "./tts.js";
+import { describeInspection, inspectAudio, inspectFolder } from "./inspect.js";
+import fsSync from "node:fs";
 import { transcribeFile } from "./transcribe.js";
 import { FORMATS } from "./audio.js";
 
@@ -115,6 +117,73 @@ server.tool(
       return { content: [{ type: "text", text: summary(r) }] };
     } catch (err) {
       return fail("Dialogue generation", err);
+    }
+  },
+);
+
+server.tool(
+  "generate_clips",
+  [
+    "Generate a SET of separate clips, one file per line (01-intro.mp3, 02-…), each with .srt and .timings.json, plus clips.json (manifest with durations and a back-to-back timeline).",
+    "Preferred over one long take for video: place each clip on the timeline under its shot. Give `target_seconds` per line to fit a shot: speed is adjusted automatically (±5 %); if it still cannot fit, shorten or lengthen the text.",
+    "Each line can carry its own voice/preset/emotion…; shared controls apply to all lines.",
+  ].join(" "),
+  {
+    lines: z
+      .array(
+        z.object({
+          id: z.string().max(40).optional().describe("Short name, used in the file name, e.g. 'intro'."),
+          text: z.string().describe("Words for this clip (inline cues allowed)."),
+          target_seconds: z.number().positive().max(600).optional().describe("Shot length to fit."),
+          ...Object.fromEntries(Object.entries(controls).map(([k, v]) => [k, v])),
+        }),
+      )
+      .min(1)
+      .max(200),
+    out_dir: z.string().optional().describe("Folder for the clips (relative to the project). Default: clips/"),
+    ...controls,
+    format: formatEnum.optional(),
+    fit: z.boolean().optional().describe("Adjust speed to hit target_seconds (default true)."),
+    verify: output.verify,
+  },
+  async (args) => {
+    try {
+      const r = await generateClips({ ...args, baseDir: PROJECT_DIR });
+      const lines = r.clips.map(
+        (c) =>
+          `${String(c.index).padStart(2, "0")}. ${c.file} — ${c.durationSec}s${c.targetSec ? ` (target ${c.targetSec}s: ${c.fits ? "fits" : "does NOT fit — edit the text"}, speed ${c.speed})` : ""}, accuracy ${c.accuracy}%${c.warnings.length ? ` ⚠ ${c.warnings.join("; ")}` : ""}`,
+      );
+      return { content: [{ type: "text", text: `${r.clips.length} clips in ${r.dir} (total ${r.totalSec}s). Manifest: ${r.manifestPath}\n${lines.join("\n")}\nNext: inspect_audio on the folder to check timing and delivery.` }] };
+    } catch (err) {
+      return fail("Clip generation", err);
+    }
+  },
+);
+
+server.tool(
+  "inspect_audio",
+  [
+    "'See' a voice clip: duration, speech vs silence, pauses (exact), pace in words/s, and per sentence its start/end time, pace, pitch and loudness; optionally a PNG picture (waveform + pitch line + pauses) you can open to look at the delivery.",
+    "Use after generating: check a clip fits its shot, find rushed or flat lines, misplaced pauses, then rewrite the text or adjust speed/emotion/[pause] and regenerate. Accepts a file or a whole folder.",
+  ].join(" "),
+  {
+    path: z.string().describe("Audio file or folder of clips (relative to the project directory unless absolute)."),
+    picture: z.boolean().optional().describe("Also write <clip>.speech.png next to each clip."),
+    target_seconds: z.number().positive().optional().describe("Shot length to compare against (single file)."),
+    min_pause: z.number().min(0.05).max(5).optional().describe("Smallest silence reported as a pause, seconds (default 0.25)."),
+    language: z.string().max(10).optional(),
+  },
+  async ({ path: p, picture, target_seconds, min_pause, language }) => {
+    try {
+      const abs = p.startsWith("/") ? p : `${PROJECT_DIR}/${p}`;
+      const isDir = fsSync.existsSync(abs) && fsSync.statSync(abs).isDirectory();
+      const opts = { baseDir: PROJECT_DIR, picture, minPauseSec: min_pause, language };
+      const results = isDir ? await inspectFolder(abs, opts) : [await inspectAudio(abs, { ...opts, targetSec: target_seconds })];
+      const total = results.reduce((a, r) => a + r.durationSec, 0);
+      const text = results.map(describeInspection).join("\n\n") + (results.length > 1 ? `\n\n${results.length} clips, ${Math.round(total * 100) / 100}s total.` : "");
+      return { content: [{ type: "text", text }] };
+    } catch (err) {
+      return fail("inspect_audio", err);
     }
   },
 );

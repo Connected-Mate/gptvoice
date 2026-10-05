@@ -23,6 +23,16 @@ function splitLongPiece(piece, max) {
   return out;
 }
 
+/** Split text into sentences (keeps their punctuation). */
+export function splitSentences(text) {
+  return String(text)
+    .replace(/\s+/g, " ")
+    .trim()
+    .match(SENTENCE_RE)
+    ?.map((x) => x.trim())
+    .filter(Boolean) ?? [];
+}
+
 /**
  * Split text into chunks of at most `max` characters, never mid-sentence unless a
  * single sentence is longer than `max`. Paragraph breaks always end a chunk so
