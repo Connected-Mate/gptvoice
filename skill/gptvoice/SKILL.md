@@ -1,9 +1,9 @@
 ---
 name: gptvoice
-description: Generate spoken audio (text-to-speech, MP3/WAV/M4A) from text using the user's ChatGPT subscription — no API key. Use whenever the user asks for a voice, voice-over, narration, audiobook passage, podcast intro, trailer voice, ad read, dubbing, spoken announcement, audio for a video/film, a dialogue with several characters, emotional or whispered delivery, or to read text aloud into a file; also to transcribe an audio file, make subtitles, browse voices, or save voice presets. Powered by the gptvoice MCP server.
+description: Generate spoken audio (text-to-speech, MP3/WAV/M4A) from text using the user's ChatGPT sign-in — no API key to manage. Use whenever the user asks for a voice, voice-over, narration, audiobook passage, podcast intro, trailer voice, ad read, dubbing, spoken announcement, audio for a video/film, a dialogue with several characters, emotional or whispered delivery, or to read text aloud into a file; also to transcribe an audio file, make subtitles, browse voices, or save voice presets. Powered by the gptvoice MCP server.
 ---
 
-# gptvoice — a voice studio via ChatGPT subscription
+# gptvoice — a voice studio via your ChatGPT sign-in
 
 The **gptvoice** MCP server drives OpenAI's realtime voice model with the user's "Sign in with ChatGPT" login. No API key.
 
@@ -61,6 +61,7 @@ If `voice_auth_status` says "not authenticated" or a call returns a 401, tell th
 
 ## Notes / limits
 
-- Unofficial path (grey area): heavy use can hit plan limits (429) — the tool retries, then asks to wait. Keep usage personal.
+- Unofficial path (grey area): heavy use can hit rate limits (429) — the tool retries, then asks to wait. Keep usage personal.
+- **Cost: never say it is free or included in the ChatGPT plan.** Calls are routed to the user's personal OpenAI API organization and may be billed there (roughly $0.03–0.08 per minute of audio at API prices, unconfirmed). Before large jobs, suggest the user check https://platform.openai.com/usage.
 - Max ~60,000 characters per call. Split books into chapters.
 - Synthetic voices: never impersonate real people.

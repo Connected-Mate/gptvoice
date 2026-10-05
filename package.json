@@ -1,7 +1,7 @@
 {
   "name": "gptvoice",
   "version": "0.1.0",
-  "description": "Text-to-speech for Claude Code, powered by OpenAI's realtime voice model through your ChatGPT subscription sign-in — no API key. MCP server + skill + CLI.",
+  "description": "Text-to-speech for Claude Code, powered by OpenAI's realtime voice model through your ChatGPT sign-in — no API key to manage. MCP server + skill + CLI.",
   "type": "module",
   "private": true,
   "bin": {

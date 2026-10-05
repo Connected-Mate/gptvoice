@@ -75,11 +75,11 @@ function summary(r) {
 server.tool(
   "generate_speech",
   [
-    "Turn text into a spoken audio file (text-to-speech) with the ChatGPT subscription's realtime voice model.",
+    "Turn text into a spoken audio file (text-to-speech) with OpenAI's realtime voice model, through the user's ChatGPT sign-in.",
     "For narration, voice-overs, film/trailer voices, ads, podcasts, audiobooks, announcements. Any length: one file, natural pauses.",
     "`text` is spoken word for word. Inline cues inside text: [pause 1s] (exact silence), [whispers] / [excited] / [sad] (direction for the following words), [laughs] / [sighs] / [gasps] (sound), {Nguyen|win} (pronunciation).",
     "Direct the performance with the controls (emotion, intensity, speed, pitch, intonation, volume, accent, narration, character…), or a saved preset.",
-    "Returns path, duration, word accuracy and what the voice said. Billed to the user's ChatGPT plan, not an API key.",
+    "Returns path, duration, word accuracy and what the voice said. Uses the user's ChatGPT sign-in (no API key to manage); usage is routed to their personal OpenAI API organization and may be billed there — do not tell the user it is free or included in their ChatGPT plan.",
   ].join(" "),
   {
     text: z.string().describe("Exact words to speak, with optional inline cues. Blank lines = paragraph pauses."),

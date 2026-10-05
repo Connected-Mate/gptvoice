@@ -118,7 +118,7 @@ async function withRetry(fn, creds, { maxAttempts = 4 } = {}) {
       const retryable = kind === "rate_limit" || kind === "network" || kind === "server" || kind === "timeout";
       if (!retryable || attempt >= maxAttempts) {
         if (kind === "rate_limit") {
-          err.message = `${err.message} — your ChatGPT plan's voice limit was hit. Wait a few minutes and try again.`;
+          err.message = `${err.message} — wait a few minutes and try again.`;
         } else if (kind === "auth") {
           err.message = `${err.message} — run \`npm run login\` in the gptvoice folder to sign in again.`;
         }

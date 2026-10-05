@@ -40,7 +40,7 @@ function httpError(status, body) {
   const detail = String(body || "").slice(0, 200);
   if (status === 401) return new VoiceError(`sign-in rejected (401). ${detail}`, "auth", { status });
   if (status === 403) return new VoiceError(`access denied (403) — your plan may not include realtime voice. ${detail}`, "invalid", { status });
-  if (status === 429) return new VoiceError(`rate limited (429) by your ChatGPT plan. ${detail}`, "rate_limit", { status });
+  if (status === 429) return new VoiceError(`rate limited (429) — the voice rate limit on your account was hit. ${detail}`, "rate_limit", { status });
   if (status >= 500) return new VoiceError(`OpenAI server error (${status}). ${detail}`, "server", { status });
   return new VoiceError(`realtime connection refused (${status}). ${detail}`, "invalid", { status });
 }
@@ -48,7 +48,7 @@ function httpError(status, body) {
 function eventError(err) {
   const code = err?.code || err?.type || "";
   const msg = err?.message || "unknown realtime error";
-  if (/rate_limit|429/.test(code) || /rate limit/i.test(msg)) return new VoiceError(`rate limited by your ChatGPT plan: ${msg}`, "rate_limit");
+  if (/rate_limit|429/.test(code) || /rate limit/i.test(msg)) return new VoiceError(`rate limited — the voice rate limit on your account was hit: ${msg}`, "rate_limit");
   if (/insufficient_quota|quota/i.test(code + msg)) return new VoiceError(`quota exhausted: ${msg}`, "rate_limit");
   if (/invalid_api_key|unauthorized|token/i.test(code)) return new VoiceError(`sign-in rejected: ${msg}`, "auth");
   if (/server_error/.test(code)) return new VoiceError(`OpenAI server error: ${msg}`, "server");

@@ -179,7 +179,7 @@ Presets hold any control plus a pronunciation dictionary; explicit arguments ove
 |---------|----------------------------|
 | `Not authenticated` | Run `npm run login` |
 | `sign-in rejected (401)` | GPTVoice already tried renewing it; run `npm run login` |
-| `rate limited (429)` | Your plan's voice limit — GPTVoice retried; wait a few minutes |
+| `rate limited (429)` | The voice rate limit on your account — GPTVoice retried; wait a few minutes |
 | `network error` | Check your internet connection |
 | `may not be word-perfect` | One passage drifted even after re-recording; the message shows the difference |
 | `unknown voice` / `no preset named` | See `npm run speak -- --voices` / `--presets` |

@@ -81,9 +81,9 @@ test("429 is retried with backoff, then succeeds", async () => {
   assert.ok(r.durationSec > 0);
 });
 
-test("429 forever → plain-language plan limit message", async () => {
+test("429 forever → plain-language rate-limit message", async () => {
   await mock([{ status: 429 }]);
-  await assert.rejects(generateSpeech({ text: "Too many requests here.", out: "q.mp3", baseDir: out, getCreds: creds() }), /rate limited.*Wait a few minutes/);
+  await assert.rejects(generateSpeech({ text: "Too many requests here.", out: "q.mp3", baseDir: out, getCreds: creds() }), /rate limited.*wait a few minutes/);
 });
 
 test("model paraphrases → chunk is re-recorded until it matches", async () => {

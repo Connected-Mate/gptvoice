@@ -1,6 +1,8 @@
 # GPTVoice — Quickstart
 
-Give Claude Code a voice with your ChatGPT subscription. Narration, voice-overs, dialogues. No API key.
+Give Claude Code a voice with your ChatGPT sign-in. Narration, voice-overs, dialogues. No API key to manage.
+
+> Cost: voice calls are routed to your personal OpenAI API organization and **may be billed there** — check <https://platform.openai.com/usage> after your first voices. See the README warning.
 
 ## 1. Install + sign in (one flow, run once)
 
@@ -53,6 +55,6 @@ npm run speak -- --save-preset brand --voice coral --narration ad  # save a pres
 | `Not authenticated` | Run `npm run login` |
 | Claude Code doesn't see the tool | Restart Claude Code; `claude mcp list` should show `gptvoice ✔ Connected` |
 | Browser didn't open at login | The URL is copied to your clipboard — paste it into a browser |
-| `rate limited (429)` | Your ChatGPT plan hit its limit — wait a few minutes |
+| `rate limited (429)` | The voice rate limit on your account was hit — wait a few minutes |
 | `Node.js 22 or newer` | Install the current Node.js from nodejs.org |
 | Port 1455 in use during login | A previous login is still running — `pkill -f login.js`, then retry |

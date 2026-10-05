@@ -2,7 +2,8 @@
 //
 // We authenticate against ChatGPT the same way the official Codex CLI does:
 // an OAuth + PKCE flow against auth.openai.com that mints a token tied to the
-// user's ChatGPT subscription (NOT an API key).
+// user's ChatGPT account (NOT an API key). Realtime usage is routed to the
+// personal OpenAI API org in the token (see README: it may be billed there).
 //
 // Token resolution order:
 //   1. GPTVOICE_ACCESS_TOKEN env var (escape hatch / CI)
