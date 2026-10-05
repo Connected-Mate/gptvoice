@@ -38,3 +38,26 @@ Rules: do not use sudo, do not change any other MCP server or setting, do not co
 | 7 | Cost reminder |
 
 Prefer doing it by hand? See the README: `git clone …`, then `./install.sh`.
+
+## Version française
+
+```text
+Installe GPTVoice pour moi (serveur MCP de synthèse vocale, https://github.com/Connected-Mate/gptvoice). Suis exactement ces étapes, montre-moi le résultat de chaque commande, et arrête-toi pour me demander si quelque chose échoue.
+
+1. Vérifie que Node.js 22 ou plus récent est installé (`node -v`). S'il manque ou s'il est trop ancien, arrête-toi et dis-moi de l'installer depuis https://nodejs.org.
+2. Clone le projet dans mon dossier personnel (si ~/gptvoice existe déjà, ne clone pas et lance plutôt `git -C ~/gptvoice pull`) :
+   git clone https://github.com/Connected-Mate/gptvoice.git ~/gptvoice
+3. Installe et enregistre le serveur MCP pour l'agent que tu es (choisis la ligne qui te correspond) :
+   - Claude Code : cd ~/gptvoice && ./install.sh --agent claude --no-login --yes
+   - Codex :       cd ~/gptvoice && ./install.sh --agent codex --no-login --yes
+   - Cursor :      cd ~/gptvoice && ./install.sh --agent cursor --no-login --yes
+   - Autre agent : cd ~/gptvoice && ./install.sh --agent none --no-login --yes, puis ajoute dans ta propre configuration un serveur MCP nommé "gptvoice" avec la commande `node` et l'argument `~/gptvoice/src/server.js` (stdio, chemin absolu).
+4. Connexion. Lance `cd ~/gptvoice && node src/login.js --check`.
+   - Si ça réussit, je suis déjà connecté (GPTVoice réutilise une connexion GPTImage ou Codex CLI) : continue.
+   - Sinon, lance `cd ~/gptvoice && npm run login` et dis-moi : « Ton navigateur s'ouvre : connecte-toi avec ton compte ChatGPT, puis reviens. » Attends la fin de la commande. Ne me demande JAMAIS mon mot de passe et ne le tape jamais toi-même.
+5. Vérifie : lance `cd ~/gptvoice && npm run status`, puis `cd ~/gptvoice && npm run selftest`. Il doit afficher « Signed in » et créer un court extrait audio avec sa précision mot à mot. Donne-moi le chemin de l'extrait pour que je l'écoute.
+6. Dis-moi de te redémarrer (toi, l'agent) pour charger le nouvel outil « gptvoice ». Après le redémarrage, appelle une fois l'outil `voice_auth_status` pour confirmer la connexion.
+7. Enfin, dis-moi clairement : « GPTVoice utilise ta connexion ChatGPT, pas une clé d'API, mais l'usage de la voix peut être facturé sur ton organisation OpenAI API personnelle. Vérifie https://platform.openai.com/usage après tes premières voix. »
+
+Règles : pas de sudo, ne modifie aucun autre serveur MCP ni réglage, ne commit et ne publie rien, et n'affiche ni ne partage jamais le contenu de ~/.gptvoice/auth.json ou ~/.codex/auth.json.
+```
