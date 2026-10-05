@@ -1,0 +1,193 @@
+{
+  "file": "cedar-storyteller.mp3",
+  "durationSec": 122.564,
+  "passages": [
+    {
+      "start": 0.21,
+      "end": 21.709,
+      "text": "Le train de nuit quitta Paris à vingt-deux heures quinze, sous une pluie fine qui faisait briller les rails. Dans le compartiment numéro sept, une femme d'une soixantaine d'années rangeait soigneusement un vieux carnet dans son sac. Elle n'avait pas pris ce train depuis plus de trente ans.",
+      "speaker": null,
+      "voice": "cedar"
+    },
+    {
+      "start": 22.309,
+      "end": 48.109,
+      "text": "À l'époque, elle était étudiante. Elle partait chaque été rejoindre sa grand-mère dans un petit village des Alpes, où l'on parlait encore un patois que plus personne ne comprend aujourd'hui. Elle se souvenait de l'odeur du foin, du bruit des cloches, et de ce silence immense, le soir, quand la montagne avalait toutes les lumières.",
+      "speaker": null,
+      "voice": "cedar"
+    },
+    {
+      "start": 48.709,
+      "end": 71.754,
+      "text": "Le contrôleur passa vérifier les billets. Il remarqua le carnet, dont la couverture de cuir était usée jusqu'à la trame. « Un souvenir ? » demanda-t-il poliment. Elle sourit. « Une promesse », répondit-elle. Il n'insista pas, mais il resta un instant sur le seuil, comme s'il attendait la suite de l'histoire.",
+      "speaker": null,
+      "voice": "cedar"
+    },
+    {
+      "start": 72.354,
+      "end": 96.004,
+      "text": "Alors elle raconta. La lettre écrite à vingt ans, jamais envoyée. Le garçon du village, qui voulait devenir guide de haute montagne. Le dernier été, la dispute idiote, le départ précipité. Et ces trente années passées à se demander ce qui serait arrivé si elle avait simplement posté cette lettre.",
+      "speaker": null,
+      "voice": "cedar"
+    },
+    {
+      "start": 96.604,
+      "end": 122.104,
+      "text": "Le train ralentit à l'approche de Grenoble. Dehors, l'aube commençait à dessiner les sommets. Elle ouvrit le carnet à la dernière page, où l'enveloppe attendait toujours, jaunie, avec un timbre qui ne valait plus rien. « Vous allez la poster ? » demanda le contrôleur. Elle regarda la montagne, puis elle hocha la tête. « Cette fois, oui. »",
+      "speaker": null,
+      "voice": "cedar"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0.21,
+      "end": 4.495,
+      "text": "Le train de nuit quitta Paris à vingt-deux heures quinze,",
+      "speaker": null
+    },
+    {
+      "start": 4.495,
+      "end": 8.253,
+      "text": "sous une pluie fine qui faisait briller les rails.",
+      "speaker": null
+    },
+    {
+      "start": 8.253,
+      "end": 14.192,
+      "text": "Dans le compartiment numéro sept, une femme d'une soixantaine d'années rangeait",
+      "speaker": null
+    },
+    {
+      "start": 14.192,
+      "end": 17.425,
+      "text": "soigneusement un vieux carnet dans son sac.",
+      "speaker": null
+    },
+    {
+      "start": 17.425,
+      "end": 21.709,
+      "text": "Elle n'avait pas pris ce train depuis plus de trente ans.",
+      "speaker": null
+    },
+    {
+      "start": 22.309,
+      "end": 24.905,
+      "text": "À l'époque, elle était étudiante.",
+      "speaker": null
+    },
+    {
+      "start": 24.905,
+      "end": 31.198,
+      "text": "Elle partait chaque été rejoindre sa grand-mère dans un petit village des Alpes,",
+      "speaker": null
+    },
+    {
+      "start": 31.198,
+      "end": 37.097,
+      "text": "où l'on parlait encore un patois que plus personne ne comprend aujourd'hui.",
+      "speaker": null
+    },
+    {
+      "start": 37.097,
+      "end": 43.783,
+      "text": "Elle se souvenait de l'odeur du foin, du bruit des cloches, et de ce silence immense,",
+      "speaker": null
+    },
+    {
+      "start": 43.783,
+      "end": 48.109,
+      "text": "le soir, quand la montagne avalait toutes les lumières.",
+      "speaker": null
+    },
+    {
+      "start": 48.709,
+      "end": 51.807,
+      "text": "Le contrôleur passa vérifier les billets.",
+      "speaker": null
+    },
+    {
+      "start": 51.807,
+      "end": 57.701,
+      "text": "Il remarqua le carnet, dont la couverture de cuir était usée jusqu'à la trame.",
+      "speaker": null
+    },
+    {
+      "start": 57.701,
+      "end": 64.199,
+      "text": "« Un souvenir ? » demanda-t-il poliment. Elle sourit. « Une promesse », répondit-elle.",
+      "speaker": null
+    },
+    {
+      "start": 64.199,
+      "end": 68.43,
+      "text": "Il n'insista pas, mais il resta un instant sur le seuil,",
+      "speaker": null
+    },
+    {
+      "start": 68.43,
+      "end": 71.754,
+      "text": "comme s'il attendait la suite de l'histoire.",
+      "speaker": null
+    },
+    {
+      "start": 72.354,
+      "end": 77.601,
+      "text": "Alors elle raconta. La lettre écrite à vingt ans, jamais envoyée.",
+      "speaker": null
+    },
+    {
+      "start": 77.601,
+      "end": 82.928,
+      "text": "Le garçon du village, qui voulait devenir guide de haute montagne.",
+      "speaker": null
+    },
+    {
+      "start": 82.928,
+      "end": 87.367,
+      "text": "Le dernier été, la dispute idiote, le départ précipité.",
+      "speaker": null
+    },
+    {
+      "start": 87.367,
+      "end": 94.47,
+      "text": "Et ces trente années passées à se demander ce qui serait arrivé si elle avait simplement",
+      "speaker": null
+    },
+    {
+      "start": 94.47,
+      "end": 96.004,
+      "text": "posté cette lettre.",
+      "speaker": null
+    },
+    {
+      "start": 96.604,
+      "end": 99.867,
+      "text": "Le train ralentit à l'approche de Grenoble.",
+      "speaker": null
+    },
+    {
+      "start": 99.867,
+      "end": 103.586,
+      "text": "Dehors, l'aube commençait à dessiner les sommets.",
+      "speaker": null
+    },
+    {
+      "start": 103.586,
+      "end": 109.961,
+      "text": "Elle ouvrit le carnet à la dernière page, où l'enveloppe attendait toujours, jaunie,",
+      "speaker": null
+    },
+    {
+      "start": 109.961,
+      "end": 116.715,
+      "text": "avec un timbre qui ne valait plus rien. « Vous allez la poster ? » demanda le contrôleur.",
+      "speaker": null
+    },
+    {
+      "start": 116.715,
+      "end": 122.104,
+      "text": "Elle regarda la montagne, puis elle hocha la tête. « Cette fois, oui. »",
+      "speaker": null
+    }
+  ]
+}

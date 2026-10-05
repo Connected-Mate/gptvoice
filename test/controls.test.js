@@ -8,6 +8,7 @@ import { startMock, smartBehavior } from "./helpers/mock-server.js";
 
 const out = await fs.mkdtemp(path.join(os.tmpdir(), "gptvoice-ctl-"));
 process.env.GPTVOICE_RETRY_BASE_MS = "5";
+process.env.GPTVOICE_DIRECTOR = "heuristic";
 process.env.GPTVOICE_CONFIG = path.join(out, "config.json");
 const { generateSpeech, generateDialogue } = await import("../src/tts.js");
 const { savePreset } = await import("../src/config.js");

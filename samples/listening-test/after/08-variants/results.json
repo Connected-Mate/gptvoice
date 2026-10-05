@@ -1,0 +1,136 @@
+{
+  "baseline": {
+    "label": "marin + audiobook (current)",
+    "file": "../08-fr-long-2min.mp3",
+    "melodySt": 2.15,
+    "sentencePitchSdSt": 1.07,
+    "sentenceRateSd": 0.31,
+    "sentenceLoudSdDb": 1.49,
+    "durationSec": 100.22,
+    "accuracy": 99.7
+  },
+  "coral-audiobook": {
+    "label": "coral + audiobook",
+    "file": "coral-audiobook.mp3",
+    "melodySt": 3.15,
+    "sentencePitchSdSt": 1.48,
+    "sentenceRateSd": 0.27,
+    "sentenceLoudSdDb": 1.97,
+    "durationSec": 105.36,
+    "accuracy": 97.1,
+    "director": null
+  },
+  "verse-audiobook": {
+    "label": "verse + audiobook",
+    "file": "verse-audiobook.mp3",
+    "melodySt": 2.52,
+    "sentencePitchSdSt": 0.99,
+    "sentenceRateSd": 0.29,
+    "sentenceLoudSdDb": 1.43,
+    "durationSec": 105.62,
+    "accuracy": 98.1,
+    "director": null
+  },
+  "marin-director": {
+    "label": "marin + audiobook + director pass",
+    "file": "marin-director.mp3",
+    "melodySt": 2.32,
+    "sentencePitchSdSt": 1.27,
+    "sentenceRateSd": 0.33,
+    "sentenceLoudSdDb": 1.56,
+    "durationSec": 109.03,
+    "accuracy": 99,
+    "director": {
+      "source": "gpt-5.5",
+      "directions": [
+        "Voix douce et posée, rythme lent, légère mélancolie; installer le mystère sous la pluie, avec une tension retenue.",
+        "Plus chaud et nostalgique, pace légèrement ralenti; élargir l’espace sonore, comme un souvenir qui respire après l’ouverture mystérieuse.",
+        "Revenir au présent, plus net et vivant; dialogue discret, curiosité suspendue, tension qui monte doucement sans brusquer.",
+        "Plus intime et grave, débit mesuré; laisser peser les regrets, construire l’émotion comme une confession longtemps retenue.",
+        "Éclaircir progressivement, voix plus lumineuse et calme; ralentir sur la décision finale, libérer la tension avec espoir."
+      ]
+    }
+  },
+  "marin-storyteller": {
+    "label": "marin + old-storyteller",
+    "file": "marin-storyteller.mp3",
+    "melodySt": 4.56,
+    "sentencePitchSdSt": 4.37,
+    "sentenceRateSd": 0.31,
+    "sentenceLoudSdDb": 2.08,
+    "durationSec": 136.78,
+    "accuracy": 98.2,
+    "director": null
+  },
+  "cedar-storyteller": {
+    "label": "cedar + old-storyteller",
+    "file": "cedar-storyteller.mp3",
+    "melodySt": 2.79,
+    "sentencePitchSdSt": 1.68,
+    "sentenceRateSd": 0.23,
+    "sentenceLoudSdDb": 2.01,
+    "durationSec": 122.62,
+    "accuracy": 98.5,
+    "director": null
+  },
+  "cedar-storyteller-director": {
+    "label": "cedar + old-storyteller + director pass",
+    "file": "cedar-storyteller-director.mp3",
+    "melodySt": 2.59,
+    "sentencePitchSdSt": 1.41,
+    "sentenceRateSd": 0.31,
+    "sentenceLoudSdDb": 1.96,
+    "durationSec": 127.01,
+    "accuracy": 99.3,
+    "director": {
+      "source": "gpt-5.5",
+      "directions": [
+        "Voix douce et posée, lente, teintée de mystère; installer la nuit et la nostalgie avec une tension discrète.",
+        "Plus chaleureux et rêveur; ralentir légèrement, laisser respirer les souvenirs sensoriels, contraste lumineux avec l’ouverture pluvieuse.",
+        "Revenir au présent, ton plus vif mais feutré; créer une curiosité retenue, avec une légère suspension sur « promesse ».",
+        "Plus intime et grave; ralentir, baisser la voix, faire monter le regret et l’émotion par fragments successifs.",
+        "Éclaircir progressivement; rythme calme et chargé d’espoir, voix plus ferme sur la décision finale, libération après le regret."
+      ]
+    }
+  },
+  "coral-director": {
+    "label": "coral + audiobook + director pass",
+    "file": "coral-director.mp3",
+    "melodySt": 3.07,
+    "sentencePitchSdSt": 1.44,
+    "sentenceRateSd": 0.25,
+    "sentenceLoudSdDb": 1.86,
+    "durationSec": 114.34,
+    "accuracy": 98.5,
+    "director": {
+      "source": "gpt-5.5",
+      "directions": [
+        "Calme, feutré, lent; installer le mystère sous la pluie, avec une nostalgie retenue et une légère tension d’ouverture.",
+        "Plus chaud et rêveur; ralentir encore, voix douce et ample, comme un souvenir qui s’ouvre après le mystère initial.",
+        "Revenir au présent, plus vif et curieux; ton poli, léger suspense, marquer le silence après « une promesse ».",
+        "Plus intime et chargé; ralentir, voix plus basse, émotion contenue qui monte, comme une confession longtemps retenue.",
+        "Éclaircir et apaiser; rythme mesuré, voix plus lumineuse, laisser naître l’espoir et conclure avec une résolution douce."
+      ]
+    }
+  },
+  "verse-director": {
+    "label": "verse + audiobook + director pass",
+    "file": "verse-director.mp3",
+    "melodySt": 2.76,
+    "sentencePitchSdSt": 1.02,
+    "sentenceRateSd": 0.28,
+    "sentenceLoudSdDb": 1.39,
+    "durationSec": 111.5,
+    "accuracy": 99.3,
+    "director": {
+      "source": "gpt-5.5",
+      "directions": [
+        "Voix douce et posée, rythme lent, mélancolie discrète; installer le mystère sous la pluie, avec une tension retenue.",
+        "Plus chaud et rêveur, ralentir encore; laisser respirer les souvenirs, contraste nostalgique avec le présent du train.",
+        "Énergie légèrement plus vive, curiosité polie; voix feutrée, suspendre la fin comme une porte qui s’entrouvre.",
+        "Plus intime et grave, rythme mesuré mais chargé; monter l’émotion, comme une confession longtemps contenue.",
+        "Commencer calme et lumineux, puis ralentir sur la décision; voix plus ferme, libératrice, avec une note d’espoir."
+      ]
+    }
+  }
+}

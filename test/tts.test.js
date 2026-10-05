@@ -7,6 +7,7 @@ import path from "node:path";
 import { startMock, ttsBehavior } from "./helpers/mock-server.js";
 
 process.env.GPTVOICE_RETRY_BASE_MS = "5";
+process.env.GPTVOICE_DIRECTOR = "heuristic";
 process.env.GPTVOICE_IDLE_TIMEOUT_MS = "800";
 process.env.GPTVOICE_CONCURRENCY = "2";
 const { generateSpeech, generateDialogue } = await import("../src/tts.js");

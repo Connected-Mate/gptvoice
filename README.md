@@ -86,6 +86,10 @@ Measured on the 7 demo files, before → after: **0 issues at the joins between 
 
 Benchmark (`bench/acting.js`, 13 scripts × 4 models, each vs a neutral reading of the same words; listen in `samples/listening-test/index.html#acting`): every mode produced a measurable change in pitch, range, loudness, pace or duration on the default model (sarcastic the subtlest); word accuracy 99.3–99.5 % on all models. Model comparison — average change vs neutral: **gpt-realtime-1.5 8.4**, gpt-realtime-2 6.2, gpt-realtime-2.1 5.6, gpt-realtime-2.1-mini 5.6, so the default stays 1.5. OpenAI's newer expressive model `gpt-live-1` answers "Voice session access denied" for this sign-in. The metric cannot hear tears or laughter: your ears are the final judge.
 
+## Long narration without monotony
+
+For 3+ paragraphs, a **director pass** (on by default, `director: false` to disable) reads the whole story with a text model on the same sign-in and gives each paragraph its own direction (e.g. "warmer and nostalgic, slow down on sensory memories" → "graver, confidential, let the regrets weigh"); a local heuristic is used if the text model is unreachable. On the 1 min 40 FR test: melody 2.15 → 2.32 semitones, sentence-to-sentence pitch variation 1.07 → 1.27, accuracy 99 %. Voice choice matters more: `coral` reached 3.15 st and `cedar` + `old-storyteller` 2.79 st (listen: `samples/listening-test/index.html`, test 8). `marin` + `old-storyteller` was rejected — its character voice jumped between 88 and 207 Hz from one paragraph to the next.
+
 ## Clips for video, and letting the agent "see" the voice
 
 GPTVoice speaks sentence by sentence, so for a film or a video the best results come from **separate clips aligned on the timeline**, not one long take.

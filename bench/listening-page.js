@@ -46,6 +46,27 @@ const metricRows = (m, r) => `
 
 const player = (side, rel, label) => `<figure><figcaption>${label}</figcaption><audio controls preload="none" src="${esc(`${side}/${rel}`)}"></audio></figure>`;
 
+// Test 8 variants: voices, acting and the automatic director pass (bench/monotony.js).
+async function variantsBlock() {
+  let v;
+  try {
+    v = JSON.parse(await fs.readFile(path.join(ROOT, "after", "08-variants", "results.json"), "utf8"));
+  } catch {
+    return "";
+  }
+  const order = ["baseline", "marin-director", "verse-audiobook", "verse-director", "coral-audiobook", "coral-director", "cedar-storyteller", "cedar-storyteller-director", "marin-storyteller"];
+  const rows = order.filter((k) => v[k]).map((k) => {
+    const x = v[k];
+    const note = k === "marin-storyteller" ? " ⚠ voice changes character between paragraphs (88 ↔ 207 Hz)" : k === "marin-director" ? " ← new default (director on for 3+ paragraphs)" : "";
+    return `<tr><td>${esc(x.label)}${note}</td><td>${x.melodySt} st</td><td>${x.sentencePitchSdSt} st</td><td>${x.sentenceRateSd}</td><td>${x.sentenceLoudSdDb} dB</td><td>${x.durationSec} s</td><td>${x.accuracy} %</td><td><audio controls preload="none" src="${esc(k === "baseline" ? "after/08-fr-long-2min.mp3" : `after/08-variants/${x.file}`)}" aria-label="${esc(x.label)}"></audio></td></tr>`;
+  });
+  const dir = v["marin-director"]?.director?.directions;
+  return `<h3>Against monotony: variants</h3>
+  <p class="note">Same text. Melody = pitch movement inside sentences; sentence pitch / pace / loudness variation = how much sentences differ from each other (higher = less monotonous). The director pass reads the whole story first and gives each paragraph its own delivery.</p>
+  <div class="tablewrap"><table class="models"><thead><tr><th>Variant</th><th>Melody</th><th>Sentence pitch var.</th><th>Pace var. (w/s)</th><th>Loudness var.</th><th>Duration</th><th>Accuracy</th><th>Listen</th></tr></thead><tbody>${rows.join("")}</tbody></table></div>
+  ${dir ? `<details><summary>Director pass directions (marin)</summary><ol>${dir.map((d) => `<li>${esc(d)}</li>`).join("")}</ol></details>` : ""}`;
+}
+
 let sections = "";
 const totals = { before: { clicks: 0, edges: 0, cut: 0, zero: 0, joins: 0, joinCount: 0 }, after: { clicks: 0, edges: 0, cut: 0, zero: 0, joins: 0, joinCount: 0 } };
 const add = (side, m) => {
@@ -81,6 +102,7 @@ for (const it of ITEMS) {
     body += `<div class="pair"><div class="side">${player("before", b.file, "Before")}${metricRows(mb, b)}</div><div class="side after">${player("after", a.file, "After")}${metricRows(ma, a)}</div></div>
     <details><summary>Script</summary><pre class="script">${esc(it.text)}</pre></details>`;
   }
+  if (it.id === "08-fr-long-2min") body += await variantsBlock();
   sections += `<section id="${it.id}"><h2>${esc(it.title)}</h2>${body}</section>\n`;
 }
 
@@ -189,6 +211,8 @@ h1.part { margin-top: 40px; padding-top: 16px; border-top: 2px solid var(--line)
 .grid3 { display:grid; grid-template-columns: repeat(auto-fit, minmax(260px,1fr)); gap: 16px; margin-top: 10px; }
 table.models { border-collapse: collapse; margin: 0 0 12px; background: var(--card); border:1px solid var(--line); }
 table.models th, table.models td { padding: 6px 12px; border-bottom: 1px solid var(--line); text-align: left; }
+.tablewrap { overflow-x: auto; }
+.tablewrap audio { width: 220px; }
 ul.verdicts { columns: 2 260px; padding-left: 18px; margin: 0 0 20px; }
 :focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 </style>

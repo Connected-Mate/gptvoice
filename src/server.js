@@ -51,6 +51,7 @@ const controls = {
 };
 
 const output = {
+  director: z.boolean().optional().describe("Director pass for long narration: reads the whole text and gives each paragraph its own delivery along the story's arc. Default: on for 3+ paragraphs."),
   format: formatEnum.optional().describe("mp3 (default), wav (lossless, for editing), or m4a (macOS). Inferred from `out` if omitted."),
   subtitles: z.boolean().optional().describe("Also write a matching .srt subtitle file (timed per sentence)."),
   verify: z.boolean().optional().describe("Double-check every passage with an independent speech-to-text pass and re-record drifting ones. Slower; use for final deliverables."),

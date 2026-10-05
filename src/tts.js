@@ -21,6 +21,7 @@ import { DEFAULT_VOICE, VOICES, voiceGainDb } from "./voices.js";
 import { START_CUE, buildInstructions, validateSpeed, deliveryLines } from "./direction.js";
 import { parseCues, scriptOf, expectedOf } from "./cues.js";
 import { getPreset, PRESET_FIELDS } from "./config.js";
+import { directParagraphs } from "./director.js";
 import { wordAccuracy, describeDiff } from "./accuracy.js";
 import { MAX_PITCH_SHIFT, SAMPLE_RATE, applyGainDb, crossfadeConcat, encode, fadeEdges, fillDigitalSilence, pitchShift, normalizeLoudness, pcmDurationSec, resolveFormat, roomTone, saveAudio, smoothTrim, withExtension } from "./audio.js";
 import { MAX_TEXT_CHARS, chunkText, parseScript } from "./text.js";
@@ -419,12 +420,24 @@ export async function generateSpeech(opts) {
   const t = validateText(text);
   if (!out) throw new VoiceError("an output path is required (e.g. narration.mp3)", "invalid");
   const settings = await resolveSettings(opts);
+  const paragraphs = t.split(/\n\s*\n/).filter((p) => p.trim());
+  // Director pass: one delivery direction per paragraph, following the story's arc.
+  let directions = [];
+  let directorSource = null;
+  // Default: on for long narration (3+ paragraphs) — measured livelier and more accurate.
+  const useDirector = opts.director ?? paragraphs.length >= 3;
+  if (useDirector) {
+    const d = await directParagraphs(paragraphs, getCreds ? { getCreds } : {});
+    directions = d.directions;
+    directorSource = d.source;
+  }
   const units = [];
-  t.split(/\n\s*\n/).forEach((para, p) => {
-    if (!para.trim()) return;
-    units.push(...unitsFor(para, settings, { firstPause: p > 0 && units.length ? PARAGRAPH_PAUSE_MS : 0 }));
+  paragraphs.forEach((para, p) => {
+    units.push(...unitsFor(para, settings, { firstPause: p > 0 && units.length ? PARAGRAPH_PAUSE_MS : 0, extraStyle: directions[p] ?? undefined }));
   });
-  return render(units, { out, format, baseDir, subtitles, manifest, model, verify, normalize, redos, padToSec, getCreds, onProgress });
+  const result = await render(units, { out, format, baseDir, subtitles, manifest, model, verify, normalize, redos, padToSec, getCreds, onProgress });
+  if (useDirector) result.director = { source: directorSource, directions };
+  return result;
 }
 
 /**

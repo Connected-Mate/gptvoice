@@ -57,6 +57,10 @@ Human-sounding results come from this loop: short lines, one intention per line,
 6. **Speed near 1.0** (0.8–1.2 sounds natural). To fit a shot, rewrite the line before pushing speed to extremes.
 7. **Check by ear AND with `inspect_audio`**: its "Smoothness" line flags clicks, hard cuts, cut-off endings and dead air. Default output is already smoothed (natural tails kept, fades, 40 ms crossfades, room tone, loudness ≈ -19 dB RMS).
 
+## Long narration (3+ paragraphs)
+
+A **director pass** runs automatically: the whole text is read once and each paragraph gets its own delivery along the story's arc (measured on a 1 min 40 FR text: melody +8 %, sentence-to-sentence pitch variation +19 %). For an even livelier read pick a more animated voice: `coral` (melody +47 %) or `cedar` with `acting: "old-storyteller"` (+30 %). Avoid `marin` + `old-storyteller` on long texts: the character voice drifted between paragraphs. `director: false` turns the pass off.
+
 ## Model choice
 
 Keep the default `gpt-realtime-1.5`: in the acting benchmark it was the MOST expressive of the four accessible models (avg change vs neutral 8.4 vs 6.2 for gpt-realtime-2, 5.6 for 2.1 / 2.1-mini) at 99.5 % word accuracy. `gpt-live-1` exists but refuses this sign-in.

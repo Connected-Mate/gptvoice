@@ -21,7 +21,7 @@ await client.connect(
   new StdioClientTransport({
     command: process.execPath,
     args: [path.resolve("src/server.js")],
-    env: { ...process.env, HOME: home, GPTVOICE_REALTIME_URL: mock.url, GPTVOICE_PROJECT_DIR: project, GPTVOICE_RETRY_BASE_MS: "5" },
+    env: { ...process.env, GPTVOICE_DIRECTOR: "heuristic", HOME: home, GPTVOICE_REALTIME_URL: mock.url, GPTVOICE_PROJECT_DIR: project, GPTVOICE_RETRY_BASE_MS: "5" },
     stderr: "ignore",
   }),
 );

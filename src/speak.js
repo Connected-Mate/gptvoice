@@ -49,7 +49,7 @@ const VALUE_FLAGS = {
   "--favorite": "favorite", "--unfavorite": "unfavorite", "--model": "model",
   "--clips": "clips", "--out-dir": "outDir", "--inspect": "inspect", "--target": "target", "--min-pause": "minPause",
 };
-const BOOL_FLAGS = { "--picture": "picture", "--subtitles": "subtitles", "--verify": "verify", "--breaths": "breaths", "--voices": "listVoices", "--presets": "listPresets", "--favorites": "favoritesOnly", "--help": "help", "-h": "help" };
+const BOOL_FLAGS = { "--director": "director", "--picture": "picture", "--subtitles": "subtitles", "--verify": "verify", "--breaths": "breaths", "--voices": "listVoices", "--presets": "listPresets", "--favorites": "favoritesOnly", "--help": "help", "-h": "help" };
 
 function parseArgs(argv) {
   const out = { baseDir: process.cwd(), tags: [], say: {} };
@@ -156,7 +156,7 @@ async function main() {
     return;
   }
   if (!args.out) throw new Error(`--out is required\n\n${USAGE}`);
-  const common = { ...controlsOf(args), format: args.format, out: args.out, baseDir: args.baseDir, subtitles: args.subtitles, verify: args.verify, model: args.model, onProgress: progress };
+  const common = { ...controlsOf(args), director: args.director || undefined, format: args.format, out: args.out, baseDir: args.baseDir, subtitles: args.subtitles, verify: args.verify, model: args.model, onProgress: progress };
   let r;
   if (args.dialogue) {
     r = await generateDialogue({ ...common, script: await readText(args.dialogue), voices: parseCast(args.cast) });

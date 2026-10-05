@@ -7,6 +7,7 @@ import { startMock, smartBehavior, tone } from "./helpers/mock-server.js";
 
 const dir = await fs.mkdtemp(path.join(os.tmpdir(), "gptvoice-insp-"));
 process.env.GPTVOICE_RETRY_BASE_MS = "5";
+process.env.GPTVOICE_DIRECTOR = "heuristic";
 const { contourPcm, segmentSpeech } = await import("../src/analysis.js");
 const { pcmToWav, silence } = await import("../src/audio.js");
 const { inspectAudio, inspectFolder, describeInspection } = await import("../src/inspect.js");

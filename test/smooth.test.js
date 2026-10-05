@@ -91,3 +91,12 @@ test("sentence-safe cues: mid-sentence pause → '…', mid-sentence direction �
   assert.equal(relocateCues("End here [pause 2s]"), "End here [pause 2s]");
   assert.equal(relocateCues("We did it, [laughs] all of us!"), "We did it, [laughs] all of us!", "sounds stay inline");
 });
+
+test("director heuristic gives one direction per paragraph, energetic for exclamations", async () => {
+  const { heuristicDirections } = await import("../src/director.js");
+  const d = heuristicDirections(["Calm opening.", "Run! Now! Go!", "« Who is there? » she asked.", "The end."]);
+  assert.equal(d.length, 4);
+  assert.match(d[1], /energetic/);
+  assert.match(d[2], /quoted lines/);
+  assert.match(d[3], /resolution/);
+});
