@@ -168,6 +168,17 @@ function mergeCompounds(words, expectedSet) {
   return out;
 }
 
+// French silent endings: "ils arrivent" and "il arrive" sound identical, so a
+// transcriber may write either. Compare what is HEARD: drop silent plural
+// -s/-x and the silent verb ending -ent.
+function heardKey(w, lang) {
+  if (lang !== "fr" || w.length < 3) return w;
+  let k = w;
+  if (k.length > 4 && k.endsWith("ent")) k = k.slice(0, -2);
+  if (/[sx]$/.test(k) && k.length > 2) k = k.slice(0, -1);
+  return k;
+}
+
 /** Levenshtein alignment on words; returns edit ops. */
 function align(a, b) {
   const n = a.length;
@@ -224,7 +235,7 @@ export function wordAccuracy(expected, said, lang) {
     const errors = a.length - hit + Math.max(0, b.length - a.length);
     return { accuracy: Math.max(0, 1 - errors / a.length), errors, words: a.length, ops: [] };
   }
-  const { distance, ops } = align(a, b);
+  const { distance, ops } = align(a.map((w) => heardKey(w, language)), b.map((w) => heardKey(w, language)));
   return { accuracy: Math.max(0, 1 - distance / a.length), errors: distance, words: a.length, ops };
 }
 

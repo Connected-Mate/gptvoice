@@ -45,5 +45,5 @@ test("inline cue words expand to the same strong directions (EN + FR)", () => {
   assert.match(expandCue("excité"), /excited/);
   assert.equal(expandCue("like a pirate"), "like a pirate");
   assert.match(buildInstructions("Go!", {}, "v2", { directions: ["triste"] }), /sad: slow/);
-  assert.match(buildInstructions("Go!", {}, "v2", { sounds: [{ sound: "Ha ha ha!", how: "genuine laughter" }] }), /opens with "Ha ha ha!"/);
+  assert.match(buildInstructions("Go!", {}, "v2", { sounds: [{ sound: "Ha ha ha!", how: "genuine laughter" }] }), /contains "Ha ha ha!": perform it as genuine laughter, not as words/);
 });

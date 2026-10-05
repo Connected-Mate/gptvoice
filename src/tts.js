@@ -22,7 +22,7 @@ import { START_CUE, buildInstructions, validateSpeed, deliveryLines } from "./di
 import { parseCues, scriptOf, expectedOf } from "./cues.js";
 import { getPreset, PRESET_FIELDS } from "./config.js";
 import { wordAccuracy, describeDiff } from "./accuracy.js";
-import { MAX_PITCH_SHIFT, applyGainDb, encode, pitchShift, joinPcm, normalizeLoudness, pcmDurationSec, resolveFormat, saveAudio, silence, trimSilence, withExtension } from "./audio.js";
+import { MAX_PITCH_SHIFT, SAMPLE_RATE, applyGainDb, crossfadeConcat, encode, fadeEdges, fillDigitalSilence, pitchShift, normalizeLoudness, pcmDurationSec, resolveFormat, roomTone, saveAudio, smoothTrim, withExtension } from "./audio.js";
 import { MAX_TEXT_CHARS, chunkText, parseScript } from "./text.js";
 
 const CONCURRENCY = Math.max(1, Number(process.env.GPTVOICE_CONCURRENCY) || 3);
@@ -30,9 +30,16 @@ const RETRY_BASE_MS = Number(process.env.GPTVOICE_RETRY_BASE_MS ?? 2000);
 const MIN_ACCURACY = 0.9; // against the model's own transcript
 const MIN_VERIFIED_ACCURACY = 0.85; // against independent STT (which has its own errors)
 const MAX_REDOS = 2;
-const CHUNK_PAUSE_MS = 250;
-const PARAGRAPH_PAUSE_MS = 700;
-const DIALOGUE_PAUSE_MS = 450;
+// Gaps are room tone added AFTER each take's natural tail (~160 ms kept by
+// smoothTrim), so the heard pause is roughly gap + 0.2 s.
+const CHUNK_PAUSE_MS = 150;
+const PARAGRAPH_PAUSE_MS = 600;
+const DIALOGUE_PAUSE_MS = 300;
+const HEAD_ROOM_MS = 250; // room tone before the first word
+const TAIL_ROOM_MS = 500; // room tone after the last word
+const XFADE_MS = 40; // equal-power crossfade at every join
+const MAX_CHUNK_CHARS = 900; // whole sentences, ~1 paragraph per take
+const CONTEXT_CHARS = 220;
 const DIALOGUE_VOICE_ROTATION = ["marin", "cedar", "coral", "ash", "sage", "verse", "shimmer", "echo", "ballad", "alloy"];
 // Placeholder that keeps "{New York|nu york}" in one piece while chunking.
 const HINT_SPACE = "⁣";
@@ -135,7 +142,7 @@ const accuracyOf = (u, said, lang) =>
 
 // Speak one chunk; re-record while the words drift from the text.
 async function speakUnit(creds, u, { model, verify, redos = MAX_REDOS }) {
-  const cue = { directions: u.directions, sounds: u.sounds };
+  const cue = { directions: u.directions, sounds: u.sounds, before: u.before, after: u.after };
   const instructions = buildInstructions(u.script, u.controls, undefined, cue);
   const cueText = START_CUE;
   const lang = /french|fran/i.test(u.controls.language || "") ? "fr" : undefined;
@@ -152,8 +159,17 @@ async function speakUnit(creds, u, { model, verify, redos = MAX_REDOS }) {
     let heard = null;
     let verified = null;
     if (verify && checkable) {
-      heard = await withRetry((c) => transcribePcm(c, trimSilence(r.pcm), { language: lang }), creds);
+      // Speech-to-text does better with a little lead-in and tail room.
+      const clip = Buffer.concat([roomTone(300), smoothTrim(r.pcm), roomTone(300)]);
+      heard = await withRetry((c) => transcribePcm(c, clip, { language: lang }), creds);
       verified = accuracyOf(u, heard, lang);
+      if (verified < MIN_VERIFIED_ACCURACY) {
+        // Speech-to-text sometimes hallucinates (it once returned Chinese for a French
+        // line): get a second opinion from another model before blaming the voice.
+        const second = await withRetry((c) => transcribePcm(c, clip, { language: lang, model: "whisper-1" }), creds).catch(() => "");
+        const v2 = accuracyOf(u, second, lang);
+        if (v2 > verified) [heard, verified] = [second, v2];
+      }
     }
     const score = verified ?? own;
     if (!best || score > best.score) best = { ...r, own, heard, verified, score };
@@ -237,14 +253,14 @@ function unitsFor(text, settings, { firstPause, speaker, extraStyle } = {}) {
       continue;
     }
     const protectedRaw = seg.raw.replace(/\{[^}]{1,170}\}/g, (h) => h.replaceAll(" ", HINT_SPACE));
-    const pieces = protectedRaw ? chunkText(protectedRaw) : [""];
+    const pieces = protectedRaw ? chunkText(protectedRaw, MAX_CHUNK_CHARS) : [""];
     pieces.forEach((piece, i) => {
       const raw = piece.replaceAll(HINT_SPACE, " ");
-      const sounds = i === 0 ? seg.sounds : [];
-      const opener = sounds.map((x) => x.sound).join(" ");
+      // Sounds are already inline ("Ha ha ha!"); keep the notes for the piece that has them.
+      const sounds = seg.sounds.filter((x) => raw.includes(x.sound));
       units.push({
-        script: [opener, scriptOf(raw)].filter(Boolean).join(" "),
-        expected: expectedOf(raw),
+        script: scriptOf(raw).replace(/\s+/g, " ").trim(),
+        expected: expectedOf(raw).replaceAll("\u200b", "").replace(/\s+/g, " ").trim(),
         alternate: scriptOf(raw),
         voice: settings.voice,
         speed: settings.speed,
@@ -274,35 +290,44 @@ async function render(units, { out, format, baseDir, subtitles, manifest, model,
   const creds = credentialSource(getCreds);
   await creds.get(); // fail fast on "not signed in" before any work
 
+  // Continuity context for every take: the neighbouring words (with the speaker in dialogues).
+  const label = (u) => (u?.expected ? (u.speaker ? `${u.speaker}: ${u.expected}` : u.expected) : "");
+  units.forEach((u, i) => {
+    const prev = label(units[i - 1]);
+    const next = label(units[i + 1]);
+    const ctx = process.env.GPTVOICE_CONTEXT !== "off";
+    u.before = ctx && prev ? prev.slice(-CONTEXT_CHARS) : undefined;
+    u.after = ctx && next ? next.slice(0, CONTEXT_CHARS) : undefined;
+  });
+
   let done = 0;
   const spoken = await mapLimit(units, CONCURRENCY, async (u) => {
     const r = await speakUnit(creds, u, { model, verify, redos });
     onProgress?.(++done, units.length);
     // Even out the level differences between voices (sage is ~14 dB quieter than marin).
-    const pcm = applyGainDb(pitchShift(trimSilence(r.pcm), u.pitchShift || 0), voiceGainDb(u.voice));
+    const pcm = fillDigitalSilence(applyGainDb(pitchShift(smoothTrim(r.pcm), u.pitchShift || 0), voiceGainDb(u.voice)));
     return { ...u, pcm, transcript: r.transcript, own: r.own, verified: r.verified, heard: r.heard };
   });
 
-  const parts = [];
-  const segments = [];
-  let cursor = 0;
+  // Assembly: room tone head → take → room-tone gap → take … → room tone tail,
+  // every join an equal-power crossfade; then loudness and edge fades.
+  const parts = [{ pcm: roomTone(HEAD_ROOM_MS) }];
   spoken.forEach((u, i) => {
     const gapMs = i === 0 ? u.pauseBefore : u.pauseBefore;
-    if (gapMs > 0) {
-      parts.push(silence(gapMs));
-      cursor += gapMs / 1000;
-    }
-    parts.push(u.pcm);
-    const duration = pcmDurationSec(u.pcm);
-    segments.push({ start: cursor, duration, text: u.expected, speaker: u.speaker, voice: u.voice });
-    cursor += duration;
-    if (u.pauseAfter) {
-      parts.push(silence(u.pauseAfter));
-      cursor += u.pauseAfter / 1000;
-    }
+    // The two crossfades around a gap eat 2 × XFADE_MS of it: add them back.
+    if (gapMs > 0) parts.push({ pcm: roomTone(gapMs + 2 * XFADE_MS, { seed: i + 1 }) });
+    parts.push({ pcm: u.pcm, unit: u });
+    if (u.pauseAfter) parts.push({ pcm: roomTone(u.pauseAfter + 2 * XFADE_MS, { seed: 1000 + i }) });
   });
-  let pcm = joinPcm(parts);
+  parts.push({ pcm: roomTone(TAIL_ROOM_MS, { seed: 99 }) });
+  const starts = [];
+  let pcm = crossfadeConcat(parts.map((p) => p.pcm), { xfadeMs: XFADE_MS, starts });
   if (normalize) pcm = normalizeLoudness(pcm);
+  pcm = fadeEdges(pcm, { inMs: 10, outMs: 200 });
+  const segments = [];
+  parts.forEach((p, k) => {
+    if (p.unit) segments.push({ start: starts[k] / SAMPLE_RATE, duration: pcmDurationSec(p.pcm), text: p.unit.expected, speaker: p.unit.speaker, voice: p.unit.voice });
+  });
   const bytes = await encode(pcm, fmt);
   const { savedPath, versioned } = await saveAudio(target, baseDir, bytes);
 
@@ -337,6 +362,9 @@ async function render(units, { out, format, baseDir, subtitles, manifest, model,
   let verSum = 0;
   let verWords = 0;
   const warnings = [];
+  if (units.some((u) => u.pitchShift)) {
+    warnings.push("pitch_shift is audio processing: beyond ±4 semitones it can sound robotic or phasey — listen before delivering");
+  }
   spoken.forEach((u, i) => {
     const n = u.expected.split(/\s+/).filter(Boolean).length;
     if (!n) return;

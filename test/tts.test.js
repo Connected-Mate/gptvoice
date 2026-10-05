@@ -33,7 +33,8 @@ test("happy path: sends auth headers, voice, verbatim instructions; writes a wav
   const r = await generateSpeech({ text: "Bonjour tout le monde, voici un test.", voice: "cedar", style: "whisper", out: "a.wav", baseDir: out, getCreds: creds() });
   assert.equal(r.format, "wav");
   assert.equal(r.passages, 1);
-  assert.ok(r.durationSec > 0.4 && r.durationSec < 0.7, `duration ${r.durationSec}`);
+  // 0.4 s tone + kept head/tail (40/160 ms) + room tone head/tail (250/500 ms) − crossfades
+  assert.ok(r.durationSec > 1.1 && r.durationSec < 1.35, `duration ${r.durationSec}`);
   assert.deepEqual(r.warnings, []);
   const c = m.connections[0];
   assert.equal(c.headers.authorization, "Bearer token");
@@ -53,9 +54,9 @@ test("long text → several passages, joined in order, with subtitles", async ()
   await mock([ttsBehavior()]);
   const para = Array.from({ length: 12 }, (_, i) => `Sentence number ${i} is here to fill the paragraph nicely.`).join(" ");
   const r = await generateSpeech({ text: `${para}\n\n${para}`, out: "long.mp3", baseDir: out, subtitles: true, getCreds: creds() });
-  assert.ok(r.passages >= 4, `passages ${r.passages}`);
+  assert.ok(r.passages >= 2, `passages ${r.passages}`); // whole paragraphs per take (≤ 900 chars)
   const srt = await fs.readFile(r.subtitlesPath, "utf8");
-  assert.match(srt, /^1\n00:00:00,000 --> /);
+  assert.match(srt, /^1\n00:00:00,2\d\d --> /); // after the 250 ms room-tone head
   assert.match(srt, /Sentence number 0/);
   assert.equal(r.transcript.split("\n")[0].startsWith("Sentence number 0"), true);
 });
@@ -150,7 +151,7 @@ test("dialogue: distinct voices per speaker, explicit cast respected, one file",
   assert.ok(voices.includes("coral"));
   const bob = m.connections
     .map((c) => c.messages.find((x) => x.type === "session.update").session.instructions)
-    .find((i) => i.includes("Fine, thanks Alice."));
+    .find((i) => i.split('"""')[1].includes("Fine, thanks Alice."));
   assert.match(bob, /tired/);
   assert.match(await fs.readFile(r.subtitlesPath, "utf8"), /BOB: Fine/);
 });

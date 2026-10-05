@@ -1,0 +1,161 @@
+[
+  {
+    "file": "samples/ab-smooth/en-emotions-coral-after.mp3",
+    "clicks": 2,
+    "clickTimes": [
+      5.539,
+      11.01
+    ],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -89,
+    "tailDb": -180,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 0,
+      "seconds": 0
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/ab-smooth/en-meditation-sage-after.mp3",
+    "clicks": 0,
+    "clickTimes": [],
+    "abruptOnsets": 1,
+    "abruptOffsets": 2,
+    "edgeTimes": [
+      7.323,
+      13.698,
+      13.699
+    ],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -80,
+    "tailDb": -180,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 0,
+      "seconds": 0
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/ab-smooth/en-trailer-cedar-after.mp3",
+    "clicks": 3,
+    "clickTimes": [
+      5.622,
+      7.903,
+      13.357
+    ],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -84,
+    "tailDb": -180,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 0,
+      "seconds": 0
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/ab-smooth/fr-conte-marin-after.mp3",
+    "clicks": 0,
+    "clickTimes": [],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -86,
+    "tailDb": -180,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 0,
+      "seconds": 0
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/ab-smooth/fr-dialogue-after.mp3",
+    "clicks": 2,
+    "clickTimes": [
+      7.047,
+      14.256
+    ],
+    "abruptOnsets": 1,
+    "abruptOffsets": 2,
+    "edgeTimes": [
+      6.819,
+      10.316,
+      10.317
+    ],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -88,
+    "tailDb": -180,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 0,
+      "seconds": 0
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/ab-smooth/fr-narration-long-marin-after.mp3",
+    "clicks": 5,
+    "clickTimes": [
+      2.287,
+      4.502,
+      19.157,
+      27.995,
+      32.557
+    ],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -86,
+    "tailDb": -180,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 0,
+      "seconds": 0
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/ab-smooth/fr-pub-coral-after.mp3",
+    "clicks": 1,
+    "clickTimes": [
+      2.704
+    ],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -87,
+    "tailDb": -180,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 0,
+      "seconds": 0
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  }
+]

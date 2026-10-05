@@ -79,7 +79,7 @@ test("generate_clips: numbered files + srt + timings + manifest; fitting tries s
   process.env.GPTVOICE_REALTIME_URL = m.url;
   const r = await generateClips({
     lines: [
-      { id: "Intro shot", text: "Welcome to the harbour tonight.", target_seconds: 0.55 },
+      { id: "Intro shot", text: "Welcome to the harbour tonight.", target_seconds: 1.2 },
       { id: "end", text: "And the light came home.", target_seconds: 3, voice: "cedar" },
     ],
     out_dir: "clips",
@@ -90,12 +90,12 @@ test("generate_clips: numbered files + srt + timings + manifest; fitting tries s
   assert.deepEqual(names, ["01-intro-shot.mp3", "01-intro-shot.srt", "01-intro-shot.timings.json", "02-end.mp3", "02-end.srt", "02-end.timings.json", "clips.json"]);
   assert.equal(r.clips[0].fits, true);
   assert.equal(r.clips[0].takes, 1);
-  // The mock ignores speed, so 0.52 s can never stretch to 3 s: speed drops to the
-  // 0.25 floor, then stops (no further change possible) and reports the misfit.
+  // The mock ignores speed, so ~1.2 s can never stretch to 3 s: speed drops to
+  // 0.4, then the 0.25 floor, then stops (no further change possible) and reports the misfit.
   assert.equal(r.clips[1].fits, false);
-  assert.equal(r.clips[1].takes, 2);
+  assert.equal(r.clips[1].takes, 3);
   const speeds = m.connections.filter((c) => !/transcription/.test(c.url)).map((c) => c.messages.find((x) => x.type === "session.update").session.audio.output.speed);
-  assert.deepEqual(speeds, [undefined, undefined, 0.25]);
+  assert.deepEqual(speeds, [undefined, undefined, 0.4, 0.25]);
   const manifest = JSON.parse(await fs.readFile(r.manifestPath, "utf8"));
   assert.equal(manifest.clips[1].timelineStart, manifest.clips[0].durationSec);
   const timings = JSON.parse(await fs.readFile(path.join(r.dir, "02-end.timings.json"), "utf8"));

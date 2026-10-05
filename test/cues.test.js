@@ -7,7 +7,8 @@ test("pause cues become exact silences, merged when stacked", () => {
   assert.deepEqual(s.map((x) => [x.script, x.pauseAfterMs]), [["One.", 1500], ["Two.", 300], ["Three.", 1900]]);
   assert.equal(parseCues("[pause] Hi")[0].pauseAfterMs, 800);
   assert.equal(parseCues("Hi [pause 99s]")[0].pauseAfterMs, MAX_PAUSE_MS);
-  assert.equal(parseCues("Bonjour [pause 1,5 s] toi")[0].pauseAfterMs, 1500);
+  // Mid-sentence pauses never split a sentence: they become "…" in one take.
+  assert.deepEqual(parseCues("Bonjour [pause 1,5 s] toi").map((x) => [x.script, x.pauseAfterMs]), [["Bonjour… toi", 0]]);
 });
 
 test("directions are removed from the script and applied to the following words", () => {

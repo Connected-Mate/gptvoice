@@ -52,7 +52,7 @@ test("[whispers] and [laughs] never reach the voice as words", async () => {
   const m = await mock(smartBehavior());
   await generateSpeech({ text: "[laughs] We did it! [whispers] Now be quiet.", out: "c.wav", baseDir: out, getCreds: creds });
   const [first, second] = updates(m);
-  assert.match(first.instructions, /"""\nHa ha ha! We did it!\n"""/);
+  assert.equal(first.instructions.split('"""')[1].trim(), "Ha ha ha! We did it!");
   assert.match(second.instructions, /WHISPER every word/);
   assert.ok(!/\[(laughs|whispers)\]/.test(first.instructions + second.instructions));
 });

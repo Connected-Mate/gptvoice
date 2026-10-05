@@ -41,6 +41,11 @@ test("WER counts substitutions, omissions and additions; diff is readable", () =
   assert.equal(wordAccuracy("", "", "en").accuracy, 1);
 });
 
+test("French homophones from silent endings are not counted as errors", () => {
+  assert.equal(wordAccuracy("Ils arrivent, je les vois !", "Il arrive, je les vois !", "fr").accuracy, 1);
+  assert.ok(wordAccuracy("Ils partent demain.", "Ils restent demain.", "fr").accuracy < 1, "a different word still counts");
+});
+
 test("compound words split by the transcriber still match", () => {
   assert.equal(wordAccuracy("Essayez GPTVoice dès aujourd'hui", "Essayez GPT Voice dès aujourd'hui", "fr").accuracy, 1);
 });

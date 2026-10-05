@@ -39,6 +39,179 @@ export function trimSilence(pcm, { threshold = 500, marginMs = 60, rate = SAMPLE
   return pcm.subarray(s * 2, e * 2);
 }
 
+// ---------------------------------------------------------------------------
+// Smooth assembly (see docs/VOICE-BEST-PRACTICES.md): keep natural tails,
+// fade edges, fill gaps with low room tone, equal-power crossfade every join.
+// ---------------------------------------------------------------------------
+
+export const ROOM_TONE_DB = -72; // under ACX's -60 dB noise-floor ceiling, inaudible at normal levels
+
+// Deterministic PRNG so renders (and tests) are reproducible.
+function mulberry32(seed) {
+  return () => {
+    seed |= 0;
+    seed = (seed + 0x6d2b79f5) | 0;
+    let t = Math.imul(seed ^ (seed >>> 15), 1 | seed);
+    t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+    return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+  };
+}
+
+/** Soft, slightly low-passed noise at `levelDb` dBFS RMS: "room tone" instead of digital zero. */
+export function roomTone(ms, { levelDb = ROOM_TONE_DB, seed = 7, rate = SAMPLE_RATE } = {}) {
+  const n = Math.max(0, Math.round((ms / 1000) * rate));
+  if (levelDb === -Infinity || levelDb == null) return Buffer.alloc(n * 2);
+  const rnd = mulberry32(seed + n);
+  const y = new Float32Array(n);
+  let lp = 0;
+  let e = 0;
+  for (let i = 0; i < n; i++) {
+    lp = 0.85 * lp + 0.15 * (rnd() * 2 - 1);
+    y[i] = lp;
+    e += lp * lp;
+  }
+  const g = n ? 10 ** (levelDb / 20) / Math.sqrt(e / n || 1) : 0;
+  const out = Buffer.alloc(n * 2);
+  for (let i = 0; i < n; i++) out.writeInt16LE(Math.max(-32768, Math.min(32767, Math.round(y[i] * g * 32767))), i * 2);
+  return out;
+}
+
+const toF = (pcm) => {
+  const n = Math.floor(pcm.length / 2);
+  const x = new Float32Array(n);
+  for (let i = 0; i < n; i++) x[i] = pcm.readInt16LE(i * 2) / 32768;
+  return x;
+};
+const toPcm = (x) => {
+  const out = Buffer.alloc(x.length * 2);
+  for (let i = 0; i < x.length; i++) out.writeInt16LE(Math.max(-32768, Math.min(32767, Math.round(x[i] * 32767))), i * 2);
+  return out;
+};
+
+function nearestZeroCrossing(x, i, radius) {
+  for (let d = 0; d <= radius; d++) {
+    for (const j of [i - d, i + d]) {
+      if (j > 0 && j < x.length && (x[j - 1] <= 0) !== (x[j] <= 0)) return j;
+    }
+  }
+  return i;
+}
+
+/**
+ * Trim leading/trailing silence WITHOUT eating the natural decay of the last
+ * syllable: the cut follows sound down to `floorDb` (or 50 dB under the peak),
+ * keeps `headMs`/`tailMs` of room around it, snaps to zero crossings, then
+ * applies a raised-cosine fade-in/out. (The old trim at -36 dB cut 115-360 ms
+ * of audible tail on 7 of 8 test takes.)
+ */
+export function smoothTrim(pcm, { floorDb = -58, relDb = -50, headMs = 40, tailMs = 160, fadeInMs = 15, fadeOutMs = 120, rate = SAMPLE_RATE } = {}) {
+  const x = toF(pcm);
+  if (x.length === 0) return pcm;
+  const F = Math.round(0.005 * rate);
+  const lv = [];
+  let peak = -200;
+  for (let s = 0; s < x.length; s += F) {
+    let e = 0;
+    const end = Math.min(x.length, s + F);
+    for (let i = s; i < end; i++) e += x[i] * x[i];
+    const d = 10 * Math.log10(e / (end - s) || 1e-20);
+    lv.push(d);
+    if (d > peak) peak = d;
+  }
+  const thr = Math.max(floorDb, peak + relDb);
+  const first = lv.findIndex((d) => d > thr);
+  if (first < 0) return Buffer.alloc(0);
+  let last = lv.length - 1;
+  while (last > first && lv[last] <= thr) last--;
+  let a = Math.max(0, first * F - Math.round((headMs / 1000) * rate));
+  let b = Math.min(x.length, (last + 1) * F + Math.round((tailMs / 1000) * rate));
+  a = nearestZeroCrossing(x, a, Math.round(0.002 * rate));
+  b = nearestZeroCrossing(x, b, Math.round(0.002 * rate));
+  const y = x.slice(a, Math.max(a, b));
+  const fi = Math.min(y.length >> 1, Math.round((fadeInMs / 1000) * rate));
+  const fo = Math.min(y.length >> 1, Math.round((fadeOutMs / 1000) * rate));
+  for (let i = 0; i < fi; i++) y[i] *= Math.sin((Math.PI / 2) * (i / fi));
+  for (let i = 0; i < fo; i++) y[y.length - 1 - i] *= Math.sin((Math.PI / 2) * (i / fo));
+  return toPcm(y);
+}
+
+/**
+ * Replace runs of exact digital silence (> `minMs`) inside a take with room
+ * tone, crossfaded in and out, so the background never "drops out".
+ */
+export function fillDigitalSilence(pcm, { minMs = 40, rate = SAMPLE_RATE } = {}) {
+  const x = toF(pcm);
+  const min = Math.round((minMs / 1000) * rate);
+  const fade = Math.round(0.01 * rate);
+  let changed = false;
+  let i = 0;
+  while (i < x.length) {
+    if (Math.abs(x[i]) > 3e-5) {
+      i++;
+      continue;
+    }
+    let j = i;
+    while (j < x.length && Math.abs(x[j]) <= 3e-5) j++;
+    if (j - i >= min) {
+      const tone = toF(roomTone(((j - i) / rate) * 1000, { seed: i }));
+      for (let k = 0; k < tone.length && i + k < j; k++) {
+        const g = Math.min(1, k / fade, (j - i - 1 - k) / fade);
+        x[i + k] += tone[k] * Math.max(0, g);
+      }
+      changed = true;
+    }
+    i = j;
+  }
+  return changed ? toPcm(x) : pcm;
+}
+
+/** Fade the very start and end of a whole file (raised cosine). */
+export function fadeEdges(pcm, { inMs = 10, outMs = 150, rate = SAMPLE_RATE } = {}) {
+  const y = toF(pcm);
+  const fi = Math.min(y.length >> 1, Math.round((inMs / 1000) * rate));
+  const fo = Math.min(y.length >> 1, Math.round((outMs / 1000) * rate));
+  for (let i = 0; i < fi; i++) y[i] *= Math.sin((Math.PI / 2) * (i / fi));
+  for (let i = 0; i < fo; i++) y[y.length - 1 - i] *= Math.sin((Math.PI / 2) * (i / fo));
+  return toPcm(y);
+}
+
+/**
+ * Concatenate segments with an equal-power (sin/cos) crossfade of `xfadeMs` at
+ * every join, so no join is a hard cut. Each overlap shortens the total by
+ * the crossfade length; callers that need exact gaps add it to the gap.
+ */
+export function crossfadeConcat(segments, { xfadeMs = 40, rate = SAMPLE_RATE, starts = [] } = {}) {
+  const all = segments.map(toF);
+  const xs = all.filter((x) => x.length);
+  if (!xs.length) return Buffer.alloc(0);
+  const X = Math.round((xfadeMs / 1000) * rate);
+  let total = xs[0].length;
+  for (let k = 1; k < xs.length; k++) total += xs[k].length - Math.min(X, xs[k].length >> 1, xs[k - 1].length >> 1);
+  const out = new Float32Array(total);
+  out.set(xs[0], 0);
+  let end = xs[0].length;
+  // Report each input segment's start sample (empty segments get the current position).
+  let ki = 0;
+  const report = (pos) => {
+    while (ki < all.length && all[ki].length === 0) starts[ki++] = pos;
+    starts[ki++] = pos;
+  };
+  report(0);
+  for (let k = 1; k < xs.length; k++) {
+    const seg = xs[k];
+    const ov = Math.min(X, seg.length >> 1, xs[k - 1].length >> 1);
+    const start = end - ov;
+    report(start);
+    for (let i = 0; i < ov; i++) {
+      const t = (i + 0.5) / ov;
+      out[start + i] = out[start + i] * Math.cos((Math.PI / 2) * t) + seg[i] * Math.sin((Math.PI / 2) * t);
+    }
+    out.set(seg.subarray(ov), start + ov);
+    end = start + seg.length;
+  }
+  return toPcm(out.subarray(0, end));
+}
+
 // Join PCM segments with a pause between each (no pause before the first).
 export function joinPcm(segments, pauseMs = 0) {
   const parts = [];
@@ -63,7 +236,7 @@ export function applyGainDb(pcm, db) {
  * Bring speech to a consistent level: RMS over active (non-silent) 20 ms frames
  * to `targetDb` dBFS, never letting peaks exceed `peakDb`. Silence stays silent.
  */
-export function normalizeLoudness(pcm, { targetDb = -19, peakDb = -1 } = {}) {
+export function normalizeLoudness(pcm, { targetDb = -19, peakDb = -2 } = {}) {
   const n = Math.floor(pcm.length / 2);
   if (!n) return pcm;
   const frame = 480;

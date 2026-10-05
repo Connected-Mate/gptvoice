@@ -14,7 +14,7 @@ import { VoiceError } from "./errors.js";
 export const EMOTIONS = {
   neutral: "neutral and even: steady pitch, moderate pace, no emotional colour",
   joy: "joyful: bright smiling voice, slightly higher pitch, lively bouncing rhythm, warm",
-  excitement: "excited: fast, high-energy, noticeably higher pitch, louder, big pitch swings, exclamatory",
+  excitement: "excited: energetic and quick, brighter and somewhat higher voice, lively pitch movement, exclamatory — still articulating every word",
   sadness: "sad: slow, low and quiet, heavy breath, falling intonation at every phrase end, voice close to tears",
   anger: "angry: loud and forceful, tense throat, clipped hard consonants, sharp emphasis, faster bursts",
   fear: "afraid: trembling, breathy, shallow quick breaths, higher pitch, hesitant and unsteady",
@@ -210,15 +210,24 @@ export function buildInstructions(script, controls = {}, version = promptVersion
     delivery.push(`For this script (overrides the general delivery where they conflict): ${expandCue(d)}.`);
   }
   for (const snd of cue.sounds ?? []) {
-    delivery.push(`The script opens with "${snd.sound}": perform it as ${snd.how}, then continue naturally.`);
+    delivery.push(`The script contains "${snd.sound}": perform it as ${snd.how}, not as words, then continue naturally.`);
   }
   const deliveryBlock = delivery.length
     ? [
         "# Performance (mandatory)",
-        "Perform with the following delivery, clearly and unmistakably — a listener must hear it from the first word. Exaggerate rather than understate.",
+        "Perform with the following delivery, clearly and unmistakably — a listener must hear it from the first word.",
+        "- STAY INTELLIGIBLE: every word must remain clearly understandable, even when whispering, shouting or excited. Never trade a word's clarity for effect.",
         ...delivery.map((l) => `- ${l}`),
         "- These directions change HOW you speak, never WHICH words you say. Never say the directions themselves aloud.",
       ]
     : ["# Performance", "- Natural, clear, well-paced, engaging narration with the emotion that fits the meaning of the text."];
-  return [...rules, "", ...deliveryBlock, "", "# SCRIPT", '"""', fence(script), '"""'].join("\n");
+  // Continuity (like ElevenLabs request stitching): neighbouring text so the
+  // intonation flows across takes. Tested: never spoken (6/6 takes verbatim).
+  const context = [];
+  if (cue.before || cue.after) {
+    context.push("", "# CONTEXT (NEVER SPEAK THIS — it only tells you what comes before and after, so your intonation flows naturally)");
+    if (cue.before) context.push(`- Just before: “${String(cue.before).replaceAll('"""', "")}”`);
+    if (cue.after) context.push(`- Right after: “${String(cue.after).replaceAll('"""', "")}”`);
+  }
+  return [...rules, "", ...deliveryBlock, ...context, "", "# SCRIPT", '"""', fence(script), '"""'].join("\n");
 }

@@ -1,0 +1,47 @@
+{
+  "file": "en-trailer-cedar.mp3",
+  "durationSec": 14.872,
+  "passages": [
+    {
+      "start": 0.21,
+      "end": 6.895,
+      "text": "In a world where every story deserves a voice… one tool changes everything.",
+      "speaker": null,
+      "voice": "cedar"
+    },
+    {
+      "start": 7.295,
+      "end": 10.394,
+      "text": "No API key. No studio.",
+      "speaker": null,
+      "voice": "cedar"
+    },
+    {
+      "start": 10.894,
+      "end": 14.412,
+      "text": "Just your words… brought to life.",
+      "speaker": null,
+      "voice": "cedar"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0.21,
+      "end": 6.895,
+      "text": "In a world where every story deserves a voice… one tool changes everything.",
+      "speaker": null
+    },
+    {
+      "start": 7.295,
+      "end": 10.394,
+      "text": "No API key. No studio.",
+      "speaker": null
+    },
+    {
+      "start": 10.894,
+      "end": 14.412,
+      "text": "Just your words… brought to life.",
+      "speaker": null
+    }
+  ]
+}

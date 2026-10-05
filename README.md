@@ -68,6 +68,18 @@ Make a scene: Léa (excited, coral) and Hugo (sceptical, ash). Hugo whispers the
 Save a preset "doc-fr": voice cedar, documentary narration, speed 0.95, and pronounce SNCF as "èss-ène-cé-èf".
 ```
 
+## Smooth, natural audio by default
+
+After listening tests ("too choppy, cut off, no fades"), every file is now assembled like an audiobook editor would (rules and sources: [docs/VOICE-BEST-PRACTICES.md](docs/VOICE-BEST-PRACTICES.md)):
+
+- **Whole sentences only**: cues are moved to sentence boundaries; takes are whole paragraphs (≤ 900 characters); each take gets its neighbours as unspoken context so the intonation flows.
+- **Natural tails kept**: the old silence trim cut 115–360 ms of audible syllable decay on 7 of 8 test takes; the new trim follows the sound down to -58 dBFS.
+- **Fades and crossfades**: zero-crossing cuts, 15 ms fade-in / 120 ms fade-out per take, 40 ms equal-power crossfade at every join, 10/200 ms fades on the file.
+- **Room tone instead of digital silence** (-72 dBFS) for gaps, 250 ms head and 500 ms tail.
+- **Even loudness**: speech ≈ -19 dB RMS, peaks ≤ -2 dBFS (inside ACX's -23…-18 dB window).
+
+Measured on the 7 demo files, before → after: **0 issues at the joins between takes** (the 19 remaining clicks/edges are inside takes — the model's own breaths, whispers and sighs), cut-off endings 1 → 0, files with digital-silence gaps 7 → 0, takes starting mid-sentence 2 → 0, syllable tails no longer cut (the old trim removed 115–360 ms on 7 of 8 takes). Word accuracy, same benchmark: EN 98.3 % → 99.3 %, FR 97.7 % → 95.4 % (98.9 % without one take where the checker hallucinated Chinese; verification now asks a second model before re-recording). Listen: `samples/ab-smooth/*-before.mp3` vs `*-after.mp3`. `inspect_audio` reports the same checks for any file.
+
 ## Clips for video, and letting the agent "see" the voice
 
 GPTVoice speaks sentence by sentence, so for a film or a video the best results come from **separate clips aligned on the timeline**, not one long take.

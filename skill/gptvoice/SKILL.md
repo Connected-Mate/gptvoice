@@ -46,6 +46,16 @@ For anything that goes on a video timeline, **do not generate one long narration
 
 Human-sounding results come from this loop: short lines, one intention per line, a pause where a person would breathe, and an inspection before delivering.
 
+## Writing scripts that sound human (researched rules — docs/VOICE-BEST-PRACTICES.md)
+
+1. **Whole sentences, always.** Put `[pause …]`, `[whispers]`, `[excited]`… only BETWEEN sentences. (A mid-sentence pause is turned into "…", a mid-sentence direction is moved to the start of its sentence — the tool never speaks fragments, but write it right in the first place.)
+2. **Punctuation is your pause control**: comma = breath, period = stop, "…" = hesitation, blank line = paragraph pause. Use `[pause Ns]` sparingly, for real dramatic silences or to sync with a shot.
+3. **Short sentences, one intention each.** Long sentences flatten the delivery; split them.
+4. **Spell what must be said exactly**: "$42.50" → "forty-two dollars and fifty cents", dates and phone numbers in words, `pronunciations` for names and acronyms.
+5. **Direct with concrete words** ("slow, low, voice breaking") in `emotion`/`style`, not just labels; never put directions in the text itself.
+6. **Speed near 1.0** (0.8–1.2 sounds natural). To fit a shot, rewrite the line before pushing speed to extremes.
+7. **Check by ear AND with `inspect_audio`**: its "Smoothness" line flags clicks, hard cuts, cut-off endings and dead air. Default output is already smoothed (natural tails kept, fades, 40 ms crossfades, room tone, loudness ≈ -19 dB RMS).
+
 ## How to direct well
 
 1. **Text is spoken word for word.** Never put stage directions in plain words inside `text` — use controls, or `[cues]` (they are stripped before the voice sees the text).

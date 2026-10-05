@@ -1,0 +1,53 @@
+{
+  "file": "fr-conte-marin.mp3",
+  "durationSec": 16.039,
+  "passages": [
+    {
+      "start": 0.21,
+      "end": 6.11,
+      "text": "Il était une fois, au bord de la mer, une vieille horloge qui ne donnait jamais la bonne heure.",
+      "speaker": null,
+      "voice": "marin"
+    },
+    {
+      "start": 6.91,
+      "end": 12.53,
+      "text": "Un soir, quelqu'un frappa à la porte du clocher…",
+      "speaker": null,
+      "voice": "marin"
+    },
+    {
+      "start": 13.13,
+      "end": 15.579,
+      "text": "C'était une enfant, une lanterne à la main !",
+      "speaker": null,
+      "voice": "marin"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0.21,
+      "end": 2.532,
+      "text": "Il était une fois, au bord de la mer,",
+      "speaker": null
+    },
+    {
+      "start": 2.532,
+      "end": 6.11,
+      "text": "une vieille horloge qui ne donnait jamais la bonne heure.",
+      "speaker": null
+    },
+    {
+      "start": 6.91,
+      "end": 12.53,
+      "text": "Un soir, quelqu'un frappa à la porte du clocher…",
+      "speaker": null
+    },
+    {
+      "start": 13.13,
+      "end": 15.579,
+      "text": "C'était une enfant, une lanterne à la main !",
+      "speaker": null
+    }
+  ]
+}

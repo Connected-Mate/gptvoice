@@ -1,0 +1,60 @@
+{
+  "file": "en-emotions-coral.mp3",
+  "durationSec": 12.38,
+  "passages": [
+    {
+      "start": 0.21,
+      "end": 1.72,
+      "text": "We won the match!",
+      "speaker": null,
+      "voice": "coral"
+    },
+    {
+      "start": 2.22,
+      "end": 5.98,
+      "text": "We lost the match.",
+      "speaker": null,
+      "voice": "coral"
+    },
+    {
+      "start": 6.48,
+      "end": 8.27,
+      "text": "Who lost the match?!",
+      "speaker": null,
+      "voice": "coral"
+    },
+    {
+      "start": 8.77,
+      "end": 11.92,
+      "text": "Shh… nobody knows about the match.",
+      "speaker": null,
+      "voice": "coral"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0.21,
+      "end": 1.72,
+      "text": "We won the match!",
+      "speaker": null
+    },
+    {
+      "start": 2.22,
+      "end": 5.98,
+      "text": "We lost the match.",
+      "speaker": null
+    },
+    {
+      "start": 6.48,
+      "end": 8.27,
+      "text": "Who lost the match?!",
+      "speaker": null
+    },
+    {
+      "start": 8.77,
+      "end": 11.92,
+      "text": "Shh… nobody knows about the match.",
+      "speaker": null
+    }
+  ]
+}

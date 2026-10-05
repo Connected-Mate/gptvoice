@@ -1,0 +1,60 @@
+{
+  "file": "fr-dialogue.mp3",
+  "durationSec": 22.318,
+  "passages": [
+    {
+      "start": 0.21,
+      "end": 5.649,
+      "text": "Tu as entendu ? On peut faire parler nos films en quelques minutes !",
+      "speaker": "LÉA",
+      "voice": "coral"
+    },
+    {
+      "start": 5.949,
+      "end": 11.698,
+      "text": "Sans clé d’API ? Ça me paraît trop beau pour être vrai.",
+      "speaker": "HUGO",
+      "voice": "ash"
+    },
+    {
+      "start": 11.998,
+      "end": 16.908,
+      "text": "Il suffit de se connecter avec son compte ChatGPT. Le reste se fait tout seul.",
+      "speaker": "LÉA",
+      "voice": "coral"
+    },
+    {
+      "start": 17.208,
+      "end": 21.858,
+      "text": "Bon… alors on enregistre la bande-annonce ce soir.",
+      "speaker": "HUGO",
+      "voice": "ash"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0.21,
+      "end": 5.649,
+      "text": "Tu as entendu ? On peut faire parler nos films en quelques minutes !",
+      "speaker": "LÉA"
+    },
+    {
+      "start": 5.949,
+      "end": 11.698,
+      "text": "Sans clé d’API ? Ça me paraît trop beau pour être vrai.",
+      "speaker": "HUGO"
+    },
+    {
+      "start": 11.998,
+      "end": 16.908,
+      "text": "Il suffit de se connecter avec son compte ChatGPT. Le reste se fait tout seul.",
+      "speaker": "LÉA"
+    },
+    {
+      "start": 17.208,
+      "end": 21.858,
+      "text": "Bon… alors on enregistre la bande-annonce ce soir.",
+      "speaker": "HUGO"
+    }
+  ]
+}

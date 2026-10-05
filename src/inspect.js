@@ -17,6 +17,7 @@ import { decodeToPcm, transcribeFile } from "./transcribe.js";
 import { splitSentences } from "./text.js";
 import { Canvas } from "./png.js";
 import { VoiceError } from "./errors.js";
+import { smoothness, describeSmoothness } from "./quality.js";
 
 const AUDIO_EXTS = new Set([".mp3", ".wav", ".m4a", ".aac", ".aif", ".aiff", ".caf", ".flac", ".ogg"]);
 const r2 = (v) => Math.round(v * 100) / 100;
@@ -161,6 +162,7 @@ export async function inspectAudio(file, { baseDir = process.cwd(), minPauseSec 
     sentences: detail,
     text,
   };
+  result.smoothness = smoothness(pcm, manifest?.passages?.slice(1).map((p) => p.start) ?? []);
   if (targetSec != null) {
     const t = Number(targetSec);
     result.target = { seconds: t, differenceSec: r2(c.durationSec - t), fits: Math.abs(c.durationSec - t) <= Math.max(0.3, t * 0.05) };
@@ -203,6 +205,7 @@ export function describeInspection(r) {
       lines.push(`  ${s.index}. ${s.start}–${s.end}s (${s.durationSec}s, ${s.wordsPerSec ?? "?"} w/s, ~${s.pitchHz ?? "?"} Hz, ${s.loudnessDb ?? "?"} dB)${s.speaker ? ` ${s.speaker}:` : ""} ${s.text}`);
     }
   }
+  if (r.smoothness) lines.push(describeSmoothness(r.smoothness));
   if (r.picture) lines.push(`Picture: ${r.picture} (blue = loudness, red = pitch 60–400 Hz log scale with lines at 100/200 Hz, orange = pauses, green = sentence starts, grey ticks = seconds).`);
   return lines.join("\n");
 }

@@ -6,12 +6,9 @@
 import fs from "node:fs/promises";
 import path from "node:path";
 import { fileURLToPath } from "node:url";
-import { getValidCredentials } from "../src/auth.js";
-import { synthesizeChunk } from "../src/realtime.js";
-import { buildInstructions } from "../src/direction.js";
-import { encode, trimSilence } from "../src/audio.js";
+import { generateSpeech } from "../src/tts.js";
+import { decodeToPcm } from "../src/transcribe.js";
 import { analyzePcm } from "../src/analysis.js";
-import { wordAccuracy } from "../src/accuracy.js";
 import { VOICE_IDS } from "../src/voices.js";
 
 const ROOT = path.dirname(path.dirname(fileURLToPath(import.meta.url)));
@@ -19,25 +16,20 @@ const TEXT = {
   en: (v) => `Hello, I'm ${v}. I can narrate your stories, voice your videos, and bring your characters to life.`,
   fr: (v) => `Bonjour, je suis ${v}. Je peux raconter vos histoires, doubler vos vidéos et donner vie à vos personnages.`,
 };
-const creds = await getValidCredentials();
 const metrics = {};
 await Promise.all(
   VOICE_IDS.map(async (voice) => {
     metrics[voice] = {};
     for (const lang of ["en", "fr"]) {
       const text = TEXT[lang](voice.charAt(0).toUpperCase() + voice.slice(1));
-      let best;
-      for (let i = 0; i < 3; i++) {
-        const r = await synthesizeChunk(creds, { instructions: buildInstructions(text, { language: lang === "fr" ? "French" : "English" }), voice });
-        const acc = wordAccuracy(text, r.transcript, lang).accuracy;
-        if (!best || acc > best.acc) best = { ...r, acc };
-        if (acc === 1) break;
-      }
-      const pcm = trimSilence(best.pcm);
-      await fs.writeFile(path.join(ROOT, "samples/voices", `${voice}-${lang}.mp3`), await encode(pcm, "mp3"));
+      const file = path.join(ROOT, "samples/voices", `${voice}-${lang}.mp3`);
+      await fs.rm(file, { force: true });
+      // Same smooth pipeline as every user file, verified by independent transcription.
+      const r = await generateSpeech({ text, voice, language: lang === "fr" ? "French" : "English", out: file, verify: true });
+      const pcm = await decodeToPcm(file);
       const a = analyzePcm(pcm);
-      metrics[voice][lang] = { ...a, wordsPerSec: Math.round((text.split(/\s+/).length / a.durationSec) * 100) / 100, accuracy: best.acc };
-      process.stderr.write(`${voice} ${lang} f0=${a.f0Median}Hz spread=${a.f0Semitones}st ${a.durationSec}s acc=${best.acc}\n`);
+      metrics[voice][lang] = { ...a, wordsPerSec: Math.round((text.split(/\s+/).length / a.activeSec) * 100) / 100, accuracy: (r.verifiedAccuracy ?? r.accuracy) / 100 };
+      process.stderr.write(`${voice} ${lang} f0=${a.f0Median}Hz spread=${a.f0Semitones}st ${a.durationSec}s acc=${r.verifiedAccuracy}%\n`);
     }
   }),
 );

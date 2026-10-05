@@ -1,15 +1,11 @@
 1
-00:00:00,000 --> 00:00:03,393
-In a world where every story deserves a voice…
+00:00:00,210 --> 00:00:06,895
+In a world where every story deserves a voice… one tool changes everything.
 
 2
-00:00:03,993 --> 00:00:06,923
-one tool changes everything.
-
-3
-00:00:07,323 --> 00:00:10,141
+00:00:07,295 --> 00:00:10,394
 No API key. No studio.
 
-4
-00:00:10,641 --> 00:00:13,378
+3
+00:00:10,894 --> 00:00:14,412
 Just your words… brought to life.

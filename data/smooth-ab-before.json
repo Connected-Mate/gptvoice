@@ -1,0 +1,177 @@
+[
+  {
+    "file": "samples/ab-smooth/en-emotions-coral-before.mp3",
+    "clicks": 2,
+    "clickTimes": [
+      2.868,
+      8.492
+    ],
+    "abruptOnsets": 0,
+    "abruptOffsets": 1,
+    "edgeTimes": [
+      9.499
+    ],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -56,
+    "tailDb": -47,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 3,
+      "seconds": 1.388
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/ab-smooth/en-meditation-sage-before.mp3",
+    "clicks": 5,
+    "clickTimes": [
+      5.405,
+      5.591,
+      5.974,
+      10.07,
+      13.488
+    ],
+    "abruptOnsets": 1,
+    "abruptOffsets": 1,
+    "edgeTimes": [
+      7.473,
+      13.488
+    ],
+    "startsAbruptly": false,
+    "endsAbruptly": true,
+    "headDb": -83,
+    "tailDb": -37,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 2,
+      "seconds": 2.925
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/ab-smooth/en-trailer-cedar-before.mp3",
+    "clicks": 2,
+    "clickTimes": [
+      0.837,
+      8.359
+    ],
+    "abruptOnsets": 0,
+    "abruptOffsets": 2,
+    "edgeTimes": [
+      6.948,
+      11.51
+    ],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -60,
+    "tailDb": -76,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 3,
+      "seconds": 1.394
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/ab-smooth/fr-conte-marin-before.mp3",
+    "clicks": 2,
+    "clickTimes": [
+      0.324,
+      3.864
+    ],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -77,
+    "tailDb": -100,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 2,
+      "seconds": 1.388
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/ab-smooth/fr-dialogue-before.mp3",
+    "clicks": 6,
+    "clickTimes": [
+      3.726,
+      5.792,
+      11.526,
+      12.665,
+      12.851,
+      13.022
+    ],
+    "abruptOnsets": 0,
+    "abruptOffsets": 1,
+    "edgeTimes": [
+      19.108
+    ],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -48,
+    "tailDb": -180,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 6,
+      "seconds": 1.556
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/ab-smooth/fr-narration-long-marin-before.mp3",
+    "clicks": 5,
+    "clickTimes": [
+      2.626,
+      5.686,
+      10.555,
+      18.646,
+      36.755
+    ],
+    "abruptOnsets": 0,
+    "abruptOffsets": 1,
+    "edgeTimes": [
+      44.273
+    ],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -70,
+    "tailDb": -81,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 2,
+      "seconds": 1.333
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/ab-smooth/fr-pub-coral-before.mp3",
+    "clicks": 1,
+    "clickTimes": [
+      3.818
+    ],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -57,
+    "tailDb": -69,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 2,
+      "seconds": 0.531
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  }
+]

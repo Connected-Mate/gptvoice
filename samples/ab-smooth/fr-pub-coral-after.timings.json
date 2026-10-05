@@ -1,0 +1,47 @@
+{
+  "file": "fr-pub-coral.mp3",
+  "durationSec": 9.437,
+  "passages": [
+    {
+      "start": 0.21,
+      "end": 1.279,
+      "text": "Nouveau !",
+      "speaker": null,
+      "voice": "coral"
+    },
+    {
+      "start": 1.579,
+      "end": 5.927,
+      "text": "La voix de vos vidéos, en un clic, avec votre compte ChatGPT.",
+      "speaker": null,
+      "voice": "coral"
+    },
+    {
+      "start": 6.227,
+      "end": 8.977,
+      "text": "Essayez GPTVoice dès aujourd'hui !",
+      "speaker": null,
+      "voice": "coral"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0.21,
+      "end": 1.279,
+      "text": "Nouveau !",
+      "speaker": null
+    },
+    {
+      "start": 1.579,
+      "end": 5.927,
+      "text": "La voix de vos vidéos, en un clic, avec votre compte ChatGPT.",
+      "speaker": null
+    },
+    {
+      "start": 6.227,
+      "end": 8.977,
+      "text": "Essayez GPTVoice dès aujourd'hui !",
+      "speaker": null
+    }
+  ]
+}

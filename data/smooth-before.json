@@ -1,0 +1,674 @@
+[
+  {
+    "file": "samples/demo/en-emotions-coral.mp3",
+    "clicks": 2,
+    "clickTimes": [
+      2.868,
+      8.492
+    ],
+    "abruptOnsets": 0,
+    "abruptOffsets": 1,
+    "edgeTimes": [
+      9.499
+    ],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -56,
+    "tailDb": -47,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 3,
+      "seconds": 1.388
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/demo/en-meditation-sage.mp3",
+    "clicks": 5,
+    "clickTimes": [
+      5.405,
+      5.591,
+      5.974,
+      10.07,
+      13.488
+    ],
+    "abruptOnsets": 1,
+    "abruptOffsets": 1,
+    "edgeTimes": [
+      7.473,
+      13.488
+    ],
+    "startsAbruptly": false,
+    "endsAbruptly": true,
+    "headDb": -83,
+    "tailDb": -37,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 2,
+      "seconds": 2.925
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/demo/en-trailer-cedar.mp3",
+    "clicks": 2,
+    "clickTimes": [
+      0.837,
+      8.359
+    ],
+    "abruptOnsets": 0,
+    "abruptOffsets": 2,
+    "edgeTimes": [
+      6.948,
+      11.51
+    ],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -60,
+    "tailDb": -76,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 3,
+      "seconds": 1.394
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/demo/fr-conte-marin.mp3",
+    "clicks": 2,
+    "clickTimes": [
+      0.324,
+      3.864
+    ],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -77,
+    "tailDb": -100,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 2,
+      "seconds": 1.388
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/demo/fr-dialogue.mp3",
+    "clicks": 2,
+    "clickTimes": [
+      11.403,
+      18.187
+    ],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -65,
+    "tailDb": -86,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 6,
+      "seconds": 1.797
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/demo/fr-pub-coral.mp3",
+    "clicks": 1,
+    "clickTimes": [
+      3.818
+    ],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -57,
+    "tailDb": -69,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 2,
+      "seconds": 0.531
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/voices/alloy-en.mp3",
+    "clicks": 1,
+    "clickTimes": [
+      1.613
+    ],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -72,
+    "tailDb": -96,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 0,
+      "seconds": 0
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/voices/alloy-fr.mp3",
+    "clicks": 0,
+    "clickTimes": [],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -77,
+    "tailDb": -94,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 0,
+      "seconds": 0
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/voices/ash-en.mp3",
+    "clicks": 1,
+    "clickTimes": [
+      5.363
+    ],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -69,
+    "tailDb": -74,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 1,
+      "seconds": 0.164
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/voices/ash-fr.mp3",
+    "clicks": 0,
+    "clickTimes": [],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -70,
+    "tailDb": -116,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 0,
+      "seconds": 0
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/voices/ballad-en.mp3",
+    "clicks": 3,
+    "clickTimes": [
+      0.981,
+      1.011,
+      6.369
+    ],
+    "abruptOnsets": 0,
+    "abruptOffsets": 1,
+    "edgeTimes": [
+      6.604
+    ],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -45,
+    "tailDb": -180,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 0,
+      "seconds": 0
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/voices/ballad-fr.mp3",
+    "clicks": 3,
+    "clickTimes": [
+      1.886,
+      2.848,
+      7.045
+    ],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -68,
+    "tailDb": -63,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 0,
+      "seconds": 0
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/voices/cedar-en.mp3",
+    "clicks": 1,
+    "clickTimes": [
+      1.676
+    ],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -69,
+    "tailDb": -55,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 0,
+      "seconds": 0
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/voices/cedar-fr.mp3",
+    "clicks": 0,
+    "clickTimes": [],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -70,
+    "tailDb": -96,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 0,
+      "seconds": 0
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/voices/coral-en.mp3",
+    "clicks": 3,
+    "clickTimes": [
+      2.76,
+      6.804,
+      6.967
+    ],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -67,
+    "tailDb": -96,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 0,
+      "seconds": 0
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/voices/coral-fr.mp3",
+    "clicks": 7,
+    "clickTimes": [
+      2.83,
+      5.98,
+      6.314,
+      6.347,
+      6.368,
+      6.389,
+      6.41
+    ],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -63,
+    "tailDb": -100,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 0,
+      "seconds": 0
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/voices/echo-en.mp3",
+    "clicks": 0,
+    "clickTimes": [],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -49,
+    "tailDb": -110,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 0,
+      "seconds": 0
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/voices/echo-fr.mp3",
+    "clicks": 1,
+    "clickTimes": [
+      6.765
+    ],
+    "abruptOnsets": 1,
+    "abruptOffsets": 0,
+    "edgeTimes": [
+      0.07
+    ],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -83,
+    "tailDb": -100,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 0,
+      "seconds": 0
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/voices/marin-en.mp3",
+    "clicks": 2,
+    "clickTimes": [
+      1.792,
+      4.564
+    ],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -81,
+    "tailDb": -109,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 0,
+      "seconds": 0
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/voices/marin-fr.mp3",
+    "clicks": 0,
+    "clickTimes": [],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -76,
+    "tailDb": -99,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 0,
+      "seconds": 0
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/voices/sage-en.mp3",
+    "clicks": 3,
+    "clickTimes": [
+      0.187,
+      0.243,
+      2.682
+    ],
+    "abruptOnsets": 1,
+    "abruptOffsets": 0,
+    "edgeTimes": [
+      2.627
+    ],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -68,
+    "tailDb": -97,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 0,
+      "seconds": 0
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/voices/sage-fr.mp3",
+    "clicks": 7,
+    "clickTimes": [
+      0.084,
+      1.193,
+      1.72,
+      2.762,
+      2.794,
+      6.477,
+      6.999
+    ],
+    "abruptOnsets": 1,
+    "abruptOffsets": 0,
+    "edgeTimes": [
+      0.024
+    ],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -53,
+    "tailDb": -95,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 0,
+      "seconds": 0
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/voices/shimmer-en.mp3",
+    "clicks": 0,
+    "clickTimes": [],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -73,
+    "tailDb": -180,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 0,
+      "seconds": 0
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/voices/shimmer-fr.mp3",
+    "clicks": 1,
+    "clickTimes": [
+      6.792
+    ],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -77,
+    "tailDb": -72,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 0,
+      "seconds": 0
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/voices/verse-en.mp3",
+    "clicks": 0,
+    "clickTimes": [],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -65,
+    "tailDb": -119,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 0,
+      "seconds": 0
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/voices/verse-fr.mp3",
+    "clicks": 3,
+    "clickTimes": [
+      0.12,
+      1.758,
+      6.961
+    ],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -58,
+    "tailDb": -180,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 4,
+      "seconds": 0.475
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/narration-fr-marin.mp3",
+    "clicks": 4,
+    "clickTimes": [
+      0.464,
+      2.571,
+      16.694,
+      19.906
+    ],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -69,
+    "tailDb": -69,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 1,
+      "seconds": 0.68
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/story-en-verse.mp3",
+    "clicks": 16,
+    "clickTimes": [
+      0.309,
+      0.716,
+      0.738,
+      3.136,
+      3.395,
+      15.155,
+      21.576,
+      21.657,
+      23.751,
+      24.045,
+      25.937,
+      28.532,
+      42.676,
+      42.931,
+      42.965,
+      48.367
+    ],
+    "abruptOnsets": 4,
+    "abruptOffsets": 3,
+    "edgeTimes": [
+      10.731,
+      13.629,
+      21.962,
+      22.002,
+      26.837,
+      51.313,
+      52.332
+    ],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -56,
+    "tailDb": -80,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 17,
+      "seconds": 6.009
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  },
+  {
+    "file": "samples/dialogue-fr.mp3",
+    "clicks": 5,
+    "clickTimes": [
+      5.896,
+      7.814,
+      9.167,
+      16.439,
+      16.475
+    ],
+    "abruptOnsets": 0,
+    "abruptOffsets": 0,
+    "edgeTimes": [],
+    "startsAbruptly": false,
+    "endsAbruptly": false,
+    "headDb": -67,
+    "tailDb": -99,
+    "clippedSamples": 0,
+    "digitalSilence": {
+      "count": 7,
+      "seconds": 1.828
+    },
+    "hotJoins": 0,
+    "hotJoinTimes": []
+  }
+]

@@ -1,0 +1,47 @@
+{
+  "file": "en-meditation-sage.mp3",
+  "durationSec": 16.508,
+  "passages": [
+    {
+      "start": 0.21,
+      "end": 4.005,
+      "text": "Breathe in slowly.",
+      "speaker": null,
+      "voice": "sage"
+    },
+    {
+      "start": 5.505,
+      "end": 7.9,
+      "text": "And let it go.",
+      "speaker": null,
+      "voice": "sage"
+    },
+    {
+      "start": 9.4,
+      "end": 16.048,
+      "text": "Feel your shoulders soften, one breath at a time.",
+      "speaker": null,
+      "voice": "sage"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0.21,
+      "end": 4.005,
+      "text": "Breathe in slowly.",
+      "speaker": null
+    },
+    {
+      "start": 5.505,
+      "end": 7.9,
+      "text": "And let it go.",
+      "speaker": null
+    },
+    {
+      "start": 9.4,
+      "end": 16.048,
+      "text": "Feel your shoulders soften, one breath at a time.",
+      "speaker": null
+    }
+  ]
+}

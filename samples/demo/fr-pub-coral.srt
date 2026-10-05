@@ -1,11 +1,11 @@
 1
-00:00:00,000 --> 00:00:00,703
+00:00:00,210 --> 00:00:01,279
 Nouveau !
 
 2
-00:00:01,003 --> 00:00:05,629
-La voix de vos vidéos, en un clic, avec votre abonnement ChatGPT.
+00:00:01,579 --> 00:00:05,927
+La voix de vos vidéos, en un clic, avec votre compte ChatGPT.
 
 3
-00:00:05,929 --> 00:00:08,586
+00:00:06,227 --> 00:00:08,977
 Essayez GPTVoice dès aujourd'hui !
