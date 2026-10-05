@@ -1,10 +1,30 @@
 #!/usr/bin/env bash
-# Register the gptvoice MCP server and skill with Claude Code.
+# Install GPTVoice and register its MCP server with your coding agent(s).
+#
+#   ./install.sh                     detect installed agents, register with each, then sign in
+#   ./install.sh --agent claude      only Claude Code   (also: codex, cursor, none; repeatable or comma-separated)
+#   ./install.sh --no-login          skip the ChatGPT sign-in step (run `npm run login` later)
+#   ./install.sh --yes               non-interactive: never prompt (for coding agents running this)
+#
+# Safe to re-run: each registration replaces the previous GPTVoice entry only.
 set -euo pipefail
 
 DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-SKILL_SRC="$DIR/skill/gptvoice"
-SKILL_DST="$HOME/.claude/skills/gptvoice"
+SERVER="$DIR/src/server.js"
+AGENTS=""
+LOGIN=1
+YES=0
+
+while [ $# -gt 0 ]; do
+  case "$1" in
+    --agent) AGENTS="$AGENTS,${2:-}"; shift 2 ;;
+    --agent=*) AGENTS="$AGENTS,${1#*=}"; shift ;;
+    --no-login) LOGIN=0; shift ;;
+    --yes|-y) YES=1; shift ;;
+    -h|--help) sed -n '2,10p' "$0"; exit 0 ;;
+    *) echo "✗ Unknown option: $1 (see ./install.sh --help)"; exit 2 ;;
+  esac
+done
 
 NODE_MAJOR="$(node -p 'process.versions.node.split(".")[0]' 2>/dev/null || echo 0)"
 if [ "$NODE_MAJOR" -lt 22 ]; then
@@ -12,31 +32,63 @@ if [ "$NODE_MAJOR" -lt 22 ]; then
   echo "  Install it from https://nodejs.org, then run ./install.sh again."
   exit 1
 fi
-if ! command -v claude >/dev/null 2>&1; then
-  echo "✗ Claude Code (the 'claude' command) was not found. Install it first: https://claude.com/claude-code"
-  exit 1
+
+# Auto-detect agents when none were named.
+if [ -z "${AGENTS//,/}" ]; then
+  command -v claude >/dev/null 2>&1 && AGENTS="$AGENTS,claude"
+  command -v codex >/dev/null 2>&1 && AGENTS="$AGENTS,codex"
+  [ -d "$HOME/.cursor" ] && AGENTS="$AGENTS,cursor"
 fi
 
 echo "==> Installing npm dependencies"
-( cd "$DIR" && npm install --silent )
+( cd "$DIR" && npm install --silent --no-audit --no-fund )
 
-echo "==> Registering MCP server 'gptvoice' (user scope)"
-# Remove any prior registration so re-running is idempotent.
-claude mcp remove gptvoice -s user >/dev/null 2>&1 || true
-claude mcp add gptvoice -s user -- node "$DIR/src/server.js"
-
-echo "==> Installing the /gptvoice skill"
-mkdir -p "$SKILL_DST"
-cp -R "$SKILL_SRC/." "$SKILL_DST/"
+REGISTERED=""
+for agent in $(echo "$AGENTS" | tr ',' ' '); do
+  case "$agent" in
+    claude)
+      if ! command -v claude >/dev/null 2>&1; then echo "⚠ Claude Code not found, skipping."; continue; fi
+      echo "==> Registering with Claude Code (user scope)"
+      claude mcp remove gptvoice -s user >/dev/null 2>&1 || true
+      claude mcp add gptvoice -s user -- node "$SERVER"
+      mkdir -p "$HOME/.claude/skills/gptvoice"
+      cp -R "$DIR/skill/gptvoice/." "$HOME/.claude/skills/gptvoice/"
+      REGISTERED="$REGISTERED Claude-Code"
+      ;;
+    codex)
+      if ! command -v codex >/dev/null 2>&1; then echo "⚠ Codex CLI not found, skipping."; continue; fi
+      echo "==> Registering with Codex"
+      codex mcp remove gptvoice >/dev/null 2>&1 || true
+      codex mcp add gptvoice -- node "$SERVER"
+      REGISTERED="$REGISTERED Codex"
+      ;;
+    cursor)
+      echo "==> Registering with Cursor (~/.cursor/mcp.json)"
+      mkdir -p "$HOME/.cursor"
+      GPTVOICE_SERVER="$SERVER" node -e '
+        const fs = require("fs"), p = require("os").homedir() + "/.cursor/mcp.json";
+        let cfg = {};
+        try { cfg = JSON.parse(fs.readFileSync(p, "utf8")); } catch (e) { if (e.code !== "ENOENT") { fs.copyFileSync(p, p + ".bak"); console.log("  (unreadable mcp.json backed up to mcp.json.bak)"); } }
+        cfg.mcpServers = cfg.mcpServers || {};
+        cfg.mcpServers.gptvoice = { command: "node", args: [process.env.GPTVOICE_SERVER] };
+        fs.writeFileSync(p, JSON.stringify(cfg, null, 2) + "\n");'
+      REGISTERED="$REGISTERED Cursor"
+      ;;
+    none|"") ;;
+    *) echo "⚠ Unknown agent '$agent' (use claude, codex, cursor or none)." ;;
+  esac
+done
 
 echo
-echo "==> Tool registered (MCP 'gptvoice' + /gptvoice skill)."
+if [ -n "$REGISTERED" ]; then
+  echo "==> Registered with:$REGISTERED. Restart the agent so it loads the new tool."
+else
+  echo "==> No agent registered. Any MCP client can run:  node \"$SERVER\"   (stdio)"
+fi
 echo
 
-# Continue straight into the ChatGPT sign-in so setup is one smooth flow.
-# Skip with: ./install.sh --no-login
-if [ "${1:-}" = "--no-login" ]; then
-  echo "Skipping login. When ready:  npm run login"
+if [ "$LOGIN" = 0 ]; then
+  echo "Skipping sign-in. When ready:  npm run login"
   exit 0
 fi
 
@@ -44,11 +96,18 @@ fi
 if node "$DIR/src/login.js" --check; then
   echo "==> Already signed in — reusing your existing ChatGPT sign-in:"
   node "$DIR/src/login.js" --status
-  echo
-  echo "✅ Setup complete. Restart Claude Code, then ask e.g.:"
-  echo '   "Read this paragraph in a warm narrator voice and save it to narration.mp3 with the gptvoice tool."'
-  exit 0
+else
+  if [ "$YES" = 1 ] && [ ! -t 0 ]; then
+    echo "==> Sign-in needed. A human must run:  cd \"$DIR\" && npm run login"
+    echo "    (it opens the browser; you sign in with your own ChatGPT account)"
+    exit 0
+  fi
+  echo "==> Last step: sign in with your ChatGPT account (in your browser)"
+  node "$DIR/src/login.js"
 fi
 
-echo "==> Last step: sign in with your ChatGPT account"
-node "$DIR/src/login.js"
+echo
+echo "⚠ Cost: voice calls are routed to your personal OpenAI API organization and may be"
+echo "  billed there. Check https://platform.openai.com/usage after your first voices."
+echo
+echo "✅ Setup complete. Test it:  npm run selftest"

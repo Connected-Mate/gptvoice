@@ -17,7 +17,8 @@
     "server": "node src/server.js",
     "speak": "node src/speak.js",
     "test": "node --test 'test/*.test.js'",
-    "test:live": "GPTVOICE_LIVE=1 node --test --test-concurrency=1 test/live.test.js"
+    "test:live": "GPTVOICE_LIVE=1 node --test --test-concurrency=1 test/live.test.js",
+    "selftest": "node scripts/selftest.js"
   },
   "engines": {
     "node": ">=22"

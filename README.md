@@ -38,6 +38,10 @@ No API key to manage. Sign in with your ChatGPT account once, and Claude Code ca
 - Node.js ≥ 22 · [Claude Code](https://claude.com/claude-code) · a ChatGPT plan (Plus / Pro / …)
 - macOS, Linux or Windows. M4A output and transcription of MP3/M4A files need macOS; MP3/WAV output works everywhere.
 
+## Install with your agent
+
+Paste one prompt into Claude Code, Codex, Cursor or any coding agent and it installs GPTVoice for you, connects it, and makes a test clip. You only sign in to ChatGPT in your browser when asked. → **[AGENT-INSTALL.md](AGENT-INSTALL.md)**
+
 ## Install — one flow
 
 ```bash
@@ -46,7 +50,7 @@ cd gptvoice
 ./install.sh
 ```
 
-`./install.sh` installs dependencies, registers the tool **globally** with Claude Code, then reuses your GPTImage/Codex sign-in or opens your browser to **sign in with ChatGPT**. Restart Claude Code afterwards.
+`./install.sh` installs dependencies, registers the tool with the agents it finds (Claude Code, Codex, Cursor — or choose with `--agent claude|codex|cursor|none`), then reuses your GPTImage/Codex sign-in or opens your browser to **sign in with ChatGPT**. `--no-login` skips the sign-in, `--yes` never prompts (for agents). Restart your agent afterwards, then `npm run selftest`.
 
 ```bash
 npm run status     # which account / plan, token expiry
