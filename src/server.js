@@ -79,7 +79,7 @@ server.tool(
     "For narration, voice-overs, film/trailer voices, ads, podcasts, audiobooks, announcements. Any length: one file, natural pauses.",
     "`text` is spoken word for word. Inline cues inside text: [pause 1s] (exact silence), [whispers] / [excited] / [sad] (direction for the following words), [laughs] / [sighs] / [gasps] (sound), {Nguyen|win} (pronunciation).",
     "Direct the performance with the controls (emotion, intensity, speed, pitch, intonation, volume, accent, narration, character…), or a saved preset.",
-    "Returns path, duration, word accuracy and what the voice said. Uses the user's ChatGPT sign-in (no API key to manage); usage is routed to their personal OpenAI API organization and may be billed there — do not tell the user it is free or included in their ChatGPT plan.",
+    "Returns path, duration, word accuracy and what the voice said. Uses your ChatGPT sign-in (no API key); usage may be metered on your personal OpenAI API org, so check platform.openai.com/usage. Never tell the user it is free or included in their ChatGPT plan.",
   ].join(" "),
   {
     text: z.string().describe("Exact words to speak, with optional inline cues. Blank lines = paragraph pauses."),

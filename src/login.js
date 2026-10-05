@@ -1,7 +1,7 @@
 #!/usr/bin/env node
 // Interactive "Sign in with ChatGPT" — OAuth + PKCE, same flow as the Codex CLI.
 // Opens your browser, you log in with your own ChatGPT account, and the resulting
-// subscription token is stored at ~/.gptvoice/auth.json (mode 0600).
+// sign-in token is stored at ~/.gptvoice/auth.json (mode 0600).
 //
 //   node src/login.js            log in
 //   node src/login.js --status   show current auth

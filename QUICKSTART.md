@@ -2,7 +2,7 @@
 
 Give Claude Code a voice with your ChatGPT sign-in. Narration, voice-overs, dialogues. No API key to manage.
 
-> Cost: voice calls are routed to your personal OpenAI API organization and **may be billed there** — check <https://platform.openai.com/usage> after your first voices. See the README warning.
+> GPTVoice uses your ChatGPT sign-in (no API key); usage may be metered on your personal OpenAI API org, so check <https://platform.openai.com/usage> after your first voices. See the README warning.
 
 ## 1. Install + sign in (one flow, run once)
 
