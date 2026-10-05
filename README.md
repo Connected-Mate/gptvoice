@@ -1,6 +1,6 @@
 <div align="center">
 
-<img src="assets/mascot.png" width="220" alt="GPTVoice mascot: a friendly pixel-art robot with headphones and a microphone" />
+<img src="assets/mascot.png" width="220" alt="GPTVoice mascot: a pixel-art robot with headphones, a teal scarf and a vintage microphone" />
 
 # GPTVoice
 
