@@ -1,0 +1,122 @@
+{
+  "gpt-realtime-1.5|shout-ash": {
+    "file": "models12/gpt-realtime-1.5/shout-ash.mp3",
+    "acc": 100,
+    "pitchRangeSt": 9.9,
+    "loudRangeDb": 19.59,
+    "pitchShiftSt": 15.3,
+    "score": 35
+  },
+  "gpt-realtime-1.5|cry-coral": {
+    "file": "models12/gpt-realtime-1.5/cry-coral.mp3",
+    "acc": 100,
+    "pitchRangeSt": 6.38,
+    "loudRangeDb": 22.76,
+    "pitchShiftSt": 1.44,
+    "score": 19.2
+  },
+  "gpt-realtime-1.5|cry-marin": {
+    "file": "models12/gpt-realtime-1.5/cry-marin.mp3",
+    "acc": 100,
+    "pitchRangeSt": 4.04,
+    "loudRangeDb": 23.86,
+    "pitchShiftSt": 0.9,
+    "score": 16.87
+  },
+  "gpt-realtime-1.5|shout-cedar": {
+    "file": "models12/gpt-realtime-1.5/shout-cedar.mp3",
+    "acc": 100,
+    "pitchRangeSt": 6.28,
+    "loudRangeDb": 18.82,
+    "pitchShiftSt": 15.54,
+    "score": 31.23
+  },
+  "gpt-realtime-1.5|excited-verse": {
+    "file": "models12/gpt-realtime-1.5/excited-verse.mp3",
+    "acc": 100,
+    "pitchRangeSt": 10.22,
+    "loudRangeDb": 14.78,
+    "pitchShiftSt": 16.06,
+    "score": 33.68
+  },
+  "gpt-realtime-2.1|cry-coral": {
+    "file": "models12/gpt-realtime-2.1/cry-coral.mp3",
+    "acc": 100,
+    "pitchRangeSt": 11.93,
+    "loudRangeDb": 21,
+    "pitchShiftSt": 0.25,
+    "score": 22.68
+  },
+  "gpt-realtime-1.5|excited-marin": {
+    "file": "models12/gpt-realtime-1.5/excited-marin.mp3",
+    "acc": 100,
+    "pitchRangeSt": 6.86,
+    "loudRangeDb": 16.53,
+    "pitchShiftSt": 11.32,
+    "score": 26.44
+  },
+  "gpt-realtime-2.1|cry-marin": {
+    "file": "models12/gpt-realtime-2.1/cry-marin.mp3",
+    "acc": 100,
+    "pitchRangeSt": 5.88,
+    "loudRangeDb": 22.02,
+    "pitchShiftSt": 0.25,
+    "score": 17.14
+  },
+  "gpt-realtime-2.1|shout-ash": {
+    "file": "models12/gpt-realtime-2.1/shout-ash.mp3",
+    "acc": 100,
+    "pitchRangeSt": 14.86,
+    "loudRangeDb": 19.36,
+    "pitchShiftSt": 9.15,
+    "score": 33.69
+  },
+  "gpt-realtime-2.1|excited-verse": {
+    "file": "models12/gpt-realtime-2.1/excited-verse.mp3",
+    "acc": 100,
+    "pitchRangeSt": 15.66,
+    "loudRangeDb": 18.15,
+    "pitchShiftSt": 13.56,
+    "score": 38.29
+  },
+  "gpt-realtime-2.1|shout-cedar": {
+    "file": "models12/gpt-realtime-2.1/shout-cedar.mp3",
+    "acc": 100,
+    "pitchRangeSt": 6,
+    "loudRangeDb": 18.32,
+    "pitchShiftSt": 9.21,
+    "score": 24.37
+  },
+  "gpt-realtime-2.1|excited-marin": {
+    "file": "models12/gpt-realtime-2.1/excited-marin.mp3",
+    "acc": 100,
+    "pitchRangeSt": 13.5,
+    "loudRangeDb": 21.82,
+    "pitchShiftSt": 8.84,
+    "score": 33.25
+  },
+  "speed|speed-1.25-take2": {
+    "file": "models12/speed/speed-1.25-take2.mp3",
+    "acc": 100,
+    "wps": 4.16,
+    "speed": 1.25
+  },
+  "speed|speed-1.25-take1": {
+    "file": "models12/speed/speed-1.25-take1.mp3",
+    "acc": 100,
+    "wps": 4.2,
+    "speed": 1.25
+  },
+  "speed|speed-0.8-take2": {
+    "file": "models12/speed/speed-0.8-take2.mp3",
+    "acc": 100,
+    "wps": 3.25,
+    "speed": 0.8
+  },
+  "speed|speed-0.8-take1": {
+    "file": "models12/speed/speed-0.8-take1.mp3",
+    "acc": 100,
+    "wps": 3.16,
+    "speed": 0.8
+  }
+}

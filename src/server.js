@@ -31,7 +31,7 @@ const formatEnum = z.enum(FORMATS);
 const controls = {
   voice: voiceEnum.optional().describe(`Voice. Default ${DEFAULT_VOICE}. Use list_voices to browse by gender/tags and hear samples.`),
   preset: z.string().max(40).optional().describe("Name of a saved preset (save_voice_preset). Explicit settings override the preset."),
-  speed: z.number().min(0.25).max(1.5).optional().describe("Native speaking-rate multiplier, 0.25-1.5 (1 = normal). Measured: works."),
+  speed: z.number().min(0.25).max(1.5).optional().describe("Speaking pace, 0.25-1.5 (1 = normal). Asked for in words first (natural); the playback knob is only used if the measured pace misses the target by more than 15 %."),
   takes: z.number().int().min(1).max(5).optional().describe("Best of N: record N full takes and keep the most expressive one whose words check out. Default 2 with `acting` or intensity ≥ 0.85, else 1. Costs N×."),
   reference_audio: z.string().optional().describe("Path to an expressive audio clip whose DELIVERY (emotion, energy, rhythm) the voice should match — not its words. Acting modes use a built-in reference automatically."),
   perform: z.boolean().optional().describe("Performer pass: a text model adds performance punctuation (ellipses, dashes, CAPS on stressed words) without changing any word (guarded). Opt-in: measured gain was inconsistent."),

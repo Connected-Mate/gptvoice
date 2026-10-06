@@ -1,37 +1,43 @@
 #!/usr/bin/env node
-// Inject "Acting: gpt-realtime-1.5 vs 2.1 (minimal reasoning)" into the listening
-// page between <!-- recheck:start --> / <!-- recheck:end -->.
+// Inject "Models: gpt-realtime-1.5 vs 2.1 (minimal reasoning)" + the speed check
+// into the listening page between <!-- recheck:start --> / <!-- recheck:end -->.
 import fs from "node:fs/promises";
 import path from "node:path";
 
 const ROOT = path.resolve("samples/listening-test");
 const PAGE = path.join(ROOT, "index.html");
 const esc = (s) => String(s).replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]);
-const R = JSON.parse(await fs.readFile(path.join(ROOT, "acting-recheck", "results.json"), "utf8"));
-const MODES = [["crying", "coral"], ["shouting", "ash"], ["child-wonder", "shimmer"]];
-const MODELS = ["gpt-realtime-1.5", "gpt-realtime-2.1"];
-const player = (rel, label) => `<figure><figcaption>${label}</figcaption><audio controls preload="none" src="acting-recheck/${esc(rel)}"></audio></figure>`;
-const avg = (m, k) => MODES.reduce((s, [id]) => s + (R[`${m}|${id}|acted`][k] ?? 0), 0) / MODES.length;
-let cards = "";
-for (const [id, voice] of MODES) {
-  cards += `<section id="recheck-${id}"><h2>${esc(id)} · voice ${voice}</h2><div class="pair">${MODELS.map((m) => {
-    const a = R[`${m}|${id}|acted`];
-    const n = R[`${m}|${id}|neutral`];
-    return `<div class="side${m.endsWith("2.1") ? " after" : ""}">${player(a.file, `Acted · ${m}${m.endsWith("2.1") ? " (minimal reasoning)" : ""}`)}${player(n.file, `Neutral · ${m}`)}<dl class="m"><div><dt>Expressiveness (acted)</dt><dd>${a.expr}</dd></div><div><dt>Change vs its neutral</dt><dd>${a.change}</dd></div><div><dt>Words heard</dt><dd>${a.verifiedAccuracy ?? a.accuracy} %</dd></div></dl></div>`;
-  }).join("")}</div></section>\n`;
-}
+const R = JSON.parse(await fs.readFile(path.join(ROOT, "models12", "results.json"), "utf8"));
+const CELLS = ["cry-coral", "cry-marin", "shout-ash", "shout-cedar", "excited-verse", "excited-marin"];
+const M = ["gpt-realtime-1.5", "gpt-realtime-2.1"];
+const player = (rel, label) => `<figure><figcaption>${label}</figcaption><audio controls preload="none" src="${esc(rel)}"></audio></figure>`;
+const avg = (m) => CELLS.reduce((s, c) => s + R[`${m}|${c}`].score, 0) / CELLS.length;
+const wins = CELLS.filter((c) => R[`gpt-realtime-2.1|${c}`].score > R[`gpt-realtime-1.5|${c}`].score + 2).length;
+const losses = CELLS.filter((c) => R[`gpt-realtime-2.1|${c}`].score < R[`gpt-realtime-1.5|${c}`].score - 2).length;
+const cards = CELLS.map((c) => `<section id="model-${c}"><h2>${esc(c)}</h2><div class="pair">${M.map((m) => {
+  const x = R[`${m}|${c}`];
+  return `<div class="side${m.endsWith("2.1") ? " after" : ""}">${player(x.file, esc(m) + (m.endsWith("2.1") ? " (minimal reasoning)" : ""))}<dl class="m"><div><dt>Expressiveness</dt><dd>${x.score}</dd></div><div><dt>Pitch range</dt><dd>${x.pitchRangeSt} st</dd></div><div><dt>Loudness range</dt><dd>${x.loudRangeDb} dB</dd></div><div><dt>Words heard</dt><dd>${x.acc} %</dd></div></dl></div>`;
+}).join("")}</div></section>`).join("\n");
+const sp = (s) => ["take1", "take2"].map((t) => R[`speed|speed-${s}-${t}`]);
+const speedRow = (s) => {
+  const xs = sp(s);
+  return `<tr><td>${s}</td><td>${xs.map((x) => x.wps).join(" / ")} words/s</td><td>${xs.map((x) => x.acc).join(" / ")} %</td><td>${xs.map((x, i) => `<audio controls preload="none" src="${esc(x.file)}" aria-label="speed ${s} take ${i + 1}"></audio>`).join(" ")}</td></tr>`;
+};
 const html = `<!-- recheck:start -->
-<h1 class="part" id="recheck">Acting: gpt-realtime-1.5 vs 2.1 (minimal reasoning)</h1>
-<p class="lead">Re-run after the OpenAI-docs audit: gpt-realtime-2.x now runs with minimal reasoning. 3 acting modes, one take each (12 takes). Two takes of the same line differ by about ±3, so this is a hint, not a verdict.</p>
-<table class="models"><thead><tr><th>Model</th><th>Avg expressiveness (acted)</th><th>Avg change vs its own neutral</th><th>Words heard</th></tr></thead><tbody>
-${MODELS.map((m) => `<tr><td>${m}</td><td>${avg(m, "expr").toFixed(1)}</td><td>${avg(m, "change").toFixed(1)}</td><td>${MODES.reduce((s, [id]) => s + (R[`${m}|${id}|acted`].verifiedAccuracy ?? R[`${m}|${id}|acted`].accuracy), 0) / 3 > 99.9 ? "100" : (MODES.reduce((s, [id]) => s + (R[`${m}|${id}|acted`].verifiedAccuracy ?? R[`${m}|${id}|acted`].accuracy), 0) / 3).toFixed(1)} %</td></tr>`).join("\n")}
+<h1 class="part" id="recheck">Models: gpt-realtime-1.5 vs 2.1 (minimal reasoning)</h1>
+<p class="lead">Same acting lines (cry, shout, excited × 2 voices), one take each per model, built-in delivery reference on. One take per cell, and takes of the same line differ by about ±3: a hint, not a verdict.</p>
+<table class="models"><thead><tr><th>Model</th><th>Avg expressiveness</th><th>Words heard</th></tr></thead><tbody>
+${M.map((m) => `<tr><td>${m}</td><td>${avg(m).toFixed(1)}</td><td>${(CELLS.reduce((s, c) => s + R[`${m}|${c}`].acc, 0) / 6).toFixed(1)} %</td></tr>`).join("\n")}
 </tbody></table>
-<p class="note">2.1 sounded more animated overall (higher absolute expressiveness on 2 of 3 modes, and its plain reading is livelier too), while 1.5 changes more between its neutral and acted readings. Default stays 1.5; use <code>model: "gpt-realtime-2.1"</code> to try the newer model — your ears decide.</p>
+<p class="note">2.1 clearly ahead on ${wins} of 6 lines, behind on ${losses}, about even on the rest; every word right on both. Default stays 1.5; choose <code>model: "gpt-realtime-2.1"</code> if you prefer it by ear.</p>
 ${cards}
+<h2 id="speed-check">Speed: pacing instruction first, playback knob only as a fallback</h2>
+<p class="note">Natural reading of this text ≈ 3.9 words/s. Before: speed 1.25 used the playback knob and read at 4.8–5.1 words/s (rushed). Now the voice is asked to speak faster/slower in words; the knob is only used if the pace misses the target by more than 15 %.</p>
+<div class="tablewrap"><table class="models"><thead><tr><th>Speed asked</th><th>Pace (2 takes)</th><th>Words heard</th><th>Listen</th></tr></thead><tbody>${speedRow(1.25)}${speedRow(0.8)}</tbody></table></div>
 <!-- recheck:end -->`;
 let page = await fs.readFile(PAGE, "utf8");
 if (page.includes("<!-- recheck:start -->")) page = page.replace(/<!-- recheck:start -->[\s\S]*?<!-- recheck:end -->/, html);
 else page = page.replace("<!-- levers:end -->", `<!-- levers:end -->\n${html}`);
-if (!page.includes('href="#recheck"')) page = page.replace('<a href="#levers">→ Encore plus expressif</a>', '<a href="#levers">→ Encore plus expressif</a> · <a href="#recheck">→ 1.5 vs 2.1</a>');
+page = page.replace('<a href="#recheck">→ 1.5 vs 2.1</a>', '<a href="#recheck">→ Models 1.5 vs 2.1</a>');
 await fs.writeFile(PAGE, page);
-console.log("ok");
+console.log(`1.5 ${avg(M[0]).toFixed(1)} · 2.1 ${avg(M[1]).toFixed(1)} · 2.1 ahead ${wins}/6, behind ${losses}/6`);

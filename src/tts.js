@@ -19,7 +19,8 @@ import { synthesizeChunk, transcribePcm } from "./realtime.js";
 import { VoiceError } from "./errors.js";
 import { DEFAULT_VOICE, VOICES, voiceGainDb } from "./voices.js";
 import { START_CUE, buildInstructions, validateSpeed, deliveryLines } from "./direction.js";
-import { expressiveness } from "./analysis.js";
+import { expressiveness, contourPcm, windowStats } from "./analysis.js";
+const analyzePace = (pcm) => windowStats(contourPcm(pcm)).activeSec;
 import { decodeToPcm } from "./transcribe.js";
 import { fileURLToPath } from "node:url";
 import { parseCues, scriptOf, expectedOf } from "./cues.js";
@@ -106,8 +107,19 @@ function controlsOf(s) {
   return controls;
 }
 
-// Pacing instruction does half of the change, the native playback knob the rest.
-const nativeSpeed = (speed) => (speed == null ? undefined : Math.round((1 + (speed - 1) * 0.5) * 100) / 100);
+// Speed: the Pacing instruction alone first (natural; the native knob only
+// changes playback rate and sounded rushed: 4.8-5.1 words/s at 1.25 vs 4.2-4.4
+// with the instruction alone). The knob is a fallback when the measured pace
+// misses the target by more than 10 %.
+const SPEED_TOLERANCE = 0.15;
+// Catalog pace is words / whole take (pauses included); speech-only pace runs
+// ~1.4x higher (marin: 2.82 vs 3.94 words/s on the same kind of text).
+const ACTIVE_PACE_FACTOR = 1.4;
+const wordsOf = (s) => String(s).split(/\s+/).filter(Boolean).length;
+function measuredPace(pcm, text) {
+  const active = analyzePace(pcm);
+  return active > 0 ? wordsOf(text) / active : null;
+}
 
 // ---------------------------------------------------------------------------
 // Expressiveness levers that won the measured search (bench/levers.js):
@@ -318,7 +330,8 @@ function unitsFor(text, settings, { firstPause, speaker, extraStyle } = {}) {
         expected: expectedOf(raw).replaceAll("\u200b", "").replace(/\s+/g, " ").trim(),
         alternate: scriptOf(raw),
         voice: settings.voice,
-        speed: nativeSpeed(settings.speed),
+        speed: undefined, // native knob only as a fallback (see below)
+        speedTarget: settings.speed,
         pitchShift: settings.pitch_shift,
         takes: defaultTakes(settings),
         settingsRef: settings,
@@ -375,6 +388,21 @@ async function render(units, { out, format, baseDir, subtitles, manifest, model,
       take.expr = u.takes > 1 ? expressiveness(smoothTrim(take.pcm), VOICES[u.voice]?.measured.pitchHz).score : 0;
       take.ok = ok;
       if (!r || (ok && !r.ok) || (ok === r.ok && take.expr > r.expr)) r = take;
+    }
+    // Speed asked: check the pace reached with the instruction alone; fall back on the knob if needed.
+    if (u.speedTarget != null && Math.abs(u.speedTarget - 1) > 0.05 && wordsOf(u.expected) >= 5) {
+      const usual = (VOICES[u.voice]?.measured.wordsPerSec ?? 2.7) * ACTIVE_PACE_FACTOR;
+      const got = measuredPace(smoothTrim(r.pcm), u.expected);
+      if (usual && got) {
+        const want = usual * u.speedTarget;
+        if (Math.abs(got / want - 1) > SPEED_TOLERANCE) {
+          const knob = Math.min(1.5, Math.max(0.25, Math.round((want / got) * 100) / 100));
+          const retake = await speakUnit(creds, { ...u, speed: knob }, { model, verify, redos });
+          const got2 = measuredPace(smoothTrim(retake.pcm), u.expected);
+          const okRetake = retake.verified != null ? retake.verified >= MIN_VERIFIED_ACCURACY : retake.own >= MIN_ACCURACY;
+          if (okRetake && got2 && Math.abs(got2 / want - 1) < Math.abs(got / want - 1)) r = { ...retake, knob };
+        }
+      }
     }
     onProgress?.(++done, units.length);
     // Even out the level differences between voices (sage is ~14 dB quieter than marin).
