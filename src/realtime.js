@@ -134,6 +134,9 @@ export function synthesizeChunk(creds, { instructions, cueText = START_CUE, voic
               output_modalities: ["audio"],
               instructions,
               audio: { output: { voice, format: { type: "audio/pcm", rate: 24000 }, ...(speed != null ? { speed } : {}) } },
+              // Cap a runaway reply; minimal reasoning for the 2.x reasoning models (OpenAI voice guide).
+              max_output_tokens: 4096,
+              ...(/^gpt-realtime-2/.test(model) ? { reasoning: { effort: "minimal" } } : {}),
             },
           });
           break;

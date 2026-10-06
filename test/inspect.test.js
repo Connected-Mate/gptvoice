@@ -98,7 +98,7 @@ test("generate_clips: numbered files + srt + timings + manifest; short takes pad
   assert.equal(r.clips[1].fits, false);
   assert.equal(r.clips[1].takes, 3);
   const speeds = m.connections.filter((c) => !/transcription/.test(c.url)).map((c) => c.messages.find((x) => x.type === "session.update").session.audio.output.speed);
-  assert.deepEqual(speeds, [undefined, undefined, undefined, 1.15]);
+  assert.deepEqual(speeds, [undefined, undefined, undefined, 1.08]); // 1.15 asked: half knob, half pacing instruction
   const manifest = JSON.parse(await fs.readFile(r.manifestPath, "utf8"));
   assert.equal(manifest.clips[1].timelineStart, manifest.clips[0].durationSec);
   const timings = JSON.parse(await fs.readFile(path.join(r.dir, "02-end.timings.json"), "utf8"));

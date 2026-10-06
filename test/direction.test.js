@@ -32,7 +32,9 @@ test("speed is validated to the API range", () => {
 
 test("instructions: verbatim rules, performance block, fenced script; triple quotes neutralized", () => {
   const i = buildInstructions('He said """stop""" now.', { emotion: "anger" });
-  assert.match(i, /exactly as written/);
+  assert.match(i, /EXACTLY AS WRITTEN/);
+  assert.match(i, /# Role & Objective/);
+  assert.match(i, /Do not add background music, humming or sound effects/);
   assert.match(i, /# Performance \(mandatory\)/);
   assert.match(i, /NEVER speak, narrate or describe them/);
   assert.ok(i.endsWith('"""\nHe said ”””stop””” now.\n"""'));
@@ -46,4 +48,17 @@ test("inline cue words expand to the same strong directions (EN + FR)", () => {
   assert.equal(expandCue("like a pirate"), "like a pirate");
   assert.match(buildInstructions("Go!", {}, "v2", { directions: ["triste"] }), /sad: slow/);
   assert.match(buildInstructions("Go!", {}, "v2", { sounds: [{ sound: "Ha ha ha!", how: "genuine laughter" }] }), /contains "Ha ha ha!": perform it as genuine laughter, not as words/);
+});
+
+test("language pin only when the detection is confident", async () => {
+  const { confidentLanguage } = await import("../src/accuracy.js");
+  assert.equal(confidentLanguage("Le chat est sur la table et il dort dans la cuisine."), "fr");
+  assert.equal(confidentLanguage("The cat is on the table and it sleeps in the kitchen."), "en");
+  assert.equal(confidentLanguage("Hola, ¿cómo estás? Muy bien."), null);
+  assert.equal(confidentLanguage("こんにちは、元気ですか"), null);
+  const i = buildInstructions("Le manager a posté le planning dans Slack pour la réunion de demain.", {});
+  assert.match(i, /Speak ONLY French/);
+  assert.match(i, /Loanwords: say English words inside the French script/);
+  assert.doesNotMatch(buildInstructions("Hola amigos, buenos días.", {}), /Speak ONLY/);
+  assert.doesNotMatch(buildInstructions("Ha!", {}, "v2", { sounds: [{ sound: "Ha ha!", how: "laughter" }] }), /background music/);
 });

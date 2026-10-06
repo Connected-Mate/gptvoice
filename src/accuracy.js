@@ -106,6 +106,17 @@ export function guessLanguage(text) {
   return fr > en ? "fr" : "en";
 }
 
+/** "fr" / "en" only when clearly so (≥ 3 function words and twice the other); else null. */
+export function confidentLanguage(text) {
+  const t = String(text);
+  if (/[^\u0000-\u024f\s\p{P}\p{N}\p{S}]/u.test(t)) return null; // non-Latin script
+  const fr = (t.match(FR_HINT) || []).length;
+  const en = (t.match(EN_HINT) || []).length;
+  if (fr >= 3 && fr >= 2 * en) return "fr";
+  if (en >= 3 && en >= 2 * fr) return "en";
+  return null;
+}
+
 function numberToWords(n, lang) {
   if (!Number.isSafeInteger(n) || n > 999_999_999_999) return String(n).split("");
   return lang === "fr" ? frWords(n) : enWords(n);

@@ -102,8 +102,12 @@ export async function resolveSettings(opts) {
 
 function controlsOf(s) {
   const { voice, speed, pitch_shift, pronunciations, takes, reference_audio, reference, perform, ...controls } = s;
+  if (speed != null) controls._speed = speed; // turned into a pacing instruction
   return controls;
 }
+
+// Pacing instruction does half of the change, the native playback knob the rest.
+const nativeSpeed = (speed) => (speed == null ? undefined : Math.round((1 + (speed - 1) * 0.5) * 100) / 100);
 
 // ---------------------------------------------------------------------------
 // Expressiveness levers that won the measured search (bench/levers.js):
@@ -314,7 +318,7 @@ function unitsFor(text, settings, { firstPause, speaker, extraStyle } = {}) {
         expected: expectedOf(raw).replaceAll("\u200b", "").replace(/\s+/g, " ").trim(),
         alternate: scriptOf(raw),
         voice: settings.voice,
-        speed: settings.speed,
+        speed: nativeSpeed(settings.speed),
         pitchShift: settings.pitch_shift,
         takes: defaultTakes(settings),
         settingsRef: settings,

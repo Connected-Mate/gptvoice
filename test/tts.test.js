@@ -43,7 +43,9 @@ test("happy path: sends auth headers, voice, verbatim instructions; writes a wav
   assert.match(c.url, /model=gpt-realtime/);
   const upd = c.messages.find((x) => x.type === "session.update").session;
   assert.equal(upd.audio.output.voice, "cedar");
-  assert.match(upd.instructions, /exactly as written/);
+  assert.match(upd.instructions, /EXACTLY AS WRITTEN/);
+  assert.doesNotMatch(upd.instructions, /Speak ONLY/); // too little text to be sure of the language: no pin
+  assert.equal(upd.max_output_tokens, 4096);
   assert.match(upd.instructions, /whisper/);
   assert.match(upd.instructions, /# SCRIPT\n"""\nBonjour tout le monde, voici un test.\n"""/);
   assert.equal(c.messages.find((x) => x.type === "conversation.item.create").item.content[0].text, "Perform the SCRIPT now.");

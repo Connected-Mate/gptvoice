@@ -28,11 +28,12 @@ after(async () => {
 });
 const updates = (m) => m.connections.filter((c) => !/transcription/.test(c.url)).map((c) => c.messages.find((x) => x.type === "session.update").session);
 
-test("speed is sent natively; other controls land in the instructions", async () => {
+test("speed: half native knob, half pacing instruction; other controls land in the instructions", async () => {
   const m = await mock(smartBehavior());
   await generateSpeech({ text: "A calm night by the sea.", speed: 1.25, emotion: "sadness", volume: "soft", accent: "Irish", out: "s.wav", baseDir: out, getCreds: creds });
   const u = updates(m)[0];
-  assert.equal(u.audio.output.speed, 1.25);
+  assert.equal(u.audio.output.speed, 1.13); // 1 + (1.25 - 1) / 2
+  assert.match(u.instructions, /Pacing: deliver your audio fast, but do not sound rushed/);
   assert.match(u.instructions, /sad: slow/);
   assert.match(u.instructions, /soft and quiet/);
   assert.match(u.instructions, /Irish accent/);
@@ -71,7 +72,7 @@ test("presets: saved settings apply, explicit arguments override them", async ()
   await generateSpeech({ text: "The river runs to the sea.", preset: "doc", speed: 1.1, out: "pr.wav", baseDir: out, getCreds: creds });
   const u = updates(m)[0];
   assert.equal(u.audio.output.voice, "cedar");
-  assert.equal(u.audio.output.speed, 1.1);
+  assert.equal(u.audio.output.speed, 1.05);
   assert.match(u.instructions, /documentary narrator/);
   await assert.rejects(generateSpeech({ text: "x y z", preset: "missing", out: "x.wav", getCreds: creds }), /no preset named "missing"/);
 });
