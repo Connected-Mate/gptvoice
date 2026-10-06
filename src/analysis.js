@@ -148,4 +148,29 @@ export function segmentSpeech(c, { minPauseSec = 0.25, bridgeSec = 0.15 } = {}) 
   return { speech, pauses };
 }
 
+/**
+ * Expressiveness of a take: pitch range (10th→90th percentile, semitones) +
+ * half the loudness range (dB) + how far the median pitch moved from the
+ * voice's usual pitch (semitones). Used to pick the best of N takes.
+ */
+export function expressiveness(pcm, usualPitchHz) {
+  const c = contourPcm(pcm);
+  const f0 = [...c.f0].filter(Boolean).sort((a, b) => a - b);
+  const st = windowStats(c);
+  const loud = [];
+  for (let k = 0; k + 5 <= c.rms.length; k += 5) {
+    let e = 0;
+    for (let i = k; i < k + 5; i++) e += c.rms[i] ** 2;
+    const d = 10 * Math.log10(e / 5 || 1e-12);
+    if (d > -45) loud.push(d);
+  }
+  loud.sort((a, b) => a - b);
+  const q = (xs, p) => xs[Math.min(xs.length - 1, Math.floor(p * xs.length))] ?? 0;
+  const pitchRangeSt = f0.length ? 12 * Math.log2(q(f0, 0.9) / q(f0, 0.1)) : 0;
+  const loudRangeDb = loud.length ? q(loud, 0.9) - q(loud, 0.1) : 0;
+  const base = usualPitchHz || st.f0Median || 1;
+  const pitchShiftSt = st.f0Median ? Math.abs(12 * Math.log2(st.f0Median / base)) : 0;
+  return { pitchRangeSt: round(pitchRangeSt), loudRangeDb: round(loudRangeDb), pitchShiftSt: round(pitchShiftSt), score: round(pitchRangeSt + loudRangeDb / 2 + pitchShiftSt) };
+}
+
 const round = (v) => Math.round(v * 100) / 100;

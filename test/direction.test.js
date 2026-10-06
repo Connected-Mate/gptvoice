@@ -34,7 +34,7 @@ test("instructions: verbatim rules, performance block, fenced script; triple quo
   const i = buildInstructions('He said """stop""" now.', { emotion: "anger" });
   assert.match(i, /exactly as written/);
   assert.match(i, /# Performance \(mandatory\)/);
-  assert.match(i, /Never say the directions themselves aloud/);
+  assert.match(i, /NEVER speak, narrate or describe them/);
   assert.ok(i.endsWith('"""\nHe said ”””stop””” now.\n"""'));
   assert.equal(START_CUE, "Perform the SCRIPT now.");
 });

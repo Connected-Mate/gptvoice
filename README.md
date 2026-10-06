@@ -90,6 +90,22 @@ Measured on the 7 demo files, before → after: **0 issues at the joins between 
 
 Benchmark (`bench/acting.js`, 13 scripts × 4 models, each vs a neutral reading of the same words; listen in `samples/listening-test/index.html#acting`): every mode produced a measurable change in pitch, range, loudness, pace or duration on the default model (sarcastic the subtlest); word accuracy 99.3–99.5 % on all models. Model comparison — average change vs neutral: **gpt-realtime-1.5 8.4**, gpt-realtime-2 6.2, gpt-realtime-2.1 5.6, gpt-realtime-2.1-mini 5.6, so the default stays 1.5. OpenAI's newer expressive model `gpt-live-1` answers "Voice session access denied" for this sign-in. The metric cannot hear tears or laughter: your ears are the final judge.
 
+## Even more expressive (measured lever search)
+
+`bench/levers.js` tested what makes acting MORE expressive without losing words (3 emotions × 2 voices, one take per lever, independent transcription):
+
+| Lever | Avg change | Lines clearly better | Words heard | Status |
+|-------|-----------:|---------------------:|------------:|--------|
+| Script performer pass (punctuation/CAPS, same words, guarded) | +5.0 | 3/6 | 88 % | opt-in `perform: true` (inconsistent across scorings) |
+| Audio delivery reference ("match its energy, not its words") | +3.4 | 3/6 | 97 % | **default for acting** (built-in clips in `assets/acting-references/`, or `reference_audio`) |
+| Best of N takes (most expressive that passes the word check) | −0.8 / +3.9 vs an average take | 2 lines | gated | **default 2 for acting / intensity ≥ 0.85** (`takes: 1–5`, costs N×) |
+| Actor framing (scene, stakes, backstory) | +1.4 | 3/6 | 67 % | not promoted |
+| Conversation priming | +0.1 | 1/6 | 91 % | not promoted |
+| Sampling temperature | — | — | — | not available: the realtime API rejects it |
+| Compression / presence EQ | — | — | — | rejected: compression cut the loudness range 4.5–6.8 dB |
+
+The search also caught acting takes **speaking stage words** ("Short gasp.") because the acting directions named sounds; directions now describe vocal qualities only, acting is verified by independent transcription by default, and 6/6 takes were word-perfect afterwards. Listen: `samples/listening-test/index.html#levers`.
+
 ## Long narration without monotony
 
 For 3+ paragraphs, a **director pass** (on by default, `director: false` to disable) reads the whole story with a text model on the same sign-in and gives each paragraph its own direction (e.g. "warmer and nostalgic, slow down on sensory memories" → "graver, confidential, let the regrets weigh"); a local heuristic is used if the text model is unreachable. On the 1 min 40 FR test: melody 2.15 → 2.32 semitones, sentence-to-sentence pitch variation 1.07 → 1.27, accuracy 99 %. Voice choice matters more: `coral` reached 3.15 st and `cedar` + `old-storyteller` 2.79 st (listen: `samples/listening-test/index.html`, test 8). `marin` + `old-storyteller` was rejected — its character voice jumped between 88 and 207 Hz from one paragraph to the next.

@@ -52,29 +52,31 @@ export function expandCue(cue) {
   return EMOTIONS[alias];
 }
 
-// Acting modes: a persona plus concrete vocal behaviour, written the way
+// Acting modes: a persona plus concrete vocal QUALITIES (never discrete sound
+// events like "a short gasp": the lever search caught the voice saying
+// "Short gasp." aloud; sounds come only from [gasps]/[sobs] cues), written the way
 // OpenAI's realtime prompting guide recommends (character, tone, pacing,
 // non-verbal cues as sounds, explicit examples of HOW — never extra words).
 export const ACTING_MODES = {
   shouting: {
     persona: "someone yelling across a noisy street to be heard",
-    voice: "SHOUT at full power: very loud, chest voice, high energy, stretched vowels on key words, a short gasp for air between phrases",
+    voice: "SHOUT at full power: very loud, chest voice, high energy, urgent, stretched vowels on key words",
   },
   crying: {
     persona: "a person who just received devastating news, fighting back tears",
-    voice: "a voice wet with tears: trembling, catching breath (shaky inhales), syllables breaking and wobbling, small sobs between phrases, quieter on the last words of each sentence",
+    voice: "a voice wet with tears: trembling and wavering, syllables breaking, unsteady pitch, quieter and fading on the last words of each sentence",
   },
   "laughing-while-speaking": {
     persona: "a friend telling a story they find hilarious and can barely get through",
-    voice: "laugh THROUGH the words: giggles bubbling inside syllables, breathy chuckles between phrases, smiling voice, struggling to keep a straight face",
+    voice: "a voice bubbling with laughter: every word spoken through a wide grin, pitch jumping, barely holding it together",
   },
   "whispering-in-fear": {
     persona: "someone hiding in a dark house, terrified of being heard",
-    voice: "a trembling, breathy WHISPER, fast shallow breathing, tiny pauses as if listening for a noise, voice shaking on every phrase",
+    voice: "a trembling, breathy WHISPER, hurried and tense, tiny pauses as if listening for a noise, voice shaking on every phrase",
   },
   "angry-rant": {
     persona: "a customer who has been ignored for an hour and finally explodes",
-    voice: "furious and escalating: hard consonants, punchy stressed words, speeding up as the anger builds, louder at the end of each sentence, exasperated breaths",
+    voice: "furious and escalating: hard consonants, punchy stressed words, speeding up as the anger builds, louder at the end of each sentence, exasperated",
   },
   "broken-voice": {
     persona: "an exhausted person at the end of a long tragedy, voice almost gone",
@@ -82,11 +84,11 @@ export const ACTING_MODES = {
   },
   panicked: {
     persona: "someone out of breath after running, in a panic",
-    voice: "OUT OF BREATH and panicked: gasping inhales between short phrases, fast and urgent, pitch high and unsteady, words tumbling out",
+    voice: "OUT OF BREATH and panicked: breathless, fast and urgent, pitch high and unsteady, words tumbling out",
   },
   sarcastic: {
     persona: "a deadpan, unimpressed colleague",
-    voice: "dry sarcasm: flat, drawn-out stressed words, exaggerated fake enthusiasm on the compliments, slight sighs, ironic rising-then-falling intonation",
+    voice: "dry sarcasm: flat, drawn-out stressed words, exaggerated fake enthusiasm on the compliments, weary, ironic rising-then-falling intonation",
   },
   intimate: {
     persona: "a warm late-night radio host speaking close to the microphone",
@@ -98,11 +100,11 @@ export const ACTING_MODES = {
   },
   "old-storyteller": {
     persona: "an old grandfather telling a tale by the fire",
-    voice: "aged and warm: slower, slightly raspy and lower, gentle wavering, knowing chuckles, long meaningful pauses",
+    voice: "aged and warm: slower, slightly raspy and lower, gently wavering, knowing and amused, long meaningful pauses",
   },
   "child-wonder": {
     persona: "a seven-year-old seeing snow for the first time",
-    voice: "a small child's voice: MUCH higher and lighter than your normal voice, fast and eager, breathless gasps of amazement, bouncy rhythm, big delighted rises in pitch",
+    voice: "a small child's voice: MUCH higher and lighter than your normal voice, fast and eager, breathless with amazement, bouncy rhythm, big delighted rises in pitch",
   },
 };
 
@@ -279,7 +281,7 @@ export function buildInstructions(script, controls = {}, version = promptVersion
         "Perform with the following delivery, clearly and unmistakably — a listener must hear it from the first word.",
         "- STAY INTELLIGIBLE: every word must remain clearly understandable, even when whispering, shouting or excited. Never trade a word's clarity for effect.",
         ...delivery.map((l) => `- ${l}`),
-        "- These directions change HOW you speak, never WHICH words you say. Never say the directions themselves aloud.",
+        "- These directions change HOW you speak, never WHICH words you say. They are private notes: NEVER speak, narrate or describe them, and never add words like 'gasp', 'sigh', 'inhale' or 'sob'. Sounds happen only where the SCRIPT itself contains them.",
       ]
     : ["# Performance", "- Natural, clear, well-paced, engaging narration with the emotion that fits the meaning of the text."];
   // Continuity (like ElevenLabs request stitching): neighbouring text so the

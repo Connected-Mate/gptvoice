@@ -28,6 +28,10 @@ export const PRESET_FIELDS = [
   "pace",
   "style",
   "pronunciations",
+  "takes",
+  "reference_audio",
+  "reference",
+  "perform",
 ];
 
 export function configPath() {

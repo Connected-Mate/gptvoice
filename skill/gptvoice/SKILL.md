@@ -61,6 +61,10 @@ Human-sounding results come from this loop: short lines, one intention per line,
 
 A **director pass** runs automatically: the whole text is read once and each paragraph gets its own delivery along the story's arc (measured on a 1 min 40 FR text: melody +8 %, sentence-to-sentence pitch variation +19 %). For an even livelier read pick a more animated voice: `coral` (melody +47 %) or `cedar` with `acting: "old-storyteller"` (+30 %). Avoid `marin` + `old-storyteller` on long texts: the character voice drifted between paragraphs. `director: false` turns the pass off.
 
+## Maximum expressiveness
+
+`acting` modes automatically use a built-in delivery reference clip and keep the best of 2 takes (word-checked by transcription). For an even stronger read: `takes: 3`, your own `reference_audio` (a clip whose energy should be matched), or `perform: true` (performance punctuation, same words). Each extra take costs one more generation.
+
 ## Model choice
 
 Keep the default `gpt-realtime-1.5`: in the acting benchmark it was the MOST expressive of the four accessible models (avg change vs neutral 8.4 vs 6.2 for gpt-realtime-2, 5.6 for 2.1 / 2.1-mini) at 99.5 % word accuracy. `gpt-live-1` exists but refuses this sign-in.

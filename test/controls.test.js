@@ -106,3 +106,22 @@ test("verify: whispered passages are checked on the model transcript only", asyn
   assert.equal(m.connections.filter((c) => /transcription/.test(c.url)).length, 0);
   assert.equal(r.accuracy, 100);
 });
+
+test("acting: built-in delivery reference is sent before the cue, and 2 takes are recorded by default", async () => {
+  const m = await mock(smartBehavior());
+  await generateSpeech({ text: "Get out of here right now please.", acting: "shouting", out: "act.wav", baseDir: out, getCreds: creds });
+  const tts = m.connections.filter((c) => !/transcription/.test(c.url));
+  assert.equal(tts.length, 2, "best of 2 takes");
+  const items = tts[0].messages.filter((x) => x.type === "conversation.item.create").map((x) => x.item.content[0].type);
+  assert.deepEqual(items, ["input_audio", "input_text", "input_text"]);
+  assert.match(tts[0].messages.filter((x) => x.type === "conversation.item.create")[1].item.content[0].text, /DELIVERY REFERENCE/);
+});
+
+test("takes and reference can be turned off; invalid takes rejected", async () => {
+  const m = await mock(smartBehavior());
+  await generateSpeech({ text: "Get out of here right now please.", acting: "shouting", takes: 1, reference: false, out: "act1.wav", baseDir: out, getCreds: creds });
+  const tts = m.connections.filter((c) => !/transcription/.test(c.url));
+  assert.equal(tts.length, 1);
+  assert.equal(tts[0].messages.filter((x) => x.type === "conversation.item.create").length, 1);
+  await assert.rejects(generateSpeech({ text: "x y z", takes: 9, out: "x.wav", getCreds: creds }), /takes must be/);
+});

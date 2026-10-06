@@ -118,7 +118,7 @@ function runSession(url, creds, driver) {
  * Synthesize one chunk of text.
  * @returns {Promise<{pcm: Buffer, transcript: string, usage: object|null}>}
  */
-export function synthesizeChunk(creds, { instructions, cueText = START_CUE, voice = DEFAULT_VOICE, speed, model = DEFAULT_MODEL }) {
+export function synthesizeChunk(creds, { instructions, cueText = START_CUE, voice = DEFAULT_VOICE, speed, model = DEFAULT_MODEL, preItems = [] }) {
   const url = `${realtimeUrl()}?model=${encodeURIComponent(model)}`;
   return runSession(url, creds, (send, finish) => {
     const audio = [];
@@ -140,6 +140,8 @@ export function synthesizeChunk(creds, { instructions, cueText = START_CUE, voic
         case "session.updated":
           if (started) break;
           started = true;
+          // Optional priming items (mood-setting history, an audio delivery reference).
+          for (const item of preItems) send({ type: "conversation.item.create", item });
           send({ type: "conversation.item.create", item: { type: "message", role: "user", content: [{ type: "input_text", text: cueText }] } });
           send({ type: "response.create" });
           break;

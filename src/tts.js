@@ -19,9 +19,13 @@ import { synthesizeChunk, transcribePcm } from "./realtime.js";
 import { VoiceError } from "./errors.js";
 import { DEFAULT_VOICE, VOICES, voiceGainDb } from "./voices.js";
 import { START_CUE, buildInstructions, validateSpeed, deliveryLines } from "./direction.js";
+import { expressiveness } from "./analysis.js";
+import { decodeToPcm } from "./transcribe.js";
+import { fileURLToPath } from "node:url";
 import { parseCues, scriptOf, expectedOf } from "./cues.js";
 import { getPreset, PRESET_FIELDS } from "./config.js";
 import { directParagraphs } from "./director.js";
+import { performScript } from "./performer.js";
 import { wordAccuracy, describeDiff } from "./accuracy.js";
 import { MAX_PITCH_SHIFT, SAMPLE_RATE, applyGainDb, crossfadeConcat, encode, fadeEdges, fillDigitalSilence, pitchShift, normalizeLoudness, pcmDurationSec, resolveFormat, roomTone, saveAudio, smoothTrim, withExtension } from "./audio.js";
 import { MAX_TEXT_CHARS, chunkText, parseScript } from "./text.js";
@@ -81,6 +85,11 @@ export async function resolveSettings(opts) {
   if (preset.pronunciations && opts.pronunciations) s.pronunciations = { ...preset.pronunciations, ...opts.pronunciations };
   s.voice = validateVoice(s.voice);
   s.speed = validateSpeed(s.speed);
+  if (s.takes != null) {
+    const n = Number(s.takes);
+    if (!(Number.isInteger(n) && n >= 1 && n <= 5)) throw new VoiceError("takes must be a whole number from 1 to 5", "invalid");
+    s.takes = n;
+  }
   if (s.pitch_shift != null) {
     const ps = Number(s.pitch_shift);
     if (!(Math.abs(ps) <= MAX_PITCH_SHIFT)) throw new VoiceError(`pitch_shift must be between -${MAX_PITCH_SHIFT} and ${MAX_PITCH_SHIFT} semitones`, "invalid");
@@ -92,9 +101,50 @@ export async function resolveSettings(opts) {
 }
 
 function controlsOf(s) {
-  const { voice, speed, pitch_shift, pronunciations, ...controls } = s;
+  const { voice, speed, pitch_shift, pronunciations, takes, reference_audio, reference, perform, ...controls } = s;
   return controls;
 }
+
+// ---------------------------------------------------------------------------
+// Expressiveness levers that won the measured search (bench/levers.js):
+//   - audio delivery reference: an expressive clip sent before the script
+//     ("match its energy, not its words") — +1.9 score, better in 4 of 6 cells
+//   - best of N takes, scored on pitch range, loudness range and pitch shift,
+//     gated on word accuracy
+// Acting modes use both by default (built-in reference + 2 takes).
+// ---------------------------------------------------------------------------
+
+const REFERENCE_DIR = path.join(path.dirname(path.dirname(fileURLToPath(import.meta.url))), "assets", "acting-references");
+const referenceCache = new Map();
+
+async function referencePcm(settings) {
+  let file = null;
+  if (settings.reference_audio) file = path.resolve(settings.reference_audio);
+  else if (settings.acting && settings.reference !== false) file = path.join(REFERENCE_DIR, `${String(settings.acting).toLowerCase()}.wav`);
+  if (!file) return null;
+  if (!referenceCache.has(file)) {
+    referenceCache.set(
+      file,
+      decodeToPcm(file)
+        .then((pcm) => smoothTrim(pcm).subarray(0, 24000 * 2 * 10)) // ≤ 10 s is enough to set the delivery
+        .catch((err) => {
+          if (settings.reference_audio) throw new VoiceError(`cannot read reference audio ${file}: ${err?.message || err}`, "invalid");
+          return null;
+        }),
+    );
+  }
+  return referenceCache.get(file);
+}
+
+function referenceItems(pcm) {
+  if (!pcm || !pcm.length) return [];
+  return [
+    { type: "message", role: "user", content: [{ type: "input_audio", audio: pcm.toString("base64") }] },
+    { type: "message", role: "user", content: [{ type: "input_text", text: "The audio above is a DELIVERY REFERENCE: match its emotion, energy and rhythm in your performance — never its words, never its voice." }] },
+  ];
+}
+
+const defaultTakes = (s) => s.takes ?? (s.acting || (s.intensity != null && Number(s.intensity) >= 0.85) ? 2 : 1);
 
 /** Credentials holder that can be force-refreshed once after a 401. `getCreds` is injectable for tests. */
 function credentialSource(getCreds = getValidCredentials) {
@@ -154,7 +204,7 @@ async function speakUnit(creds, u, { model, verify, redos = MAX_REDOS }) {
   verify = verify && !whispered;
   let best = null;
   for (let i = 0; i <= redos; i++) {
-    const r = await withRetry((c) => synthesizeChunk(c, { instructions, cueText, voice: u.voice, speed: u.speed, model }), creds);
+    const r = await withRetry((c) => synthesizeChunk(c, { instructions, cueText, voice: u.voice, speed: u.speed, model, preItems: u.preItems ?? [] }), creds);
     if (r.pcm.length === 0) continue;
     const own = accuracyOf(u, r.transcript, lang);
     let heard = null;
@@ -266,6 +316,8 @@ function unitsFor(text, settings, { firstPause, speaker, extraStyle } = {}) {
         voice: settings.voice,
         speed: settings.speed,
         pitchShift: settings.pitch_shift,
+        takes: defaultTakes(settings),
+        settingsRef: settings,
         controls,
         directions: seg.directions,
         sounds,
@@ -301,9 +353,25 @@ async function render(units, { out, format, baseDir, subtitles, manifest, model,
     u.after = ctx && next ? next.slice(0, CONTEXT_CHARS) : undefined;
   });
 
+  for (const u of units) u.preItems = referenceItems(await referencePcm(u.settingsRef ?? {}));
+  // Optional performer pass: punctuation/CAPS mark-up, same words (guarded).
+  await Promise.all(
+    units.filter((u) => u.settingsRef?.perform && u.script).map(async (u) => {
+      u.script = (await performScript(u.script, { emotion: u.settingsRef.acting || u.settingsRef.emotion, ...(getCreds ? { getCreds } : {}) })).script;
+    }),
+  );
+
   let done = 0;
   const spoken = await mapLimit(units, CONCURRENCY, async (u) => {
-    const r = await speakUnit(creds, u, { model, verify, redos });
+    // Best of N: several complete takes, keep the most expressive one whose words check out.
+    let r = null;
+    for (let k = 0; k < (u.takes || 1); k++) {
+      const take = await speakUnit(creds, u, { model, verify, redos });
+      const ok = take.verified != null ? take.verified >= MIN_VERIFIED_ACCURACY : take.own >= MIN_ACCURACY;
+      take.expr = u.takes > 1 ? expressiveness(smoothTrim(take.pcm), VOICES[u.voice]?.measured.pitchHz).score : 0;
+      take.ok = ok;
+      if (!r || (ok && !r.ok) || (ok === r.ok && take.expr > r.expr)) r = take;
+    }
     onProgress?.(++done, units.length);
     // Even out the level differences between voices (sage is ~14 dB quieter than marin).
     const pcm = fillDigitalSilence(applyGainDb(pitchShift(smoothTrim(r.pcm), u.pitchShift || 0), voiceGainDb(u.voice)));
@@ -416,10 +484,13 @@ async function render(units, { out, format, baseDir, subtitles, manifest, model,
  * pronunciations, preset, verify, format, subtitles, model.
  */
 export async function generateSpeech(opts) {
-  const { text, out, format, baseDir = process.cwd(), subtitles = false, manifest = false, model, verify = false, normalize = true, redos, padToSec, getCreds, onProgress } = opts;
+  const { text, out, format, baseDir = process.cwd(), subtitles = false, manifest = false, model, normalize = true, redos, padToSec, getCreds, onProgress } = opts;
   const t = validateText(text);
   if (!out) throw new VoiceError("an output path is required (e.g. narration.mp3)", "invalid");
   const settings = await resolveSettings(opts);
+  // Acting and maximal intensity are checked by an independent transcription by
+  // default: the model's own transcript missed spoken stage words ("Short gasp.").
+  const verify = opts.verify ?? Boolean(settings.acting || (settings.intensity != null && Number(settings.intensity) >= 0.85));
   const paragraphs = t.split(/\n\s*\n/).filter((p) => p.trim());
   // Director pass: one delivery direction per paragraph, following the story's arc.
   let directions = [];

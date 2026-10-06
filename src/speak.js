@@ -41,7 +41,7 @@ Inline cues in the text: [pause 1s] [whispers] [excited] [laughs] [sighs] {Nguye
 const VALUE_FLAGS = {
   "--text": "text", "-t": "text", "--file": "file", "-f": "file", "--out": "out", "-o": "out",
   "--voice": "voice", "-v": "voice", "--preset": "preset", "--speed": "speed", "--pitch-shift": "pitch_shift", "--emotion": "emotion",
-  "--intensity": "intensity", "--acting": "acting", "--pitch": "pitch", "--intonation": "intonation", "--volume": "volume",
+  "--intensity": "intensity", "--acting": "acting", "--takes": "takes", "--reference-audio": "reference_audio", "--pitch": "pitch", "--intonation": "intonation", "--volume": "volume",
   "--pauses": "pauses", "--accent": "accent", "--language": "language", "--narration": "narration",
   "--character": "character", "--pace": "pace", "--style": "style", "-s": "style", "--format": "format",
   "--dialogue": "dialogue", "-d": "dialogue", "--cast": "cast", "--transcribe": "transcribe",
@@ -73,6 +73,7 @@ function parseArgs(argv) {
   if (out.speed != null) out.speed = Number(out.speed);
   if (out.intensity != null) out.intensity = Number(out.intensity);
   if (out.pitch_shift != null) out.pitch_shift = Number(out.pitch_shift);
+  if (out.takes != null) out.takes = Number(out.takes);
   if (Object.keys(out.say).length) out.pronunciations = out.say;
   return out;
 }
@@ -97,7 +98,7 @@ async function readText(file) {
 }
 
 const progress = (d, n) => process.stderr.write(`\r  speaking passage ${d}/${n}…`);
-const CONTROL_KEYS = ["voice", "preset", "speed", "pitch_shift", "acting", "emotion", "intensity", "pitch", "intonation", "volume", "pauses", "breaths", "accent", "language", "narration", "character", "pace", "style", "pronunciations"];
+const CONTROL_KEYS = ["voice", "preset", "speed", "pitch_shift", "acting", "takes", "reference_audio", "emotion", "intensity", "pitch", "intonation", "volume", "pauses", "breaths", "accent", "language", "narration", "character", "pace", "style", "pronunciations"];
 const controlsOf = (a) => Object.fromEntries(CONTROL_KEYS.filter((k) => a[k] !== undefined).map((k) => [k, a[k]]));
 
 async function main() {
