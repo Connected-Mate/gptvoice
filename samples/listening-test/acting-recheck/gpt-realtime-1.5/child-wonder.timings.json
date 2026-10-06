@@ -1,0 +1,21 @@
+{
+  "file": "child-wonder.mp3",
+  "durationSec": 7.568,
+  "passages": [
+    {
+      "start": 0.21,
+      "end": 7.108,
+      "text": "Maman, regarde ! Il neige ! Tout est blanc, même la voiture ! On peut sortir ?",
+      "speaker": null,
+      "voice": "shimmer"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0.21,
+      "end": 7.108,
+      "text": "Maman, regarde ! Il neige ! Tout est blanc, même la voiture ! On peut sortir ?",
+      "speaker": null
+    }
+  ]
+}

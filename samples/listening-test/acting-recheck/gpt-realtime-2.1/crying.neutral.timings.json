@@ -1,0 +1,21 @@
+{
+  "file": "crying.neutral.mp3",
+  "durationSec": 8.089,
+  "passages": [
+    {
+      "start": 0.21,
+      "end": 7.629,
+      "text": "I waited all night by the phone. He never called. He promised me he would.",
+      "speaker": null,
+      "voice": "coral"
+    }
+  ],
+  "sentences": [
+    {
+      "start": 0.21,
+      "end": 7.629,
+      "text": "I waited all night by the phone. He never called. He promised me he would.",
+      "speaker": null
+    }
+  ]
+}

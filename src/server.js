@@ -55,6 +55,7 @@ const controls = {
 };
 
 const output = {
+  model: z.enum(["gpt-realtime-1.5", "gpt-realtime-2", "gpt-realtime-2.1", "gpt-realtime-2.1-mini"]).optional().describe("Voice model. Default gpt-realtime-1.5 (most accurate, strongest acting contrast). gpt-realtime-2.1 sounded more animated in a small test."),
   director: z.boolean().optional().describe("Director pass for long narration: reads the whole text and gives each paragraph its own delivery along the story's arc. Default: on for 3+ paragraphs."),
   format: formatEnum.optional().describe("mp3 (default), wav (lossless, for editing), or m4a (macOS). Inferred from `out` if omitted."),
   subtitles: z.boolean().optional().describe("Also write a matching .srt subtitle file (timed per sentence)."),

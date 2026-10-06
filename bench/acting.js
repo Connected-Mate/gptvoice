@@ -11,8 +11,9 @@ import { ACTING } from "./acting-items.js";
 
 const arg = (k, d) => (process.argv.includes(`--${k}`) ? process.argv[process.argv.indexOf(`--${k}`) + 1] : d);
 const models = arg("models", "gpt-realtime-1.5,gpt-realtime-2,gpt-realtime-2.1,gpt-realtime-2.1-mini").split(",");
-const only = arg("only", "");
-const OUT = path.resolve("samples/listening-test/acting");
+const only = arg("only", "").split(",").filter(Boolean);
+const OUT = path.resolve(arg("out", "samples/listening-test/acting"));
+const TAKES = Number(arg("takes", 0)) || undefined;
 const resultsFile = path.join(OUT, "results.json");
 let results = {};
 try {
@@ -48,7 +49,7 @@ function expressiveness(pcm, words) {
 
 const jobs = [];
 for (const it of ACTING) {
-  if (only && it.id !== only) continue;
+  if (only.length && !only.includes(it.id)) continue;
   for (const model of models) {
     jobs.push({ it, model, neutral: false });
     jobs.push({ it, model, neutral: true });
@@ -64,7 +65,7 @@ async function worker() {
     for (const ext of [".mp3", ".srt", ".timings.json"]) await fs.rm(file.replace(/\.mp3$/, ext), { force: true });
     const text = neutral ? it.text.replace(/\[(?!pause)[^\]]*\]\s*/g, "") : it.text;
     try {
-      const r = await generateSpeech({ text, voice: it.voice, acting: neutral ? undefined : it.acting, model, language: it.lang === "fr" ? "French" : "English", out: file, verify: true, subtitles: true, manifest: true });
+      const r = await generateSpeech({ text, voice: it.voice, acting: neutral ? undefined : it.acting, takes: TAKES, model, language: it.lang === "fr" ? "French" : "English", out: file, verify: true, subtitles: true, manifest: true });
       const words = r.transcript ? text.replace(/\[[^\]]*\]/g, "").split(/\s+/).filter(Boolean).length : 0;
       const m = expressiveness(await decodeToPcm(r.savedPath), words);
       results[`${model}|${it.id}|${neutral ? "neutral" : "acted"}`] = { file: path.relative(OUT, r.savedPath), durationSec: r.durationSec, accuracy: r.accuracy, verifiedAccuracy: r.verifiedAccuracy, warnings: r.warnings, ...m };
