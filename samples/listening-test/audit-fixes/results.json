@@ -1,0 +1,58 @@
+{
+  "acting-shouting": {
+    "wps": 2.91,
+    "melody": 5.8,
+    "acc": 100,
+    "verified": 100,
+    "heard": "Hey, over here! Grab the rope! The boat is drifting away!"
+  },
+  "default-en": {
+    "wps": 3.94,
+    "melody": 2.8,
+    "acc": 100,
+    "verified": 100,
+    "heard": "The keeper climbed the one hundred and twelve steps, cleaned the lens, and lit the lamp. Far below, a fishing boat turned toward the light."
+  },
+  "default-fr": {
+    "wps": 3.99,
+    "melody": 2.16,
+    "acc": 100,
+    "verified": 100,
+    "heard": "La gardienne monta les cent douze marches, nettoya la lentille et alluma la lampe. Tout en bas, un bateau de pêche vira vers la lumière."
+  },
+  "fr-loanwords": {
+    "wps": 3.74,
+    "melody": 2.95,
+    "acc": 100,
+    "verified": 100,
+    "heard": "Lundi matin, le manager a posté le planning du week-end sur Slack, puis il a lancé un meeting en open space pour parler du nouveau workflow. Personne n'a osé dire que le deadline était impossible."
+  },
+  "speed125-take2": {
+    "wps": 4.82,
+    "melody": 2.89,
+    "acc": 100,
+    "verified": 100,
+    "heard": "Welcome back. Today we will look at three simple ways to save time every morning, starting with the one most people forget. It takes less than a minute, and it changes the whole day."
+  },
+  "speed125-take1": {
+    "wps": 5.1,
+    "melody": 2.92,
+    "acc": 100,
+    "verified": 100,
+    "heard": "Welcome back. Today we will look at three simple ways to save time every morning, starting with the one most people forget. It takes less than a minute, and it changes the whole day."
+  },
+  "acting-crying": {
+    "wps": 3.46,
+    "melody": 1.47,
+    "acc": 100,
+    "verified": 100,
+    "heard": "I waited all night by the phone. He never called. He promised me he would."
+  },
+  "rt21-minimal": {
+    "wps": 4.57,
+    "melody": 4.82,
+    "acc": 100,
+    "verified": 100,
+    "heard": "Welcome back. Today, we will look at three simple ways to save time every morning, starting with the one most people forget. It takes less than a minute, and it changes the whole day."
+  }
+}
