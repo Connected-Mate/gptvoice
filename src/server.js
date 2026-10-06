@@ -45,7 +45,7 @@ const controls = {
   volume: z.enum(CONTROL_VALUES.volume).optional().describe("whisper, soft, normal, projected, shout."),
   pauses: z.enum(CONTROL_VALUES.pauses).optional().describe("tight, natural, dramatic. For exact silences use [pause 1.5s] in the text."),
   breaths: z.boolean().optional().describe("Allow audible breaths between phrases."),
-  accent: z.string().max(120).optional().describe("Accent, e.g. 'Parisian French', 'Québécois', 'British RP', 'Southern US'."),
+  accent: z.string().max(120).optional().describe("Accent / character preset: french-english (French person speaking English, 'ze'), english-french, marseille, quebecois, spanish-english, italian-english, posh-british, southern-drawl, robot, grandpa — or free text ('Irish'). Heavy foreign accents come out stronger with model gpt-realtime-2.1."),
   language: z.string().max(40).optional().describe("Language of the text, e.g. 'French'. Usually not needed: the text decides."),
   narration: z.enum(CONTROL_VALUES.narration).optional().describe("Narration style preset: audiobook, trailer, documentary, ad, character, news, podcast, meditation, kids, elearning, announcement."),
   character: z.string().max(300).optional().describe("Character to embody, e.g. 'an old sea captain, gruff but kind'."),

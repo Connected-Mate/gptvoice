@@ -84,8 +84,8 @@ export const ACTING_MODES = {
     voice: "VERY slow and quiet, about half your normal speed and volume; hoarse and fragile; the voice cracks and wavers on emotional words and fades almost to a whisper at the end of each sentence; long exhausted pauses between phrases",
   },
   panicked: {
-    persona: "someone out of breath after running, in a panic",
-    voice: "OUT OF BREATH and panicked: breathless, fast and urgent, pitch high and unsteady, words tumbling out",
+    persona: "someone who has just escaped a burning building and is screaming at their family to get out NOW; their heart is pounding, they can hardly breathe, they are terrified someone will die",
+    voice: "PURE PANIC: very fast and rushed, words tumbling over each other; HIGH pitch, the voice cracking upward on stressed words; short shallow breathing between fragments; sentences broken off and restarted mid-way; loud, shaking, almost hyperventilating — no calm moment at all",
   },
   sarcastic: {
     persona: "a deadpan, unimpressed colleague",
@@ -106,6 +106,52 @@ export const ACTING_MODES = {
   "child-wonder": {
     persona: "a seven-year-old seeing snow for the first time",
     voice: "a small child's voice: MUCH higher and lighter than your normal voice, fast and eager, breathless with amazement, bouncy rhythm, big delighted rises in pitch",
+  },
+};
+
+// Accent & character presets: a persona (who is speaking, where they learned the
+// language) plus concrete phonetic habits, per OpenAI's guidance on personas and
+// sample-style directions. Free text still works for any other accent.
+export const ACCENTS = {
+  "french-english": {
+    persona: "Jean-Pierre from Lyon, who learned English at school and never lost his very strong French accent",
+    phonetics: "'th' becomes 'z' or 's' (the → ze, think → sink); French uvular r; no 'h' at the start of words; pure French vowels ('i' always 'ee'); every syllable the same length with the stress on the LAST syllable of each phrase; French rising melody at phrase ends",
+  },
+  "english-french": {
+    persona: "John from Manchester speaking French he learned late, with a heavy English accent",
+    phonetics: "English r; diphthongs instead of pure vowels; stress on the FIRST syllable of words; nasal vowels pronounced with a clear 'n'; 'u' said like 'oo'; final consonants pronounced; flat English intonation",
+  },
+  marseille: {
+    persona: "a cheerful local from Marseille with a strong southern French (Provençal) accent",
+    phonetics: "sing-song melody; every final 'e' pronounced (la plage → la plageu); nasal vowels opened (pain → peng, demain → demeng); 'o' always open; lively, rolling rhythm",
+  },
+  quebecois: {
+    persona: "a Montréal local with a strong Québécois accent",
+    phonetics: "'t' and 'd' before 'i' and 'u' become 'ts' and 'dz' (petit → p'tsi, du → dzu); long vowels diphthongized (père → paère); relaxed, sing-song Québécois melody",
+  },
+  "spanish-english": {
+    persona: "Carmen from Madrid speaking English with a strong Spanish accent",
+    phonetics: "an 'e' sound before words starting with 's' + consonant (Spain → Espain); rolled or tapped r; 'v' said like 'b'; short pure vowels (ship and sheep sound the same); syllable-timed rhythm",
+  },
+  "italian-english": {
+    persona: "Marco from Naples speaking English with a strong Italian accent",
+    phonetics: "an extra vowel after words ending in a consonant (big → bigga, it's → itsa); rolled r; open pure vowels; 'h' dropped; sing-song Italian melody with expressive rises",
+  },
+  "posh-british": {
+    persona: "an upper-class English aristocrat with a very posh Received Pronunciation accent",
+    phonetics: "crisp, clipped consonants; long 'ah' (bath → bahth); non-rhotic, r dropped after vowels; drawn-out 'o' (no → neu); understated, slightly bored melody",
+  },
+  "southern-drawl": {
+    persona: "a rancher from rural Texas with a thick American Southern drawl",
+    phonetics: "slow, stretched vowels; 'i' becomes 'ah' (I → Ah, time → tahm); vowels slide into two sounds (yes → yay-us); relaxed, unhurried, warm melody",
+  },
+  robot: {
+    persona: "an old-fashioned robot",
+    phonetics: "perfectly MONOTONE: every syllable on the same pitch and the same length, no emotion, clipped mechanical rhythm, a tiny even pause between words",
+  },
+  grandpa: {
+    persona: "a very old grandpa, eighty-five, kind and a bit forgetful",
+    phonetics: "slow, frail, slightly trembling and raspy voice; lower and breathier; drawn-out vowels; small hesitations between phrases",
   },
 };
 
@@ -211,7 +257,15 @@ export function deliveryLines(c = {}) {
   const pauses = pick(PAUSES, "pauses", c.pauses);
   if (pauses) lines.push(`Pauses: ${pauses}.`);
   if (c.breaths) lines.push("Breathing: let natural, audible breaths happen between phrases.");
-  if (c.accent) lines.push(`Accent: speak with a ${String(c.accent).slice(0, 120)} accent, consistently from first to last word.`);
+  if (c.accent) {
+    const preset = ACCENTS[String(c.accent).toLowerCase().trim()];
+    if (preset) {
+      lines.push(`Character: you are ${preset.persona}. Stay in this character for every word.`);
+      lines.push(`Accent (strong and unmistakable, from the first word to the last): ${preset.phonetics}. Keep the words exactly as written; only the pronunciation changes.`);
+    } else {
+      lines.push(`Accent: speak with a ${String(c.accent).slice(0, 120)} accent, consistently from first to last word.`);
+    }
+  }
   if (c.language) lines.push(`Language: the script is in ${String(c.language).slice(0, 40)}. Speak ONLY ${String(c.language).slice(0, 40)} with a native accent, stable from the first word to the last.`);
   // Speed: the native knob only changes playback rate (OpenAI realtime prompting
   // guide, "Speed Instructions"), so pacing is also asked for in words.

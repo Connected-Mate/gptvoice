@@ -18,7 +18,7 @@ import { getValidCredentials } from "./auth.js";
 import { synthesizeChunk, transcribePcm } from "./realtime.js";
 import { VoiceError } from "./errors.js";
 import { DEFAULT_VOICE, VOICES, voiceGainDb } from "./voices.js";
-import { START_CUE, buildInstructions, validateSpeed, deliveryLines } from "./direction.js";
+import { START_CUE, ACCENTS, buildInstructions, validateSpeed, deliveryLines } from "./direction.js";
 import { expressiveness, contourPcm, windowStats } from "./analysis.js";
 const analyzePace = (pcm) => windowStats(contourPcm(pcm)).activeSec;
 import { decodeToPcm } from "./transcribe.js";
@@ -36,6 +36,10 @@ const RETRY_BASE_MS = Number(process.env.GPTVOICE_RETRY_BASE_MS ?? 2000);
 const MIN_ACCURACY = 0.9; // against the model's own transcript
 const MIN_VERIFIED_ACCURACY = 0.85; // against independent STT (which has its own errors)
 const MAX_REDOS = 2;
+// Heavy accent presets fool the transcriber ("ze window" for "the window"):
+// a looser bar for them, so a well-accented take is not re-recorded for that.
+const ACCENT_VERIFIED_ACCURACY = 0.75;
+const verifiedBar = (u) => (u.controls?.accent && ACCENTS[String(u.controls.accent).toLowerCase().trim()] ? ACCENT_VERIFIED_ACCURACY : MIN_VERIFIED_ACCURACY);
 // Gaps are room tone added AFTER each take's natural tail (~160 ms kept by
 // smoothTrim), so the heard pause is roughly gap + 0.2 s.
 const CHUNK_PAUSE_MS = 150;
@@ -230,7 +234,7 @@ async function speakUnit(creds, u, { model, verify, redos = MAX_REDOS }) {
       const clip = Buffer.concat([roomTone(300), smoothTrim(r.pcm), roomTone(300)]);
       heard = await withRetry((c) => transcribePcm(c, clip, { language: lang }), creds);
       verified = accuracyOf(u, heard, lang);
-      if (verified < MIN_VERIFIED_ACCURACY) {
+      if (verified < verifiedBar(u)) {
         // Speech-to-text sometimes hallucinates (it once returned Chinese for a French
         // line): get a second opinion from another model before blaming the voice.
         const second = await withRetry((c) => transcribePcm(c, clip, { language: lang, model: "whisper-1" }), creds).catch(() => "");
@@ -241,7 +245,7 @@ async function speakUnit(creds, u, { model, verify, redos = MAX_REDOS }) {
     const score = verified ?? own;
     if (!best || score > best.score) best = { ...r, own, heard, verified, score };
     if (!checkable) break;
-    if (verified != null ? verified >= MIN_VERIFIED_ACCURACY && own >= MIN_ACCURACY : own >= MIN_ACCURACY) break;
+    if (verified != null ? verified >= verifiedBar(u) && own >= MIN_ACCURACY : own >= MIN_ACCURACY) break;
   }
   if (!best || best.pcm.length === 0) throw new VoiceError("the voice model returned no audio for a passage", "server");
   return best;
@@ -373,7 +377,7 @@ async function render(units, { out, format, baseDir, subtitles, manifest, model,
   for (const u of units) u.preItems = referenceItems(await referencePcm(u.settingsRef ?? {}));
   // Optional performer pass: punctuation/CAPS mark-up, same words (guarded).
   await Promise.all(
-    units.filter((u) => u.settingsRef?.perform && u.script).map(async (u) => {
+    units.filter((u) => (u.settingsRef?.perform ?? u.settingsRef?.acting === "panicked") && u.script).map(async (u) => {
       u.script = (await performScript(u.script, { emotion: u.settingsRef.acting || u.settingsRef.emotion, ...(getCreds ? { getCreds } : {}) })).script;
     }),
   );
@@ -384,7 +388,7 @@ async function render(units, { out, format, baseDir, subtitles, manifest, model,
     let r = null;
     for (let k = 0; k < (u.takes || 1); k++) {
       const take = await speakUnit(creds, u, { model, verify, redos });
-      const ok = take.verified != null ? take.verified >= MIN_VERIFIED_ACCURACY : take.own >= MIN_ACCURACY;
+      const ok = take.verified != null ? take.verified >= verifiedBar(u) : take.own >= MIN_ACCURACY;
       take.expr = u.takes > 1 ? expressiveness(smoothTrim(take.pcm), VOICES[u.voice]?.measured.pitchHz).score : 0;
       take.ok = ok;
       if (!r || (ok && !r.ok) || (ok === r.ok && take.expr > r.expr)) r = take;
@@ -399,7 +403,7 @@ async function render(units, { out, format, baseDir, subtitles, manifest, model,
           const knob = Math.min(1.5, Math.max(0.25, Math.round((want / got) * 100) / 100));
           const retake = await speakUnit(creds, { ...u, speed: knob }, { model, verify, redos });
           const got2 = measuredPace(smoothTrim(retake.pcm), u.expected);
-          const okRetake = retake.verified != null ? retake.verified >= MIN_VERIFIED_ACCURACY : retake.own >= MIN_ACCURACY;
+          const okRetake = retake.verified != null ? retake.verified >= verifiedBar(u) : retake.own >= MIN_ACCURACY;
           if (okRetake && got2 && Math.abs(got2 / want - 1) < Math.abs(got / want - 1)) r = { ...retake, knob };
         }
       }
@@ -482,7 +486,7 @@ async function render(units, { out, format, baseDir, subtitles, manifest, model,
       verWords += n;
     }
     const score = u.verified ?? u.own;
-    const bar = u.verified != null ? MIN_VERIFIED_ACCURACY : MIN_ACCURACY;
+    const bar = u.verified != null ? verifiedBar(u) : MIN_ACCURACY;
     if (n >= 3 && score < bar) {
       const said = u.heard ?? u.transcript;
       const diff = describeDiff(wordAccuracy(u.expected, said).ops);

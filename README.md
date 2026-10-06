@@ -90,6 +90,10 @@ Measured on the 7 demo files, before → after: **0 issues at the joins between 
 
 Benchmark (`bench/acting.js`, 13 scripts × 4 models, each vs a neutral reading of the same words; listen in `samples/listening-test/index.html#acting`): every mode produced a measurable change in pitch, range, loudness, pace or duration on the default model (sarcastic the subtlest); word accuracy 99.3–99.5 % on all models. Model comparison — average change vs neutral: **gpt-realtime-1.5 8.4**, gpt-realtime-2 6.2, gpt-realtime-2.1 5.6, gpt-realtime-2.1-mini 5.6, so the default stays 1.5. OpenAI's newer expressive model `gpt-live-1` answers "Voice session access denied" for this sign-in. The metric cannot hear tears or laughter: your ears are the final judge.
 
+## Accents & characters
+
+`accent` takes a preset — a persona plus concrete phonetic habits — or free text: `french-english` (Jean-Pierre from Lyon: "ze", French r, stress on the last syllable), `english-french`, `marseille`, `quebecois`, `spanish-english`, `italian-english`, `posh-british`, `southern-drawl`, `robot`, `grandpa`. Words stay verbatim; because heavy accents fool the transcriber, accent presets use a looser check (75 % of words heard). Measured clues (accent itself is for your ears): with gpt-realtime-2.1 the French-English accent was strong enough that the transcriber wrote "zere" and "ze window"; `robot` came out monotone (1.55 st melody vs ~3), `southern-drawl` 13 % slower and lower, `grandpa` the slowest (3.1 words/s). gpt-realtime-2.1 once replaced "Excuse me" with "Excusez-moi" in `italian-english`, so prefer 1.5 there. Listen: `samples/listening-test/index.html#accents`.
+
 ## Even more expressive (measured lever search)
 
 `bench/levers.js` tested what makes acting MORE expressive without losing words (3 emotions × 2 voices, one take per lever, independent transcription):

@@ -62,3 +62,13 @@ test("language pin only when the detection is confident", async () => {
   assert.doesNotMatch(buildInstructions("Hola amigos, buenos días.", {}), /Speak ONLY/);
   assert.doesNotMatch(buildInstructions("Ha!", {}, "v2", { sounds: [{ sound: "Ha ha!", how: "laughter" }] }), /background music/);
 });
+
+test("accent presets expand into persona + phonetic habits; free text still works", async () => {
+  const { ACCENTS } = await import("../src/direction.js");
+  assert.ok(Object.keys(ACCENTS).includes("french-english"));
+  const lines = deliveryLines({ accent: "french-english" }).join("\n");
+  assert.match(lines, /Jean-Pierre from Lyon/);
+  assert.match(lines, /the → ze/);
+  assert.match(lines, /Keep the words exactly as written/);
+  assert.match(deliveryLines({ accent: "Irish" })[0], /Irish accent/);
+});

@@ -61,6 +61,12 @@ Human-sounding results come from this loop: short lines, one intention per line,
 
 A **director pass** runs automatically: the whole text is read once and each paragraph gets its own delivery along the story's arc (measured on a 1 min 40 FR text: melody +8 %, sentence-to-sentence pitch variation +19 %). For an even livelier read pick a more animated voice: `coral` (melody +47 %) or `cedar` with `acting: "old-storyteller"` (+30 %). Avoid `marin` + `old-storyteller` on long texts: the character voice drifted between paragraphs. `director: false` turns the pass off.
 
+## Accents & characters
+
+`accent`: french-english, english-french, marseille, quebecois, spanish-english, italian-english, posh-british, southern-drawl, robot, grandpa (persona + phonetic habits), or free text. For a heavy foreign accent (French person speaking English) use `model: "gpt-realtime-2.1"` — it was clearly stronger; keep 1.5 for italian-english and robot. Accents are judged by ear; the word check is looser for accent presets.
+
+`acting: "panicked"` was rebuilt (v2): high, cracking, urgent, performer punctuation on by default. The voice still resists speaking really fast — expect +10–25 % pace, not a frantic rush.
+
 ## Maximum expressiveness
 
 `acting` modes automatically use a built-in delivery reference clip and keep the best of 2 takes (word-checked by transcription). For an even stronger read: `takes: 3`, your own `reference_audio` (a clip whose energy should be matched), or `perform: true` (performance punctuation, same words). Each extra take costs one more generation.
